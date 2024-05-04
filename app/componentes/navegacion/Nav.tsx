@@ -32,7 +32,7 @@ const Nav = ({ abrirNav }: Propiedades) => {
             <Link href="/login">Iniciar Sesión</Link>
           </li>
           <li className="text-[20px] font-medium">
-            <Link href="/">
+            <Link href="/registro">
               <div className=" px-6 py-2 bg-[#7EB693] rounded-md transition-all duration-300 hover:bg-[#96BCA5] sm:px-8 sm:py-3">
                 Registrarse
               </div>
