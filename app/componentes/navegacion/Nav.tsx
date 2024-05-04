@@ -17,16 +17,16 @@ const Nav = ({ abrirNav }: Propiedades) => {
         {/* DIV NAVEGACION DEL NAV */}
         <ul className="hidden lg:flex items-center space-x-10 ">
           <li className="text-[20px] font-medium hover:text-[#DEE5E1]">
-            <Link href="#inicio">Inicio</Link>
+            <Link href="/#inicio">Inicio</Link>
           </li>
           <li className="text-[20px] font-medium hover:text-[#DEE5E1]">
-            <Link href="#planes">Planes</Link>
+            <Link href="/#planes">Planes</Link>
           </li>
           <li className="text-[20px] font-medium hover:text-[#DEE5E1]">
-            <Link href="#clientes">Clientes</Link>
+            <Link href="/#clientes">Clientes</Link>
           </li>
           <li className="text-[20px] font-medium hover:text-[#DEE5E1]">
-            <Link href="#contactanos">Contactanos</Link>
+            <Link href="/#contactanos">Contactanos</Link>
           </li>
           <li className="text-[20px] text-[#7EB693] font-medium hover:text-[#679377]">
             <Link href="/login">Iniciar Sesión</Link>
