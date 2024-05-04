@@ -17,7 +17,7 @@ function RegisterPage() {
                 {/* Parte izquierda */}
                 <div className="flex justify-center items-center col-span-3 ">
                     <div className="">
-                        <Image src="/imagenes/imagenClientes.svg" alt="Descripción de la imagen" className="max-h-full" width={900} height={500} />
+                        <Image src="/imagenes/imagenClientes.svg" alt="Descripción de la imagen" className="max-h-full" width={800} height={500} />
                     </div>
                 </div>
                     {/* Parte derecha */}
