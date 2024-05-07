@@ -6,9 +6,12 @@ import Logo from "@/public/imagenes/logo.svg";
 interface Propiedades {
   abrirNav: () => void;
 }
-const Nav = ({ abrirNav }: Propiedades) => {
+const Nav = ({}: Propiedades) => {
   return (
-    <div className="h-[12vh] bg-white">
+    <div
+      className="h-[12vh] bg-white"
+      style={{ fontFamily: "Barlow Condensed" }}
+    >
       <div className="  sm:w-full px-10  mx-auto flex  items-center justify-between bg-[#274C5B] text-white  fixed z-10">
         {/* DIV PARA EL LOGO */}
         <div className="flex items-center space-x-2">
