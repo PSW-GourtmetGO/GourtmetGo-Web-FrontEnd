@@ -29,7 +29,7 @@ function Login() {
         const userData = await response.json();
         console.log("Información del usuario:", userData);
         alert("Inicio de sesión exitoso");
-        window.location.href = "/"
+        window.location.href = "/dashboard"
       } else {
         console.error("Error al iniciar sesión");
         alert("Credenciales incorrectas");

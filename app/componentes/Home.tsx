@@ -7,6 +7,8 @@ import Contactanos from "./contactanos/Contactanos";
 import Footer from "./footer/Footer";
 import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
+import ResponsivoNav from "./navegacion/ResponsivoNav";
+import RegisterPage from "../registro/page";
 const Home = () => {
   useEffect(() => {
     const initAOS = async () => {
@@ -23,6 +25,7 @@ const Home = () => {
   }, []);
   return (
     <div>
+      <ResponsivoNav />
       <Noticias />
       <Planes />
       <Clientes />
