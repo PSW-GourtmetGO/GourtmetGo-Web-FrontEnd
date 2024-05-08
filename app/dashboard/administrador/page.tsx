@@ -17,15 +17,15 @@ const AdministradorPage = () => {
 
         <div className='col-start-4 col-span-2 text-[45px] flex items-center justify-end ' style={{ fontFamily: "David Libre" }}><h1>Papi Pollos</h1></div>
 
-        <div className='row-start-3 relative'>
+        <div className='row-start-2 relative mt-10'>
           <input className='w-[320px] 2xl:w-[400px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg' placeholder='Buscar nombre del empleado'></input>
           <BiSearch className='absolute left-3 top-4 text-white' />
         </div>
-        <div className='row-start-3 col-start-2 flex items-start justify-end mr-[5%]'>
+        <div className='row-start-2 col-start-2 flex items-start justify-end mr-[5%] mt-10'>
           <button className='bg-[#01AE67] hover:bg-teal-700 text-white font-bold py-3 px-2 rounded-lg'>Añadir Empleado</button>
         </div>
 
-        <div className='row-start-5 col-span-5'>
+        <div className='row-start-3 col-span-5 mt-5'>
           <table className='w-full border-collapse'>
             <thead className='border-b border-black'>
               <tr>
