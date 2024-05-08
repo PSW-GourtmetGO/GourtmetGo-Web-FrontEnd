@@ -12,7 +12,7 @@ const Nav = ({}: Propiedades) => {
       className="h-[12vh] bg-white"
       style={{ fontFamily: " Barlow Condensed, sans-serif" }}
     >
-      <div className="  sm:w-full px-10  mx-auto flex  items-center justify-between bg-[#274C5B] text-white  fixed z-10">
+      <div className="sm:w-full px-10  mx-auto flex  items-center justify-between bg-[#274C5B] text-white  fixed z-10">
         {/* DIV PARA EL LOGO */}
         <div className="flex items-center space-x-2">
           <Image className="object-contain h-16 w-auto " src={Logo} alt="" />
