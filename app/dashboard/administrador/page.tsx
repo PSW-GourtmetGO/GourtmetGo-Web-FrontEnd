@@ -15,7 +15,7 @@ const AdministradorPage = () => {
       <div className='grid grid-cols-5 grid-rows-5' >
         <div className='col-start-1 col-span-2 text-[45px] border-b border-black' style={{ fontFamily: "David Libre" }}><h1>Empleados</h1></div>
 
-        <div className='col-start-4 col-span-2 text-[45px] flex items-center justify-end ' style={{ fontFamily: "David Libre" }}><h1>Papi Pollos</h1></div>
+        <div className='col-start-4 col-span-2 text-[45px] flex  justify-end ' style={{ fontFamily: "David Libre" }}><h1>Papi Pollos</h1></div>
 
         <div className='row-start-2 relative mt-10'>
           <input className='w-[320px] 2xl:w-[400px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg' placeholder='Buscar nombre del empleado'></input>
