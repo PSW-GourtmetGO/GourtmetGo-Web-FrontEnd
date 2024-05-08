@@ -1,5 +1,9 @@
+import Image from 'next/image'
 import React from 'react'
-import { BiSearch } from 'react-icons/bi'
+import { BiPencil, BiSearch } from 'react-icons/bi'
+import { FaRegTrashAlt } from 'react-icons/fa'
+
+import empleado1 from '../../../public/imagenes/mujer2.svg'
 
 const AdministradorPage = () => {
   return (
@@ -32,7 +36,27 @@ const AdministradorPage = () => {
               </tr>
             </thead>
 
+            <tbody className='text-center'>
+              {/* Aquí puedes agregar filas de datos */}
+              <tr className='bg-transparent text-gray-800'>
+                <td className='py-2 px-4'>
+                  <div className='flex items-center justify-start ml-[20% ]'>
+                    <div className='mr-4'><Image className='rounded-full w-10' src={empleado1} alt=''></Image></div>
+                    <span>Juan</span>
+                  </div>
+                </td>
 
+                <td className='py-2 px-4'>Pérez</td>
+                <td className='py-2 px-4'>juan@example.com</td>
+                <td className='py-2 px-4'>
+                  {/* Aquí puedes agregar botones u otras acciones */}
+                  <button className='bg-[#274C5B] text-white p-2 rounded-full'><BiPencil className='left-3 top-4 text-white text-xl 2xl:text-2xl ' /></button>
+                  <button className='bg-[#B80808] text-white p-2 ml-5 rounded-full'><FaRegTrashAlt className='left-3 top-4 text-white text-2xl 2xl:text-2xl' /></button>
+
+                </td>
+              </tr>
+              {/* Puedes agregar más filas según necesites */}
+            </tbody>
           </table>
         </div>
 
