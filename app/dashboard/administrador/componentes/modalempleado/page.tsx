@@ -52,7 +52,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         <>
             {isOpen && (
                 <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                    <div className="bg-white w-[45%] h-[80%] rounded-lg p-10">
+                    <div className="bg-white w-[45%] h-[100%] 2xl:w-[45%] 2xl:h-[80%] rounded-lg p-10">
                         <div className='grid grid-cols-2 w-full gap-x-6'>
                             <div className='col-start-1'>
                                 <h2 className="text-2xl font-bold mb-4">Registro Empleados</h2>
@@ -91,9 +91,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                     </div>
                                 </form>
                             </div>
-                            <div className="mx-auto w-64 text-center col-start-2 mt-[50%]">
+                            <div className="mx-auto w-64 text-center col-start-2 mt-[65%] 2xl:mt-[50%]">
                                 <div className="card">
-                                    <label htmlFor="foto" className="block text-gray-700 font-bold mb-2">Seleccionar Imagen:</label>
+                                    <label htmlFor="foto" className="block text-gray-700 font-bold mb-2">Seleccione su Imagen:</label>
                                     <input
                                         type="file"
                                         id="foto"

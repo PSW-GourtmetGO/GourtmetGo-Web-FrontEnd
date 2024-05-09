@@ -56,10 +56,10 @@ const AdministradorPage = () => {
           <BiSearch className="absolute left-3 top-4 text-white" />
         </div>
         
-        <div className='row-start-2 col-start-2 flex items-start justify-end mr-[5%] mt-10'>
-          {/* Botón para abrir el modal */}
-          <button className='bg-[#01AE67] hover:bg-teal-700 text-white font-bold py-3 px-2 rounded-lg' onClick={handleModalOpen}>Añadir Empleado</button>
-
+        <div className="row-start-2 col-start-2 flex items-start justify-end mr-[5%] ">
+          <button className="bg-[#01AE67] hover:bg-teal-700 text-white font-bold py-3 px-2 rounded-lg" onClick={handleModalOpen}>
+            Añadir Empleado
+          </button>
         </div>
 
         <div className="row-start-3 col-span-5 mt-5">
