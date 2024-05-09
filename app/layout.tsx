@@ -19,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={barlow_Condensed.className}>
-        {children}
-      </body>
+      <body className={barlow_Condensed.className}>{children}</body>
     </html>
   );
 }
