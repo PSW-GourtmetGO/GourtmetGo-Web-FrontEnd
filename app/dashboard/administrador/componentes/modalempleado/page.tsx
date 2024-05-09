@@ -9,6 +9,7 @@ interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
+//
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [formData, setFormData] = useState({
