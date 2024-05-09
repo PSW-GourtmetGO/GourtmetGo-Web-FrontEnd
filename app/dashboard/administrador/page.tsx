@@ -1,11 +1,30 @@
+"use client";
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import { BiPencil, BiSearch } from 'react-icons/bi'
 import { FaRegTrashAlt } from 'react-icons/fa'
 
+
+
+
 import empleado1 from '../../../public/imagenes/mujer2.svg'
+import Modal from './componentes/modalempleado/page';
+
 
 const AdministradorPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Función para abrir el modal
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  // Función para cerrar el modal
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+
   return (
     <div className="bg-cover bg-no-repeat bg-center"
       style={{
@@ -22,7 +41,8 @@ const AdministradorPage = () => {
           <BiSearch className='absolute left-3 top-4 text-white' />
         </div>
         <div className='row-start-2 col-start-2 flex items-start justify-end mr-[5%] mt-10'>
-          <button className='bg-[#01AE67] hover:bg-teal-700 text-white font-bold py-3 px-2 rounded-lg'>Añadir Empleado</button>
+          {/* Botón para abrir el modal */}
+          <button className='bg-[#01AE67] hover:bg-teal-700 text-white font-bold py-3 px-2 rounded-lg' onClick={handleModalOpen}>Añadir Empleado</button>
         </div>
 
         <div className='row-start-3 col-span-5 mt-5'>
@@ -60,6 +80,7 @@ const AdministradorPage = () => {
         </div>
 
 
+        <Modal isOpen={isModalOpen} onClose={handleModalClose} />
 
       </div>
     </div>
