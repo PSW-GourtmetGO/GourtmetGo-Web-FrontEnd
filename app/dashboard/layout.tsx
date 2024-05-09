@@ -115,7 +115,7 @@ export default function DashboardLayout({
           </ul>
         </div>
       </div>
-      <div className="px-[10%] py-[5%]">{children}</div>
+      <div className="pl-[10%] pt-[4%]">{children}</div>
     </>
   );
 }
