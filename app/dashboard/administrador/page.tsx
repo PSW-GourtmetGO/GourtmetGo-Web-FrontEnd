@@ -4,10 +4,6 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { BiPencil, BiSearch } from 'react-icons/bi'
 import { FaRegTrashAlt } from 'react-icons/fa'
-
-
-
-
 import empleado1 from '../../../public/imagenes/mujer2.svg'
 import Modal from './componentes/modalempleado/page';
 
