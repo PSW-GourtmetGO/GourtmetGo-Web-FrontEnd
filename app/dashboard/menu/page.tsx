@@ -52,9 +52,9 @@ const MenuPage = () => {
             <div className='row-start-1 grid grid-cols-4 gap-3'>
               <div className='col-start-1 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full' />
                 </div>
-                <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
+                <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-xl overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
                   <h3 className='text-sm'>Costo: $21</h3>
                   <p className='text-gray-400 mt-2 mb-5'>Disponible 2</p>
@@ -62,7 +62,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-2 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -72,7 +72,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-3 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -82,7 +82,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-4 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -95,7 +95,7 @@ const MenuPage = () => {
             <div className='row-start-2 grid grid-cols-4 gap-3'>
               <div className='col-start-1 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -105,7 +105,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-2 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -115,7 +115,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-3 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -125,7 +125,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-4 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -138,7 +138,7 @@ const MenuPage = () => {
             <div className='row-start-3 grid grid-cols-4 gap-3'>
               <div className='col-start-1 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -148,7 +148,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-2 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -158,7 +158,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-3 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
@@ -168,7 +168,7 @@ const MenuPage = () => {
               </div>
               <div className='col-start-4 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }}>
                 <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                  <img src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                 </div>
                 <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-lg overflow-hidden text-white'>
                   <h2 className='text-xl font-bold mt-5'>Nombre</h2>
