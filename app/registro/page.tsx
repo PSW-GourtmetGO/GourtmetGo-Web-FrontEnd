@@ -1,6 +1,8 @@
 "use client";
+import axios from 'axios';
+import React from 'react';
 import Image from "next/image";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import {
     BsCalendar2Day,
     BsCardHeading,
@@ -12,13 +14,33 @@ import {
 import imagenClientes from "../../public/imagenes/imagenClientes.svg";
 import ResponsivoNav from "../componentes/navegacion/ResponsivoNav";
 
+type FormData = {
+    cedula: string;
+    nombre: string;
+    apellido: string;
+    fechaNacimiento: string;
+    correo: string;
+    contrasenia: string;
+    nombreRestaurante: string;
+};
+
 function RegisterPage() {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
-
+    const onSubmit: SubmitHandler<any> = (data) => { 
+        axios.post('http://localhost:4500/api/Web/clientes/register', data)
+            .then(response => {
+                // Manejar la respuesta del backend si es necesario
+                console.log(response.data);
+            })
+            .catch(error => {
+                // Manejar errores
+                console.error('Error submitting data:', error);
+            });
+    };
     return (
         <>
             <ResponsivoNav />
@@ -42,7 +64,7 @@ function RegisterPage() {
                     </div>
                     {/* Parte derecha */}
                     <div className="col-start-4 col-span-2 mr-[10%] mt-[5%]">
-                        <form className=" w-full  grid grid-cols-2 gap-4">
+                        <form className=" w-full  grid grid-cols-2 gap-4" onSubmit={handleSubmit(onSubmit)}>
                             <h1 className="text-black font-bold text-4xl mb-4 col-span-2 text-center">
                                 Registro de Clientes
                             </h1>
@@ -170,15 +192,15 @@ function RegisterPage() {
                             {/* Campo para la contraseña */}
                             <div>
                                 <label
-                                    htmlFor="password"
+                                    htmlFor="contrasenia"
                                     className="text-slate-500 mb-2 block text-sm"
                                 >
                                     Contraseña:
                                 </label>
                                 <div className="flex relative">
                                     <input
-                                        type="password"
-                                        {...register("password", {
+                                        type="contrasenia"
+                                        {...register("contrasenia", {
                                             required: {
                                                 value: true,
                                                 message: "Contraseña is required",
@@ -194,7 +216,7 @@ function RegisterPage() {
                             {/* Campo para el nombre del restaurante */}
                             <div className="col-span-2">
                                 <label
-                                    htmlFor="NombreRestaurante"
+                                    htmlFor="nombreRestaurante"
                                     className="text-slate-500 mb-2 block text-sm "
                                 >
                                     Nombre del Restaurante:
@@ -202,7 +224,7 @@ function RegisterPage() {
                                 <div className="flex relative">
                                     <input
                                         type="text"
-                                        {...register("NombreRestaurante", {
+                                        {...register("nombreRestaurante", {
                                             required: {
                                                 value: true,
                                                 message: "Nombre del Restaurante is required",
@@ -216,7 +238,7 @@ function RegisterPage() {
                             </div>
 
                             {/* Botón de submit */}
-                            <button className="col-span-2 bg-[#01AE67] hover:bg-teal-700 text-white font-bold p-3 rounded-lg mt-2">
+                            <button type="submit" className="col-span-2 bg-[#01AE67] hover:bg-teal-700 text-white font-bold p-3 rounded-lg mt-2">
                                 Guardar información
                             </button>
                         </form>
