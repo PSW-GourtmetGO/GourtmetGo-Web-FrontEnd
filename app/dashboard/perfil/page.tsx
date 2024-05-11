@@ -6,6 +6,7 @@ import platos from "../../../public/imagenes/PlatosRegistrados.svg";
 import empleados from "../../../public/imagenes/EmpleadosRegistrados.svg";
 import negocio from "../../../public/imagenes/negocio.svg";
 import { useForm } from "react-hook-form";
+import negocioSf from "../../../public/imagenes/negocioSF.svg";
 import { BsEye } from "react-icons/bs";
 const PerfilPage = () => {
   const {
@@ -30,7 +31,7 @@ const PerfilPage = () => {
         </div>
 
         <div className="row-start-2 col-start-1 col-span-2 mt-5 ">
-          <Image src={negocio} alt=""></Image>
+          <Image src={negocioSf} alt="" className="w-[50%]"></Image>
           <div
             className=" text-[45px] ml-5  "
             style={{ fontFamily: "David Libre" }}
@@ -60,8 +61,30 @@ const PerfilPage = () => {
           </div>
         </div>
 
-        <div className="col-start-3 col-span-5 row-start-2 row-span-2 mr-[10%] ">
+        <div className="col-start-3 col-span-5 row-start-2 row-span-2 mr-[10%] flex items-center ">
           <form className=" w-full  grid grid-cols-2 gap-4">
+            {/* Campo para el cedula */}
+            <div>
+              <label
+                htmlFor="cedula"
+                className="text-slate-500 mb-2 block text-sm"
+              >
+                Cedula:
+              </label>
+              <div className="flex relative">
+                <input
+                  type="text"
+                  {...register("cedula", {
+                    required: {
+                      value: true,
+                      message: "cedula is required",
+                    },
+                  })}
+                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  placeholder="0502634967"
+                />
+              </div>
+            </div>
             {/* Campo para el nombre */}
             <div>
               <label
@@ -80,7 +103,7 @@ const PerfilPage = () => {
                     },
                   })}
                   className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="1802154687"
+                  placeholder="Alex"
                 />
               </div>
             </div>
@@ -102,30 +125,7 @@ const PerfilPage = () => {
                     },
                   })}
                   className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="Juan"
-                />
-              </div>
-            </div>
-
-            {/* Campo para el cedula */}
-            <div>
-              <label
-                htmlFor="cedula"
-                className="text-slate-500 mb-2 block text-sm"
-              >
-                Cedula:
-              </label>
-              <div className="flex relative">
-                <input
-                  type="text"
-                  {...register("cedula", {
-                    required: {
-                      value: true,
-                      message: "cedula is required",
-                    },
-                  })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="Perez"
+                  placeholder="Jimenez"
                 />
               </div>
             </div>
@@ -140,7 +140,7 @@ const PerfilPage = () => {
               </label>
               <div className="flex relative">
                 <input
-                  type="text"
+                  type="date"
                   {...register("fechaNacimiento", {
                     required: {
                       value: true,
@@ -149,74 +149,6 @@ const PerfilPage = () => {
                   })}
                   className="p-3 rounded block mb-2 text-black border border-black w-full"
                   placeholder="1999-12-12"
-                />
-              </div>
-            </div>
-
-            {/* Campo para el nombre restaurante */}
-            <div>
-              <label
-                htmlFor="NombreRestaurante"
-                className="text-slate-500 mb-2 block text-sm "
-              >
-                Nombre del Restaurante:
-              </label>
-              <div className="flex relative">
-                <input
-                  type="text"
-                  {...register("NombreRestaurante", {
-                    required: {
-                      value: true,
-                      message: "Nombre del Restaurante is required",
-                    },
-                  })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="Pikos"
-                />
-              </div>
-            </div>
-            {/* Campo para la direccion */}
-            <div>
-              <label
-                htmlFor="direccion"
-                className="text-slate-500 mb-2 block text-sm"
-              >
-                Dirección:
-              </label>
-              <div className="flex relative">
-                <input
-                  type="text"
-                  {...register("direccion", {
-                    required: {
-                      value: true,
-                      message: "direccion is required",
-                    },
-                  })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="Dirección"
-                />
-              </div>
-            </div>
-
-            {/* Campo para el telefono */}
-            <div>
-              <label
-                htmlFor="telefono"
-                className="text-slate-500 mb-2 block text-sm"
-              >
-                Telefono:
-              </label>
-              <div className="flex relative">
-                <input
-                  type="text"
-                  {...register("telefono", {
-                    required: {
-                      value: true,
-                      message: "telefono is required",
-                    },
-                  })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="0999999999"
                 />
               </div>
             </div>
@@ -239,54 +171,74 @@ const PerfilPage = () => {
                     },
                   })}
                   className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="Correo"
+                  placeholder="alexJime@gmail.com"
                 />
               </div>
             </div>
-            {/*Campo para la contraseña */}
+            {/* Campo para la direccion */}
             <div>
               <label
-                htmlFor="password"
+                htmlFor="direccion"
                 className="text-slate-500 mb-2 block text-sm"
               >
-                Contraseña:
+                Dirección:
               </label>
               <div className="flex relative">
                 <input
-                  type="password"
-                  {...register("password", {
+                  type="text"
+                  {...register("direccion", {
                     required: {
                       value: true,
-                      message: "Contraseña is required",
+                      message: "direccion is required",
                     },
                   })}
                   className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="********"
+                  placeholder="Ambato"
                 />
-                <BsEye className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
               </div>
             </div>
-            {/*Campo para repita la contraseña */}
+            {/* Campo para el nombre restaurante */}
             <div>
               <label
-                htmlFor="password"
-                className="text-slate-500 mb-2 block text-sm"
+                htmlFor="NombreRestaurante"
+                className="text-slate-500 mb-2 block text-sm "
               >
-                Repita la Contraseña:
+                Nombre del Restaurante:
               </label>
               <div className="flex relative">
                 <input
-                  type="password"
-                  {...register("password", {
+                  type="text"
+                  {...register("NombreRestaurante", {
                     required: {
                       value: true,
-                      message: "Contraseña is required",
+                      message: "Nombre del Restaurante is required",
                     },
                   })}
                   className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="********"
+                  placeholder="Pikos"
                 />
-                <BsEye className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
+              </div>
+            </div>
+            {/* Campo para cargar la imagen del negocio */}
+            <div>
+              <label
+                htmlFor="imagen"
+                className="text-slate-500 mb-2 block text-sm"
+              >
+                Imagen del Negocio:
+              </label>
+              <div className="flex relative">
+                <input
+                  type="file"
+                  {...register("imagen", {
+                    required: {
+                      value: true,
+                      message: "Imagen is required",
+                    },
+                  })}
+                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  placeholder="Imagen"
+                />
               </div>
             </div>
 

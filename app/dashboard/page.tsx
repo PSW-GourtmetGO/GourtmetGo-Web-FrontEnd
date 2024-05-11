@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import filtro from "../../public/imagenes/IconoFiltro.svg";
 import negocioSf from "../../public/imagenes/negocioSF.svg";
 import { useForm } from "react-hook-form";
-import { BiPencil, BiSearch } from "react-icons/bi";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { BiSearch } from "react-icons/bi";
 import empleado1 from "../../public/imagenes/mujer2.svg";
 import ModalPedidos from "./administrador/componentes/modalPedidos/page";
 
@@ -38,6 +37,7 @@ function PedidosPage() {
       color: "#9290FE",
     },
   ];
+
   const [modalOpen, setModalOpen] = useState(false);
 
   // Función para abrir el modal
