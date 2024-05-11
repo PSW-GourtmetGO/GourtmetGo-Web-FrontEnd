@@ -20,23 +20,33 @@ function PedidosPage() {
       menu: "Beef dumpling in hot and sour soup",
       total: "$105",
       estado: "Pendiente",
-      color: "#FFB572",
     },
     {
       cliente: "Juan Alban",
       menu: "Beef dumpling in hot and sour soup",
       total: "$105",
       estado: "Completo",
-      color: "#6BE2BE",
     },
     {
       cliente: "Juan Alban",
       menu: "Beef dumpling in hot and sour soup",
       total: "$105",
       estado: "Preparado",
-      color: "#9290FE",
     },
   ];
+  // Función para obtener el color según el estado
+  const getColorByEstado = (estado: any) => {
+    switch (estado) {
+      case "Pendiente":
+        return "#FFB572";
+      case "Completo":
+        return "#6BE2BE";
+      case "Preparado":
+        return "#9290FE";
+      default:
+        return "#eb459f";
+    }
+  };
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -130,7 +140,10 @@ function PedidosPage() {
                   <td className="py-2 px-4">{registro.total}</td>
                   <td className="py-2 px-4">
                     <div
-                      className={`bg-[${registro.color}] p-1 text-white rounded-xl`}
+                      className="p-1 text-white rounded-xl"
+                      style={{
+                        backgroundColor: getColorByEstado(registro.estado),
+                      }}
                     >
                       {registro.estado}
                     </div>
