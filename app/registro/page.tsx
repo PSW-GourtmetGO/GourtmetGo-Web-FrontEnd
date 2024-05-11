@@ -14,16 +14,6 @@ import {
 import imagenClientes from "../../public/imagenes/imagenClientes.svg";
 import ResponsivoNav from "../componentes/navegacion/ResponsivoNav";
 
-type FormData = {
-    cedula: string;
-    nombre: string;
-    apellido: string;
-    fechaNacimiento: string;
-    correo: string;
-    contrasenia: string;
-    nombreRestaurante: string;
-};
-
 function RegisterPage() {
     const {
         register,
@@ -33,11 +23,11 @@ function RegisterPage() {
     const onSubmit: SubmitHandler<any> = (data) => { 
         axios.post('http://localhost:4500/api/Web/clientes/register', data)
             .then(response => {
-                // Manejar la respuesta del backend si es necesario
-                console.log(response.data);
+                alert("Usuario creado");
+                window.location.href = "/login"
             })
             .catch(error => {
-                // Manejar errores
+                alert("Hubo un problema al procesar la información. Intente más tarde");
                 console.error('Error submitting data:', error);
             });
     };
