@@ -16,7 +16,7 @@ function Login() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:4500/api/Web/clientes`, {
+      const response = await fetch(`http://localhost:4500/api/Web/clientes/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,11 +26,14 @@ function Login() {
 
       if (response.ok) {
         const userData = await response.json();
-        console.log("Información del usuario:", userData);
-        alert("Inicio de sesión exitoso");
+        localStorage.setItem('rolID', userData.rol_id);
+        localStorage.setItem('restauranteID', userData.restaurante_id);
+        localStorage.setItem('restaurante', userData.restaurante);
+        if (userData.rol_id == 1){
+            localStorage.setItem('plan', userData.planDueño_id);
+        }
         window.location.href = "/dashboard";
       } else {
-        console.error("Error al iniciar sesión");
         alert("Credenciales incorrectas");
       }
     } catch (error) {
@@ -82,7 +85,7 @@ function Login() {
                       placeholder="Correo"
                       value={correo}
                       onChange={(e) => setCorreo(e.target.value)}
-                      maxLength={25}
+                      maxLength={50}
                       minLength={4}
                     />
                     <TfiEmail className="w-4 h-4 absolute right-2 top-3 pointer-events-none" />

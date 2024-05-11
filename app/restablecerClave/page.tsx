@@ -1,10 +1,33 @@
+"use client";
 import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import ResponsivoNav from "../componentes/navegacion/ResponsivoNav";
 import RestablecerImagen from "../../public/imagenes/imgLogin.svg";
 import Image from "next/image";
 import { TfiEmail } from "react-icons/tfi";
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const RestablecerClavePage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  
+  const onSubmit: SubmitHandler<any> = async (data) => {
+    try {
+      const response = await axios.post('http://localhost:4500/api/Web/clientes/recuperar', data);
+      alert("Se le ha enviado un correo con una contraseña temporal de acceso")
+      window.location.href = "/login";
+    } catch (error) {
+      alert("No se ha podido encontrar el correo proporcionado en nuestro sistema")
+      console.error('Error submitting data:', error);
+    }
+  };
+
   return (
     <div>
       <ResponsivoNav />
@@ -43,12 +66,16 @@ const RestablecerClavePage = () => {
                 <p className="text-gray-500 mt-4">
                   Ingrese su correo electrónico para restablecer su contraseña.
                 </p>
-                <form className="mt-6">
+                <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
                   <div className="flex items-center  border-b border-black py-2">
                     <input
                       type="email"
-                      name="email"
-                      id="email"
+                      {...register("destinatario", {
+                        required: {
+                            value: true,
+                            message: "Correo is required",
+                        },
+                      })}
                       placeholder="Correo Electrónico"
                       className="w-full bg-transparent border-none text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                     />
