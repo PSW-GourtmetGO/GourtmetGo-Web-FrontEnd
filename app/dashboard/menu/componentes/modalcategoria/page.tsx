@@ -76,6 +76,10 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                                         <button className="bg-[#B80808] text-white p-2 ml-5 rounded-full">
                                                             <FaRegTrashAlt className="left-3 top-4 text-white text-xl 2xl:text-2xl" />
                                                         </button>
+                                                        <select className="border border-black p-2 ml-5 rounded-full">
+                                                            <option value="option1" selected>Visible</option>
+                                                            <option value="option2">No Visible</option>
+                                                        </select>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -110,6 +114,10 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                                     <button className="bg-[#B80808] text-white p-2 ml-5 rounded-full" >
                                                         <FaRegTrashAlt className="left-3 top-4 text-white text-xl 2xl:text-2xl" />
                                                     </button>
+                                                    <select className="border border-black p-2 ml-5 rounded-full">
+                                                        <option value="option1" selected>Visible</option>
+                                                        <option value="option2">No Visible</option>
+                                                    </select>
                                                 </td>
                                             </tr>
                                         </tbody>
