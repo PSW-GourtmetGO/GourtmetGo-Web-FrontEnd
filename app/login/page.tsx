@@ -10,6 +10,9 @@ import imgLogin from "../../public/imagenes/imgLogin.svg";
 import ResponsivoNav from "../componentes/navegacion/ResponsivoNav";
 
 function Login() {
+
+  localStorage.clear();
+
   const [correo, setCorreo] = useState("");
   const [contrasenia, setContrasenia] = useState("");
 
@@ -26,11 +29,13 @@ function Login() {
 
       if (response.ok) {
         const userData = await response.json();
-        localStorage.setItem('rolID', userData.rol_id);
-        localStorage.setItem('restauranteID', userData.restaurante_id);
-        localStorage.setItem('restaurante', userData.restaurante);
+        localStorage.setItem('rolID', userData.p_rol);
+        localStorage.setItem('restauranteID', userData.r_id);
+        localStorage.setItem('restauranteNOMBRE', userData.r_nombre);
+        localStorage.setItem('persona', userData.p_id);
+        localStorage.setItem('restauranteImagen', userData.r_imagen_base64);
         if (userData.rol_id == 1){
-            localStorage.setItem('plan', userData.planDueño_id);
+            localStorage.setItem('plan', userData.plan);
         }
         window.location.href = "/dashboard";
       } else {

@@ -1,19 +1,93 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect , useState} from "react";
+import axios from "axios";
 import ventas from "../../../public/imagenes/VentasRealizadas.svg";
 import platos from "../../../public/imagenes/PlatosRegistrados.svg";
 import empleados from "../../../public/imagenes/EmpleadosRegistrados.svg";
-import negocio from "../../../public/imagenes/negocio.svg";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler  } from "react-hook-form";
 import negocioSf from "../../../public/imagenes/negocioSF.svg";
-import { BsEye } from "react-icons/bs";
 const PerfilPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm();
+
+  const [total_pedidos, setTotalPedidos] = useState(null);
+  const [total_empleados, setTotalEmpleados] = useState(null);
+  const [total_platos, setTotalPlatos] = useState(null);
+
+  useEffect(() => {
+    const obtenerEstadisticasRestaurantes = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4500/api/Web/propietario/estadisticas/${localStorage.getItem('restauranteID')}`);
+        setTotalPedidos(response.data.total_pedidos);
+        setTotalEmpleados(response.data.total_empleados);
+        setTotalPlatos(response.data.total_platos);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error al obtener las estadísticas:', error);
+      }
+    };
+
+    obtenerEstadisticasRestaurantes();
+  }, []);
+  
+  useEffect(() => {
+    const obtenerDatosRestaurante = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4500/api/Web/propietario/${localStorage.getItem('persona')}`);
+        const datosRestaurante = response.data[0];
+        setValue('cedula', datosRestaurante.cedula_p);
+        setValue('nombre', datosRestaurante.nombre_p);
+        setValue('apellido', datosRestaurante.apellido_p);
+        const fechaNacimientoFormatted = new Date(datosRestaurante.fecha_nacimiento_p).toISOString().substr(0, 10);
+        setValue('fechaNacimiento', fechaNacimientoFormatted);
+        setValue('correo', datosRestaurante.correo_p);
+        setValue('direccion', datosRestaurante.direccion_r);
+        setValue('NombreRestaurante', datosRestaurante.nombre_r);
+      } catch (error) {
+        console.error('Error al obtener los datos del restaurante:', error);
+      }
+    };
+    obtenerDatosRestaurante();
+  }, [setValue]);
+  const restaurante = localStorage.getItem('restauranteNOMBRE');
+  const onSubmit: SubmitHandler<any> = async (data) => {
+    const base64Image = await convertImageToBase64(data.imagen[0]);
+    console.log(base64Image);
+    const datosEnviar = {
+      ...data,
+      imagen: base64Image,
+    };
+
+    axios.put(`http://localhost:4500/api/Web/propietario/${localStorage.getItem('persona')}`, datosEnviar)
+    .then(response => {
+        alert("Información actualizada correctamente");
+    })
+    .catch(error => {
+        alert("Hubo un problema al procesar la información. Intente más tarde");
+        console.error('Error submitting data:', error);
+    });
+  };
+
+  const convertImageToBase64 = (file: File) => {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === 'string') {
+          resolve(reader.result);
+        } else {
+          reject(new Error('Failed to read the file as base64.'));
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
   return (
     <div
       className="bg-cover bg-no-repeat bg-center"
@@ -36,33 +110,39 @@ const PerfilPage = () => {
             className=" text-[45px] ml-5  "
             style={{ fontFamily: "David Libre" }}
           >
-            <h1>Papi Pollos</h1>
+            <h1>{restaurante}</h1>
           </div>
           <div className="ml-5 flex mt-5">
             <Image src={ventas} alt="" className="w-[10%]"></Image>
             <div className="ml-3">
-              <h1 className="text-xl font-bold">500</h1>
+            {total_pedidos && (
+              <h1 className="text-xl font-bold">{total_pedidos}</h1>
+            )}
               <h1 className="text-[20px] ">Ventas realizadas</h1>
             </div>
           </div>
           <div className="ml-5 flex mt-5">
             <Image src={platos} alt="" className="w-[10%]"></Image>
             <div className="ml-3">
-              <h1 className="text-xl font-bold">120</h1>
+            {total_platos && (
+              <h1 className="text-xl font-bold">{total_platos}</h1>
+            )}
               <h1 className="text-[20px] ">Platos registrados</h1>
             </div>
           </div>
           <div className="ml-5 flex mt-5">
             <Image src={empleados} alt="" className="w-[10%]"></Image>
             <div className="ml-3">
-              <h1 className="text-xl font-bold">10</h1>
+            {total_empleados && (
+              <h1 className="text-xl font-bold">{total_empleados}</h1>
+            )}
               <h1 className="text-[20px] ">Empleados registrados</h1>
             </div>
           </div>
         </div>
 
         <div className="col-start-3 col-span-5 row-start-2 row-span-2 mr-[10%] flex items-center ">
-          <form className=" w-full  grid grid-cols-2 gap-4">
+          <form className=" w-full  grid grid-cols-2 gap-4" onSubmit={handleSubmit(onSubmit)}>
             {/* Campo para el cedula */}
             <div>
               <label
