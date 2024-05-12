@@ -59,6 +59,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                         <label htmlFor="costo" className="block text-gray-700 font-bold mb-2">Costo:</label>
                                         <input type="number" id="costo" name="costo" value={formData.costo} onChange={handleInputChange} className="w-full rounded block mb-2 text-black border border-black" required />
                                     </div>
+                                    <div className='"mb-4'>
+                                        <label htmlFor="costo" className="block text-gray-700 font-bold mb-2">Estado:</label>
+                                        <select className="w-full rounded block mb-2 text-black border border-black">
+                                            <option value="option1" selected>Visible</option>
+                                            <option value="option2">No Visible</option>
+                                        </select>
+                                    </div>
                                 </form>
                             </div>
                             <div className="mx-auto w-64 text-center col-start-2 mt-[10%] 2xl:mt-[5%]">
@@ -83,15 +90,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             </div>
 
-
                             <div className="col-start-1 text-left">
                                 <button type="submit" className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md">Guardar</button>
                                 <button type="button" onClick={onClose} className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-md ml-2">Cancelar</button>
                             </div>
 
-
                         </div>
-
 
                     </div>
                 </div>
