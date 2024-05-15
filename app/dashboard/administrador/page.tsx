@@ -46,7 +46,7 @@ const AdministradorPage = () => {
 
         <div className="row-start-2 relative ">
           <input
-            className="w-[320px] 2xl:w-[400px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg"
+            className="w-[320px] 2xl:w-[320px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg"
             placeholder="Buscar nombre del empleado"
           ></input>
           <BiSearch className="absolute left-3 top-4 text-white" />

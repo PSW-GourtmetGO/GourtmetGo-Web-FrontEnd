@@ -9,7 +9,7 @@ const PagosPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm();
 
   return (
@@ -36,70 +36,71 @@ const PagosPage = () => {
           >
             <h1></h1>
           </div>
-
         </div>
 
         <div className="col-start-3 col-span-5 row-start-2 row-span-2 mr-[10%] flex items-center ">
           <div>
-          <h1
-            className="flex text-5xl justify-end text-right mb-4">
-            Todas tus transacciones se realizan a través de paypal
-          </h1>
-          <h1 className="flex font-bold text-6xl justify-end">
-          Ingresa el token
-          </h1>
-          <form className=" w-full grid grid-cols-2 gap-4 mt-16">
-            <div>
-              <label
-                htmlFor="ID"
-                className="text-slate-500 mb-2 block text-sm"
-              >
-                Id:
-              </label>
-              <div className="flex relative">
-                <input
-                  type="text"
-                  {...register("ID", {
-                    required: {
-                      value: true,
-                      message: "ID is required",
-                    },
-                  })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="********"
-                />
+            <h1 className="flex text-4xl justify-end text-right mb-4">
+              Todas tus transacciones se realizan a través de paypal
+            </h1>
+            <h1 className="flex font-bold text-4xl justify-end">
+              Ingresa la información de PayPal
+            </h1>
+            <form className=" w-full grid grid-cols-2 gap-4 mt-16">
+              <div>
+                <label
+                  htmlFor="ID"
+                  className="text-slate-500 mb-2 block text-sm"
+                >
+                  Empresa:
+                </label>
+                <div className="flex relative">
+                  <input
+                    type="text"
+                    {...register("ID", {
+                      required: {
+                        value: true,
+                        message: "ID is required",
+                      },
+                    })}
+                    className="p-3 rounded block mb-2 text-black border border-black w-full"
+                    placeholder="********"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label
-                htmlFor="contrasenia"
-                className="text-slate-500 mb-2 block text-sm"
-              >
-                Contraseña:
-              </label>
-              <div className="flex relative">
-                <input
-                  type="text"
-                  {...register("contrasenia", {
-                    required: {
-                      value: true,
-                      message: "contrasenia is required",
-                    },
-                  })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
-                  placeholder="********"
-                />
+              <div>
+                <label
+                  htmlFor="contrasenia"
+                  className="text-slate-500 mb-2 block text-sm"
+                >
+                  Token:
+                </label>
+                <div className="flex relative">
+                  <input
+                    type="text"
+                    {...register("contrasenia", {
+                      required: {
+                        value: true,
+                        message: "contrasenia is required",
+                      },
+                    })}
+                    className="p-3 rounded block mb-2 text-black border border-black w-full"
+                    placeholder="********"
+                  />
+                </div>
               </div>
-              
-            </div>
-            
-            <button className="col-span-2 bg-[#6ca77d] hover:bg-[#274C5B] text-white font-sans p-3 rounded-lg mt-2  text-xl">
-            <Image src={paypal} alt="" className="w-[25px] inline-block"></Image>PayPal
-            </button>
-          </form>
+
+              <button className="col-span-2 bg-[#6ca77d] hover:bg-[#274C5B] text-white font-sans p-3 rounded-lg mt-2  text-xl">
+                <Image
+                  src={paypal}
+                  alt=""
+                  className="w-[25px] inline-block"
+                ></Image>
+                PayPal
+              </button>
+            </form>
           </div>
-          
         </div>
       </div>
     </div>
