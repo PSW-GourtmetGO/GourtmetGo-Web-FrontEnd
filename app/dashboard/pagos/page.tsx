@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect , useState} from "react";
+import axios from 'axios';
+import { useForm, SubmitHandler } from "react-hook-form";
 import pagosImagen from "../../../public/imagenes/PagosImagen.svg";
 import paypal from "../../../public/imagenes/paypal.svg";
 const PagosPage = () => {
@@ -11,7 +12,29 @@ const PagosPage = () => {
     formState: { errors },
     setValue,
   } = useForm();
+  const onSubmit: SubmitHandler<any> = (data) => { 
+    axios.put(`http://localhost:4500/api/Web/propietario/paypal/${localStorage.getItem('restauranteID')}`, data)
+        .then(response => {
+            alert("información almacenada");
+        })
+        .catch(error => {
+            alert("Hubo un problema al procesar la información. Intente más tarde");
+        });
+  };
 
+  useEffect(() => {
+    const obtenerDatosRestaurante = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4500/api/Web/propietario/paypal/${localStorage.getItem('restauranteID')}`);
+        const datosPaypal = response.data[0];
+        setValue('empresa', datosPaypal.nombre_tienda);
+        setValue('token', datosPaypal.token);
+      } catch (error) {
+        console.error('Error al obtener los datos del restaurante:', error);
+      }
+    };
+    obtenerDatosRestaurante();
+  }, [setValue]);
   return (
     <div
       className="bg-cover bg-no-repeat bg-center"
@@ -46,21 +69,20 @@ const PagosPage = () => {
             <h1 className="flex font-bold text-4xl justify-end">
               Ingresa la información de PayPal
             </h1>
-            <form className=" w-full grid grid-cols-2 gap-4 mt-16">
+            <form className=" w-full grid grid-cols-2 gap-4 mt-16" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label
                   htmlFor="ID"
-                  className="text-slate-500 mb-2 block text-sm"
-                >
+                  className="text-slate-500 mb-2 block text-sm">
                   Empresa:
                 </label>
                 <div className="flex relative">
                   <input
                     type="text"
-                    {...register("ID", {
+                    {...register("empresa", {
                       required: {
                         value: true,
-                        message: "ID is required",
+                        message: "empresa is required",
                       },
                     })}
                     className="p-3 rounded block mb-2 text-black border border-black w-full"
@@ -79,10 +101,10 @@ const PagosPage = () => {
                 <div className="flex relative">
                   <input
                     type="text"
-                    {...register("contrasenia", {
+                    {...register("token", {
                       required: {
                         value: true,
-                        message: "contrasenia is required",
+                        message: "token is required",
                       },
                     })}
                     className="p-3 rounded block mb-2 text-black border border-black w-full"
@@ -92,12 +114,7 @@ const PagosPage = () => {
               </div>
 
               <button className="col-span-2 bg-[#6ca77d] hover:bg-[#274C5B] text-white font-sans p-3 rounded-lg mt-2  text-xl">
-                <Image
-                  src={paypal}
-                  alt=""
-                  className="w-[25px] inline-block"
-                ></Image>
-                PayPal
+                Guardar Información
               </button>
             </form>
           </div>
