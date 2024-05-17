@@ -1,40 +1,45 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import filtro from "../../public/imagenes/IconoFiltro.svg";
 import negocioSf from "../../public/imagenes/negocioSF.svg";
 import { useForm } from "react-hook-form";
 import { BiSearch } from "react-icons/bi";
 import empleado1 from "../../public/imagenes/mujer2.svg";
 import ModalPedidos from "./administrador/componentes/modalPedidos/page";
+import axios from 'axios';
+
+interface Pedido {
+  pID: number;
+  pCODIGO: string;
+  pTOTAL: string;
+  pESTADO: string;
+  cCLIENTE: string;
+}
 
 function PedidosPage() {
+  const restaurante = localStorage.getItem('restauranteNOMBRE');
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
+  const [pedido, setPedido] = useState<Pedido | null>(null);
+  const [filtroo, setFiltro] = useState<string>('Pendiente');
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const registros = [
-    {
-      cliente: "Juan Alban",
-      menu: "Beef dumpling in hot and sour soup",
-      total: "$105",
-      estado: "Pendiente",
-    },
-    {
-      cliente: "Juan Alban",
-      menu: "Beef dumpling in hot and sour soup",
-      total: "$105",
-      estado: "Completo",
-    },
-    {
-      cliente: "Juan Alban",
-      menu: "Beef dumpling in hot and sour soup",
-      total: "$105",
-      estado: "Preparado",
-    },
-  ];
-  // Función para obtener el color según el estado
+
+  useEffect(() => {
+    const obtenerPedidos = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4500/api/Web/pedidos/${localStorage.getItem('restauranteID')}`);
+        setPedidos(response.data);
+      } catch (error) {
+        console.error('Error al obtener los pedidos:', error);
+      }
+    };
+    obtenerPedidos();
+  }, []);
+
   const getColorByEstado = (estado: any) => {
     switch (estado) {
       case "Pendiente":
@@ -50,15 +55,52 @@ function PedidosPage() {
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Función para abrir el modal
-  const openModal = () => {
+  const openModal = (pedido:Pedido) => {
+    setPedido(pedido)
     setModalOpen(true);
   };
-
-  // Función para cerrar el modal
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  const FilterChange = async(event:any) =>{
+    if (filtroo === 'Preparado'){
+      try {
+        const response = await axios.get(`http://localhost:4500/api/Web/pedidos/buscar/pedido?restaurante=${localStorage.getItem('restauranteID')}&filtro=${filtroo}`);
+        setPedidos(response.data);
+        setFiltro('');  
+      } catch (error) {
+        console.error('Error al obtener los pedidos:', error);
+      }   
+    } else if (filtroo === 'Pendiente'){
+        try {
+          const response = await axios.get(`http://localhost:4500/api/Web/pedidos/buscar/pedido?restaurante=${localStorage.getItem('restauranteID')}&filtro=${filtroo}`);
+          setPedidos(response.data);
+          setFiltro('Preparado');  
+        } catch (error) {
+          console.error('Error al obtener los pedidos:', error);
+        }
+    }else if (filtroo === ''){   
+        try {
+          const response = await axios.get(`http://localhost:4500/api/Web/pedidos/${localStorage.getItem('restauranteID')}`);
+          setPedidos(response.data);
+          setFiltro('Pendiente')
+        } catch (error) {
+          console.error('Error al obtener los pedidos:', error);
+        }
+    }
+  }
+
+  const InputChangeFind = async (event:any) => {
+    const inputValue = event.target.value;
+    try {
+      const response = await axios.get(`http://localhost:4500/api/Web/pedidos?restaurante=${localStorage.getItem('restauranteID')}&codigo=${inputValue}`);
+      setPedidos(response.data);
+    } catch (error) {
+      console.error('Error al obtener las estadísticas:', error);
+    }
+  };
+
   return (
     <div
       className="bg-cover bg-no-repeat bg-center"
@@ -78,18 +120,18 @@ function PedidosPage() {
           className="col-start-4 col-span-2 text-[45px] flex items-center justify-end "
           style={{ fontFamily: "David Libre" }}
         >
-          <h1>Papi Pollos</h1>
+          <h1>{restaurante}</h1>
           <Image src={negocioSf} alt=""></Image>
         </div>
         <div className="row-start-2 relative ">
           <input
             className="w-[320px] 2xl:w-[320px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg"
-            placeholder="Buscar nombre del empleado"
+            placeholder="Buscar código" onChange={InputChangeFind}
           ></input>
           <BiSearch className="absolute left-3 top-4 text-white" />
         </div>
         <div className="row-start-2 col-start-5 relative ml-[20%]">
-          <button className="w-[150px] bg-[#393C49]  hover:bg-teal-700 text-white font-bold py-3  rounded-lg ">
+          <button className="w-[150px] bg-[#393C49]  hover:bg-teal-700 text-white font-bold py-3  rounded-lg " onClick={FilterChange}>
             Filtrar Orden
           </button>
           <Image
@@ -105,7 +147,7 @@ function PedidosPage() {
                 <th className="py-2 px-4 bg-transparent text-gray-800">
                   Cliente
                 </th>
-                <th className="py-2 px-4 bg-transparent text-gray-800">Menu</th>
+                <th className="py-2 px-4 bg-transparent text-gray-800">Código</th>
                 <th className="py-2 px-4 bg-transparent text-gray-800">
                   Total a Pagar
                 </th>
@@ -117,43 +159,37 @@ function PedidosPage() {
 
             <tbody className="text-center">
               {/* Aquí generamos las filas con un ciclo */}
-              {registros.map((registro, index) => (
+              {pedidos.map((pedido, index) => (
                 <tr
-                  key={index}
-                  onClick={openModal}
+                  key={pedido.pID}
+                  onClick={() => openModal(pedido)}
                   className="bg-transparent text-gray-800 hover:bg-slate-400 cursor-pointer"
                 >
                   <td className="py-2 px-4">
                     <div className="flex items-center justify-start ml-[23%] 2xl:ml-[29%]">
                       <div className="mr-4">
-                        <Image
-                          className="rounded-full w-10"
-                          src={empleado1}
-                          alt=""
-                        ></Image>
                       </div>
-                      <span>{registro.cliente}</span>
+                      <span>{pedido.cCLIENTE}</span>
                     </div>
                   </td>
 
-                  <td className="py-2 px-4">{registro.menu}</td>
-                  <td className="py-2 px-4">{registro.total}</td>
+                  <td className="py-2 px-4">{pedido.pCODIGO}</td>
+                  <td className="py-2 px-4">{pedido.pTOTAL}</td>
                   <td className="py-2 px-4">
                     <div
                       className="p-1 text-white rounded-xl"
                       style={{
-                        backgroundColor: getColorByEstado(registro.estado),
+                        backgroundColor: getColorByEstado(pedido.pESTADO),
                       }}
                     >
-                      {registro.estado}
+                      {pedido.pESTADO}
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {/* Abre el modal */}
-          <ModalPedidos isOpen={modalOpen} onClose={closeModal}></ModalPedidos>
+          <ModalPedidos isOpen={modalOpen} onClose={closeModal} pedidoDatos={pedido} setPedidoDatos={setPedido}></ModalPedidos>
         </div>
       </div>
     </div>

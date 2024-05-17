@@ -1,60 +1,74 @@
 "use client";
-import Image from "next/image";
-import React, { useState, ChangeEvent, FormEvent, useRef } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-import NoImagen from "../../../../../public/imagenes/noimagen.svg";
-import ActualizarImgane from "../../../../../public/imagenes/actualizarImagen.svg";
+interface Pedido {
+  pID: number;
+  pCODIGO: string;
+  pTOTAL: string;
+  pESTADO: string;
+  cCLIENTE: string;
+}
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  pedidoDatos: Pedido | null;
+  setPedidoDatos: React.Dispatch<React.SetStateAction<Pedido | null>>;
 }
-//
 
-const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    cedula: "",
-    nombre: "",
-    apellido: "",
-    fecha_Nacimiento: "",
-    direccion: "",
-    telefono: "",
-    correo: "",
-    contrasenia: "",
-  });
-  const detallesPedido = [
-    { articulo: "PapiPollo", cantidad: 2, total: "$3" },
-    { articulo: "Encebollado", cantidad: 1, total: "$3.5" },
-    { articulo: "Coca Cola", cantidad: 3, total: "$2.25" },
-    { articulo: "Coca Cola", cantidad: 3, total: "$2.25" },
-    { articulo: "Coca Cola", cantidad: 3, total: "$2.25" },
-  ];
+interface detallePedido {
+  pltNOMBRE: string;
+  pdCANTIDAD: number;
+  pdPRECIO: number;
+}
+const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose,pedidoDatos,setPedidoDatos }) => {
+  const [detallePedidos, setDetallePedidos] = useState<detallePedido[]>([]);
+  useEffect(() => {
+    const obtenerDetallePedidos = async () => {
+      if (pedidoDatos) {
+        try {
+          const response = await axios.get(`http://localhost:4500/api/Web/pedidos/detalle/${pedidoDatos.pID}`);
+          setDetallePedidos(response.data);
+        } catch (error) {
+          console.error('Error al obtener los pedidos:', error);
+        }
+      }
+    };
+    obtenerDetallePedidos();
+  }, [pedidoDatos]);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const getColorByEstado = (estado: any) => {
+    switch (estado) {
+      case "Pendiente":
+        return "#FFB572";
+      case "Completo":
+        return "#6BE2BE";
+      case "Preparado":
+        return "#9290FE";
+      default:
+        return "#eb459f";
+    }
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    // Aquí puedes manejar la lógica para enviar el formulario
-    console.log(formData);
-    onClose();
+  const actualizarEstado = async () => {
+    if (pedidoDatos){
+      let newEstado = pedidoDatos.pESTADO;
+      if (newEstado === 'Pendiente'){
+        newEstado = 'Preparado'
+      }else{
+        newEstado = 'Completo'
+      }
+      try {
+        const response = await axios.put(`http://localhost:4500/api/Web/pedidos?id=${pedidoDatos.pID}&estado=${newEstado}`);
+        setPedidoDatos((prevState: Pedido | null) => ({ ...prevState!, pESTADO: newEstado }));
+      } catch (error) {
+        console.error('Error al obtener los pedidos:', error);
+        alert("Hubo un problema al conectarse al servidor")
+      }
+    }
   };
 
-  const inputFileRef = useRef<HTMLInputElement>(null);
-
-  const handleImageClick = () => {
-    inputFileRef.current?.click();
-  };
-
-  const handleFileChange = (e: any) => {
-    // Aquí puedes manejar la lógica para cargar la imagen seleccionada
-    console.log("Imagen seleccionada:", e.target.files[0]);
-  };
   return (
     <>
       {isOpen && (
@@ -68,13 +82,18 @@ const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               </div>
               <div className="col-start-1">
                 <span className="font-bold">Cliente</span>
-                <p>Juan Alban</p>
+                <p>{pedidoDatos?.cCLIENTE}</p>
                 <span className="font-bold">Estado</span>
-                <p className="p-1 bg-[#FFB572] w-fit rounded-md text-white">
-                  Pendiente
-                </p>
+                <div
+                      className="p-1 text-white rounded-xl"
+                      style={{
+                        backgroundColor: getColorByEstado(pedidoDatos?.pESTADO),
+                      }}
+                    >
+                      {pedidoDatos?.pESTADO}
+                    </div>
                 <span className="font-bold">Codigo de validación</span>
-                <p>X1S-7522</p>
+                <p>{pedidoDatos?.pCODIGO}</p>
               </div>
               <div className="col-start-2 col-span-4">
                 <span className="font-bold">Detalle del Pedido</span>
@@ -94,25 +113,21 @@ const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {detallesPedido.map((detalle, index) => (
+                        {detallePedidos.map((detalle, index) => (
                           <tr key={index}>
-                            <td className="p-2">{detalle.articulo}</td>
-                            <td className="p-2">{detalle.cantidad}</td>
-                            <td className="p-2">{detalle.total}</td>
+                            <td className="p-2">{detalle.pltNOMBRE}</td>
+                            <td className="p-2">{detalle.pdCANTIDAD}</td>
+                            <td className="p-2">{detalle.pdPRECIO}</td>
                           </tr>
                         ))}
                       </tbody>
-                      {/* Agrega una fila adicional para mostrar la suma de la columna Pvp */}
                       <tfoot className="bg-gray-200 sticky bottom-0 z-10">
                         <tr>
                           <td className="p-2"></td>
                           <td className="p-2 font-bold">Total:</td>
                           <td className="p-2 font-bold ">
-                            {/* Calcula la suma de los valores en la columna Pvp */}
-                            {detallesPedido.reduce(
-                              (acc, curr) =>
-                                acc + parseFloat(curr.total.slice(1)),
-                              0
+                            {  detallePedidos.reduce(
+                              (acc, curr) => acc + curr.pdPRECIO,0
                             )}
                           </td>
                         </tr>
@@ -125,9 +140,9 @@ const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <div className="col-span-4 text-right mt-[25px]">
                 <button
                   type="submit"
-                  className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md"
+                  className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md" onClick={actualizarEstado}
                 >
-                  Guardar
+                  Cambiar Siguiente Estado
                 </button>
                 <button
                   type="button"
