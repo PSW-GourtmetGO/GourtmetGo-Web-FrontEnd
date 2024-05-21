@@ -1,0 +1,19 @@
+.contenedorEncabezado{
+    display: flex;
+    flex-direction: column;
+
+    .titulo{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left: 20px;
+        margin-right: 150px;
+        margin-bottom: 20px;
+    }
+
+    .buscador{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+}
