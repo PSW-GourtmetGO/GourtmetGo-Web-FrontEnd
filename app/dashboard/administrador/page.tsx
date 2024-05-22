@@ -88,6 +88,8 @@ const AdministradorPage = () => {
     }
   }
 
+  const restaurante = localStorage.getItem('restauranteNOMBRE');
+
   const InputChangeFind = async (event:any) => {
     const inputValue = event.target.value;
     try {
@@ -119,7 +121,7 @@ const AdministradorPage = () => {
             className="text-[45px] flex justify-end "
             style={{ fontFamily: "David Libre" }}
           >
-            <h1>Papi Pollos</h1>
+            <h1>{restaurante }</h1>
           </div>
         </div>
         <div className="buscador">

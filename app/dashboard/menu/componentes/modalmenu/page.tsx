@@ -265,7 +265,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose,Datos,setData}) => {
                 </div>
             </div>
               ) : (
-                <h1>hola</h1>
+                <h1>.</h1>
               )}
         </>
     );
