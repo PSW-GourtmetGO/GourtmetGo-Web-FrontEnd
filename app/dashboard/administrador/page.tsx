@@ -1,28 +1,50 @@
 
 "use client";
-import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BiPencil, BiSearch } from 'react-icons/bi'
 import { FaRegTrashAlt } from 'react-icons/fa'
-import empleado1 from '../../../public/imagenes/mujer2.svg'
 import Modal from './componentes/modalempleado/page';
 import ModalUpdate from './componentes/modalActualizarEmpleado/page';
+import axios from 'axios';
 import "./page.scss";
 
 const AdministradorPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
+  const [empleados, setEmpleados] = useState<Empleado[]>([]);
+  const [data, setData] = useState({
+    id : 0,
+    cedula: '',
+    nombre: '',
+    apellido: '',
+    fecha_Nacimiento: '',
+    correo: '',
+    contrasenia: '',
+    telefono: '',
+    direccion: '',
+    estado: 0
+  });
 
-  // Función para abrir el modal
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-    // Función para cerrar el modal
     const handleModalClose = () => {
       setIsModalOpen(false);
     };
 
-  const handleModalUpdateOpen = () => {
+  const handleModalUpdateOpen = (empleado:Empleado) => {
+    setData({
+      id: empleado.id,
+      cedula: empleado.cedula,
+      nombre: empleado.nombre,
+      apellido: empleado.apellido,
+      fecha_Nacimiento:empleado.fecha_Nacimiento,
+      correo: empleado.correo,
+      contrasenia: empleado.contrasenia,
+      telefono: empleado.telefono,
+      direccion: empleado.direccion,
+      estado:empleado.estado
+    });
     setIsModalUpdateOpen(true);
   };
 
@@ -30,9 +52,53 @@ const AdministradorPage = () => {
     setIsModalUpdateOpen(false);
   }
 
+  interface Empleado {
+    id: number;
+    cedula: string;
+    nombre: string;
+    apellido: string;
+    fecha_Nacimiento:string;
+    correo: string;
+    contrasenia: string;
+    telefono: string;
+    direccion: string;
+    estado:number;
+}
 
+  useEffect(() => {
+    const obtenerEmpleados = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4500/api/Web/empleado?restaurante_id=${localStorage.getItem('restauranteID')}`);
+        console.log(response.data)
+        setEmpleados(response.data);
+      } catch (error) {
+        console.error('Error al obtener las estadísticas:', error);
+      }
+    };
+    obtenerEmpleados();
+  }, [isModalOpen,isModalUpdateOpen]);
   
+  const eliminarEmpleado = async (empleado:Empleado) => {
+    try {
+      const response = await axios.delete(`http://localhost:4500/api/Web/empleado?empleado_id=${empleado.id}`);
+      setEmpleados(prevEmpleados => prevEmpleados.filter(e => e.id !== empleado.id));
+      alert("Empleado eliminado de manera exitosa")
+    } catch (error) {
+      console.error('Error al obtener las estadísticas:', error);
+    }
+  }
 
+  const restaurante = localStorage.getItem('restauranteNOMBRE');
+
+  const InputChangeFind = async (event:any) => {
+    const inputValue = event.target.value;
+    try {
+      const response = await axios.get(`http://localhost:4500/api/Web/empleado/get?restaurante=${localStorage.getItem('restauranteID')}&cedula=${inputValue}`);
+      setEmpleados(response.data);
+    } catch (error) {
+      console.error('Error al obtener las estadísticas:', error);
+    }
+  };
 
   return (
     <div
@@ -55,7 +121,7 @@ const AdministradorPage = () => {
             className="text-[45px] flex justify-end "
             style={{ fontFamily: "David Libre" }}
           >
-            <h1>Papi Pollos</h1>
+            <h1>{restaurante }</h1>
           </div>
         </div>
         <div className="buscador">
@@ -63,7 +129,7 @@ const AdministradorPage = () => {
             <input
               className="w-[320px] 2xl:w-[320px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg"
               placeholder="Buscar nombre del empleado"
-            ></input>
+              onChange={InputChangeFind}></input>
             <BiSearch className="absolute left-3 top-4 text-white" />
           </div>
           <div className="flex items-start justify-end mr-[5%] ">
@@ -95,34 +161,23 @@ const AdministradorPage = () => {
             </thead>
 
             <tbody className="text-center">
-              {/* Aquí puedes agregar filas de datos */}
+            {empleados.map((empleado: Empleado, index: number) => (
               <tr className="bg-transparent text-gray-800">
                 <td className="py-2 px-4">
-                  <div className="flex items-center justify-start ml-[23%] 2xl:ml-[29%]">
-                    <div className="mr-4">
-                      <Image
-                        className="rounded-full w-10"
-                        src={empleado1}
-                        alt=""
-                      ></Image>
-                    </div>
-                    <span>Juan</span>
-                  </div>
+                    <span>{empleado.nombre}</span>
                 </td>
-
-                <td className="py-2 px-4">Pérez</td>
-                <td className="py-2 px-4">juan@example.com</td>
+                <td className="py-2 px-4">{empleado.apellido}</td>
+                <td className="py-2 px-4">{empleado.correo}</td>
                 <td className="py-2 px-4">
-                  {/* Aquí puedes agregar botones u otras acciones */}
-                  <button className="bg-[#274C5B] text-white p-2 rounded-full" onClick={handleModalUpdateOpen}>
+                  <button className="bg-[#274C5B] text-white p-2 rounded-full" onClick={()=>handleModalUpdateOpen(empleado)}>
                     <BiPencil className="left-3 top-4 text-white text-xl 2xl:text-2xl " />
                   </button>
-                  <button className="bg-[#B80808] text-white p-2 ml-5 rounded-full">
+                  <button className="bg-[#B80808] text-white p-2 ml-5 rounded-full" onClick={()=>eliminarEmpleado(empleado)}>
                     <FaRegTrashAlt className="left-3 top-4 text-white text-xl 2xl:text-2xl" />
                   </button>
                 </td>
               </tr>
-              {/* Puedes agregar más filas según necesites */}
+              ))}
             </tbody>
           </table>
         </div>
@@ -130,7 +185,7 @@ const AdministradorPage = () => {
 
 
         <Modal isOpen={isModalOpen} onClose={handleModalClose} />
-        <ModalUpdate isOpen={isModalUpdateOpen} onClose={handleModalUpdateClose} />
+        <ModalUpdate isOpen={isModalUpdateOpen} onClose={handleModalUpdateClose} Datos ={data} setDatos={setData}/>
 
 
       </div>

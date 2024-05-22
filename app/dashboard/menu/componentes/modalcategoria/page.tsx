@@ -157,7 +157,7 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <div className='row-start-1 flex items-center'>
                                         <input type="text" placeholder="Nueva Categoría" className="rounded border w-full border-black mr-2 placeholder-black" value={nombreCategoria} onChange={(e) => setNombreCategoria(e.target.value)}/>
                                         <button className="bg-[#274C5B] text-white p-2 rounded-full  ml-5 mr-5" onClick={() => handleCloseAddCategory(1)}>Guardar</button>
-                                        <button className="bg-[#B80808] text-white p-2 rounded-full ml-5" onClick={() => handleCloseAddCategory(0)}>Cancelar</button>
+                                        <button className="bg-[#B80808] text-white p-2 rounded-full ml-5" onClick={() => handleCloseAddCategory(0)}>Cerrar</button>
                                     </div>
                                 </div>
                             ) : showEdit ? (
@@ -165,7 +165,7 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <div className='row-start-1 flex items-center'>
                                     <input type="text" placeholder="Editar Categoría" className="rounded border w-full border-black mr-2 placeholder-black" value={categoriaActualizar} onChange={(e) => setCategoriaActualizar(e.target.value)}/>
                                         <button className="bg-[#274C5B] text-white p-2 rounded-full  ml-5 mr-5" onClick={()=>handleCloseEditCategory(1)}>Guardar</button>
-                                        <button className="bg-[#B80808] text-white p-2 rounded-full ml-5" onClick={()=>handleCloseEditCategory(0)}>Cancelar</button>
+                                        <button className="bg-[#B80808] text-white p-2 rounded-full ml-5" onClick={()=>handleCloseEditCategory(0)}>Cerrar</button>
                                     </div>
                                 </div>
                         ) : (

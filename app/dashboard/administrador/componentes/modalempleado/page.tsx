@@ -1,7 +1,7 @@
 "use client";
 import Image from 'next/image';
 import React, { useState, ChangeEvent, FormEvent, useRef } from 'react';
-
+import axios from 'axios';
 import "./page.scss";
 
 import NoImagen from '../../../../../public/imagenes/noimagen.svg'
@@ -35,21 +35,21 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        // Aquí puedes manejar la lógica para enviar el formulario
         console.log(formData);
         onClose();
     };
 
+    const guardarEmpleado = async () =>{
+        try {
+            const response = await axios.post(`http://localhost:4500/api/Web/empleado?restaurante_id=${localStorage.getItem('restauranteID')}`, formData);
+            alert("empleado creado de manera exitosa")  
+            onClose();          
+        } catch (error) {
+            alert("Hubo un problema con el servidor")
+        }
+    }
+
     const inputFileRef = useRef<HTMLInputElement>(null);
-
-    const handleImageClick = () => {
-        inputFileRef.current?.click();
-    };
-
-    const handleFileChange = (e: any) => {
-        // Aquí puedes manejar la lógica para cargar la imagen seleccionada
-        console.log("Imagen seleccionada:", e.target.files[0]);
-    };
 
     /*
     <div className="contenedorPrincipal fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
@@ -197,33 +197,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                         </div>
                                     </form>
                                 </div>
-                                <div className="portada">
-                                    <div className="card">
-                                        <label htmlFor="foto" className=" text-gray-700 font-bold mb-2">Seleccione su Imagen:</label>
-                                        <input
-                                            type="file"
-                                            id="foto"
-                                            name="foto"
-                                            className="l rounded mb-2"
-                                            required
-                                            onChange={handleFileChange}
-                                            ref={inputFileRef}
-                                            style={{ display: 'none' }}
-                                        />
-                                        <div className="relative w-64 text-black border border-black">
-                                            <Image className="w-64 h-64 rounded-full absolute" src={NoImagen} alt="" />
-                                            <div className="w-64 h-64 group hover:bg-gray-200 opacity-60 absolute flex justify-center items-center cursor-pointer transition duration-500" onClick={handleImageClick}>
-                                                <Image className="hidden group-hover:block w-12" src={ActualizarImgane} alt="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
-
-
                                 <div className="botones">
-                                    <button type="submit" className="boton boton1">Guardar</button>
+                                    <button type="submit" onClick={guardarEmpleado} className="boton boton1">Guardar</button>
                                     <button type="button" onClick={onClose} className="boton boton2">Cancelar</button>
                                 </div>
 
