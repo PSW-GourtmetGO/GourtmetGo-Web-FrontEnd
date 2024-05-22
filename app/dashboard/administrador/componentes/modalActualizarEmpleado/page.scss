@@ -38,10 +38,10 @@
             }
     
             .contenido{
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+                display: flex;
                 column-gap: 20px;
                 //height:80%;
+                flex-direction: column;
                 box-sizing: border-box;
                 overflow-y: auto;
                 overflow-x: hidden; 

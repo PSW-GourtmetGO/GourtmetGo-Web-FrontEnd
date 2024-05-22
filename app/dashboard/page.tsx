@@ -22,6 +22,7 @@ function PedidosPage() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [pedido, setPedido] = useState<Pedido | null>(null);
   const [filtroo, setFiltro] = useState<string>('Pendiente');
+  const [modalOpen, setModalOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -38,7 +39,7 @@ function PedidosPage() {
       }
     };
     obtenerPedidos();
-  }, []);
+  }, [modalOpen]);
 
   const getColorByEstado = (estado: any) => {
     switch (estado) {
@@ -53,7 +54,7 @@ function PedidosPage() {
     }
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
+  
 
   const openModal = (pedido:Pedido) => {
     setPedido(pedido)
