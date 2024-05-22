@@ -1,7 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Logo from "../../public/imagenes/LogoSideBarSF.svg";
+import { IconType } from 'react-icons';
+
 import {
   RiClipboardLine,
   RiHome3Line,
@@ -12,33 +14,11 @@ import {
 } from "react-icons/ri";
 import Link from "next/link";
 
-const enlaces = [
-  {
-    name: "dashboard",
-    link: "/dashboard",
-    icon: <RiHome3Line className="text-xl" />,
-  },
-  {
-    name: "menu",
-    link: "/dashboard/menu",
-    icon: <RiClipboardLine className="text-xl" />,
-  },
-  {
-    name: "pagos",
-    link: "/dashboard/pagos",
-    icon: <RiShoppingCartLine className="text-xl" />,
-  },
-  {
-    name: "administrador",
-    link: "/dashboard/administrador",
-    icon: <RiUserSettingsLine className="text-xl" />,
-  },
-  {
-    name: "perfil",
-    link: "/dashboard/perfil",
-    icon: <RiUserLine className="text-xl" />,
-  },
-];
+interface Rutas {
+  name: string;
+  link: string;
+  icono: IconType;
+}
 
 export default function DashboardLayout({
   children,
@@ -58,6 +38,46 @@ export default function DashboardLayout({
   const cerrarSesion = () => {
     localStorage.removeItem("moduloSeleccionado");
   };
+
+  const [enlaces, setEnlaces] = useState<Rutas[]>([]);
+
+useEffect(() => {
+    if (localStorage.getItem('rolID') === '1') {
+      setEnlaces([{
+        name: "dashboard",
+        link: "/dashboard",
+        icono: RiHome3Line,
+      },
+      {
+        name: "menu",
+        link: "/dashboard/menu",
+        icono: RiClipboardLine,
+      },
+      {
+        name: "pagos",
+        link: "/dashboard/pagos",
+        icono: RiShoppingCartLine,
+      },
+      {
+        name: "administrador",
+        link: "/dashboard/administrador",
+        icono: RiUserSettingsLine,
+      },
+      {
+        name: "perfil",
+        link: "/dashboard/perfil",
+        icono: RiUserLine,
+      },])
+    }else if (localStorage.getItem('rolID') === '2'){
+      setEnlaces([{
+        name: "dashboard",
+        link: "/dashboard",
+        icono: RiHome3Line,
+      }])
+    }else{
+        window.location.href = '/';
+    }
+}, []);
 
   return (
     <>
@@ -92,7 +112,7 @@ export default function DashboardLayout({
                         : ""
                     }`}
                   >
-                    {linkItem.icon}
+                    {linkItem.icono({ className: "text-xl" })}
                   </div>
                 </li>
               </Link>
