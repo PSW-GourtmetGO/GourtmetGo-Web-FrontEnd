@@ -1,3 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.botonVerde{
+    background-color: rgb(22 163 74);
+    font-family: "Raleway", sans-serif;
+    font-weight: bold;
+    width: 100%;
+    height: 40px;
+    color: white;
+    border-radius: 10px;
+    margin: 10px 0;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    font-size: 18px;
+}
+
+.botonVerde:hover{
+    scale: 1.1;
+    background-color: rgb(21, 128, 61);
+}
+
+.contenedorIngreso {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 40px;
+}
+
+.contenedorIngreso .ingreso {
+    
+    width: 100%;
+    border: none;
+    border: 1px solid #b6b6b6;
+    background-color: transparent;
+    outline: none;
+    padding: 8px 0;
+    border-radius: 10px;
+    padding: 10px 20px;
+    
+}
+
+.contenedorIngreso .ingreso:hover,
+.contenedorIngreso .ingreso:focus{
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    border: 1px solid #000000;
+    /*box-shadow: 0 1px 20px rgba(0,0,0,0.55);*/
+}
+
+.contenedorIngreso .iconoIngreso{
+    height: 90%;
+    width: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5px;
+}

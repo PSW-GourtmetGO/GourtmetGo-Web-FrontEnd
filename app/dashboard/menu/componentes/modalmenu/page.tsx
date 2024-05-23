@@ -193,7 +193,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose,Datos,setData}) => {
 
                             <div className="col-start-1 text-left">
                                 <button type="submit" onClick={guardarPlato} className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md">Guardar</button>
-                                <button type="button" onClick={onClose} className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-md ml-2">Cancelar</button>
+                                <button type="button" onClick={onClose} className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-md ml-2">Cerrar</button>
                             </div>
 
                         </div>
@@ -257,7 +257,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose,Datos,setData}) => {
 
                         <div className="col-start-1 text-left">
                             <button type="submit" onClick={()=>actualizarPlato(1)} className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md">Actualizar</button>
-                            <button type="button" onClick={onClose} className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-md ml-2">Cancelar</button>
+                            <button type="button" onClick={onClose} className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-md ml-2">Cerrar</button>
                         </div>
 
                     </div>
@@ -265,7 +265,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose,Datos,setData}) => {
                 </div>
             </div>
               ) : (
-                <h1>hola</h1>
+                <h1>.</h1>
               )}
         </>
     );

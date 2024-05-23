@@ -18,6 +18,7 @@ const PerfilPage = () => {
   const [total_pedidos, setTotalPedidos] = useState(null);
   const [total_empleados, setTotalEmpleados] = useState(null);
   const [total_platos, setTotalPlatos] = useState(null);
+  const [restaurante, setRestaurante] = useState("");
 
   useEffect(() => {
     const obtenerEstadisticasRestaurantes = async () => {
@@ -32,10 +33,6 @@ const PerfilPage = () => {
       }
     };
 
-    obtenerEstadisticasRestaurantes();
-  }, []);
-  
-  useEffect(() => {
     const obtenerDatosRestaurante = async () => {
       try {
         const response = await axios.get(`http://localhost:4500/api/Web/propietario/${localStorage.getItem('persona')}`);
@@ -52,9 +49,14 @@ const PerfilPage = () => {
         console.error('Error al obtener los datos del restaurante:', error);
       }
     };
+
+    setRestaurante(localStorage.getItem('restauranteNOMBRE') || '');
+    
     obtenerDatosRestaurante();
-  }, [setValue]);
-  const restaurante = localStorage.getItem('restauranteNOMBRE');
+    obtenerEstadisticasRestaurantes();
+  }, [setValue,restaurante]);
+  
+
   const onSubmit: SubmitHandler<any> = async (data) => {
     const base64Image = await convertImageToBase64(data.imagen[0]);
     console.log(base64Image);
@@ -65,6 +67,8 @@ const PerfilPage = () => {
 
     axios.put(`http://localhost:4500/api/Web/propietario/${localStorage.getItem('persona')}`, datosEnviar)
     .then(response => {
+        localStorage.setItem('restauranteNOMBRE', data.NombreRestaurante);
+        setRestaurante(localStorage.getItem('restauranteNOMBRE') || '');
         alert("Información actualizada correctamente");
     })
     .catch(error => {

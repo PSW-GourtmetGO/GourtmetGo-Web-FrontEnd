@@ -45,7 +45,7 @@ const MenuPage = () => {
     };
     obtenerCategorias();
     handleObtenerPlatosTodos();
-  }, []);
+  }, [isModalOpen,CategoriaAbierta]);
 
   const handleObtenerPlatosCategoria = async (categoriaId:number) => {
     try {
@@ -133,17 +133,7 @@ const MenuPage = () => {
         backgroundImage: 'url("/imagenes/fondo.svg")',
         minHeight: "calc(80vh)",
       }}>
-              <Link href="/dashboard/menu">
-                <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosTodos()}>Todos</span>
-              </Link>
 
-              {categorias.map((categoria: { nombre: string,id:number }, index: number) => (
-                <div key={index} className='p-2 rounded-md'>
-                  <Link href="/dashboard/menu">
-                    <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosCategoria(categoria.id)}>{categoria.nombre}</span>
-                  </Link>
-                </div>
-              ))};
       <div className='max-h-[80vh] grid grid-cols-5 grid-rows-5 gap-y-12' >
 
         <div className='row-start-1 col-span-6 grid grid-cols-4 grid-rows-2 gap-y-24'>
@@ -164,13 +154,13 @@ const MenuPage = () => {
                 <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosTodos()}>Todos</span>
               </Link>
               </div>
-              {categorias.map((categoria: { nombre: string,categoria_id:number }, index: number) => (
+              {categorias.map((categoria: { nombre: string,id:number }, index: number) => (
                 <div key={index} className='p-2 rounded-md'>
                   <Link href="/dashboard/menu">
-                    <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosCategoria(categoria.categoria_id)}>{categoria.nombre}</span>
+                    <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosCategoria(categoria.id)}>{categoria.nombre}</span>
                   </Link>
                 </div>
-              ))};
+              ))}
             </div>
           </div>
 
