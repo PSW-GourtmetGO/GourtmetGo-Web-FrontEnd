@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import imgLogin from "../../public/imagenes/imgLogin.svg";
 import ResponsivoNav from "../componentes/navegacion/ResponsivoNav";
+import "./page.scss"
 
 function Login() {
 
@@ -46,93 +47,78 @@ function Login() {
       toast.error("Error al conectar con el servidor");
     }
   };
-
+ //<TfiEmail className="w-4 h-4 absolute right-2 top-3 pointer-events-none" />
   return (
-    <>
+    <div className="contenedorPrincipal">
       <ResponsivoNav />
-      <div
-        className="bg-cover bg-no-repeat bg-center"
-        style={{
-          backgroundImage: 'url("/imagenes/fondo.svg")',
-          minHeight: "calc(88vh)",
-        }}
-      >
-        <div className="w-full grid grid-cols-5">
-          <div className="flex justify-center items-center col-span-3 row-start-1">
-            <div>
-              <Image
-                src={imgLogin}
-                alt="Descripción de la imagen"
-                className="w-[80%]"
-              />
-            </div>
+      <div className="contenedorLoguin">
+        <div className="portadasLoguin">
+          <div className="porta">
+
           </div>
-          <div className="col-start-4 col-span-2 flex justify-center  mr-[15%] mt-[10%]">
-            <div className="text-center">
-              <Image
-                width={25}
-                height={25}
-                src="/imagenes/logoBlanco.svg"
-                alt="Logo"
-                className="w-24 h-auto mx-auto"
-              />
-              <h1 className="text-4xl mt-4 font-bold">
+        </div>
+        <div className="formularioLoguin">
+          <div className="encabezadoLoguin">
+            <img src="/imagenes/logoBlanco.svg" alt="" />
+              <h1 className="">
                 Bienvenido a GourmetGo
               </h1>
-              <div>
-                <form className="mt-6" onSubmit={handleSubmit}>
-                  <div className="flex relative items-center mt-8 pl-1 pr-1 mb-10">
+          </div>
+          <div className="formulario">
+          <form className="" onSubmit={handleSubmit}>
+                  <div className="contenedorIngreso">
                     <input
                       type="email"
                       id="correo"
                       name="correo"
-                      className="border-b w-full border-black p-1"
+                      className="ingreso"
                       placeholder="Correo"
                       value={correo}
                       onChange={(e) => setCorreo(e.target.value)}
                       maxLength={50}
                       minLength={4}
                     />
-                    <TfiEmail className="w-4 h-4 absolute right-2 top-3 pointer-events-none" />
+                    <svg className="iconoIngreso" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M4.616 19q-.691 0-1.153-.462T3 17.384V6.616q0-.691.463-1.153T4.615 5h14.77q.69 0 1.152.463T21 6.616v10.769q0 .69-.463 1.153T19.385 19zM20 6.885l-7.552 4.944q-.106.055-.214.093q-.109.037-.234.037t-.234-.037t-.214-.093L4 6.884v10.5q0 .27.173.443t.443.173h14.769q.269 0 .442-.173t.173-.443zM12 11l7.692-5H4.308zM4 6.885v.211v-.811v.034V6v.32v-.052v.828zV18z"/></svg>              
                   </div>
-                  <div className="flex relative items-center mt-4 pl-1 pr-1">
+                  <div className="contenedorIngreso">
                     <input
                       type="password"
                       id="contrasenia"
                       name="contrasenia"
-                      className="border-b w-full border-black p-1"
+                      className="ingreso"
                       placeholder="Contraseña"
                       value={contrasenia}
                       onChange={(e) => setContrasenia(e.target.value)}
                       maxLength={25}
                       minLength={4}
                     />
-                    <BsEye className="w-5 h-5 absolute right-2 top-3 pointer-events-none" />
                   </div>
-                  <p className="mt-4 ml-8 text-green-600 text-right">
+                  <p className="">
                     <Link href="/restablecerClave">
                       ¿Olvidaste tu contraseña?
                     </Link>
                   </p>
                   <button
                     type="submit"
-                    className="bg-green-600 text-white py-2 px-6 rounded-lg mt-4 focus:outline-none hover:bg-green-700 w-full pl-1 pr-1"
+                    className="botonVerde"
                   >
                     Iniciar sesión
                   </button>
                 </form>
-                <p className="mt-2 text-center">
+                <div className="registrate">
+                  <p>
                   No tienes cuenta?{" "}
-                  <Link href="/registro" className="text-green-600">
-                    Regístrate!!
-                  </Link>
-                </p>
-              </div>
-            </div>
+                  </p>
+                  <p className="palabra">
+                    <Link href="/registro" className="">
+                      Regístrate!!
+                    </Link>
+                  </p>
+                </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
