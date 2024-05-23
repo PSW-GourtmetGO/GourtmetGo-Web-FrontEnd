@@ -33,10 +33,27 @@ function RegisterPage() {
     };
     const renderError = (error: any) => {
         if (error && typeof error.message === 'string') {
-            return <p className="text-red-500 text-sm">{error.message}</p>;
+            return <p className="text-red-500 text-lg">{error.message}</p>;
         }
         return null;
     };
+    const validarFechaNacimiento = (value: any) => {
+        // Convertir la fecha de nacimiento a un objeto Date
+        const fechaNacimiento = new Date(value);
+        // Calcular la fecha actual
+        const fechaActual = new Date();
+        // Calcular la edad restando los años de la fecha de nacimiento de la fecha actual
+        const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
+
+        // Verificar si la edad es menor de 18 años
+        if (edad < 18) {
+            return "Debes ser mayor de 18 años";
+        }
+
+        return undefined; // Devuelve undefined si el usuario es mayor de 18 años
+    };
+
+
     return (
         <>
             <ResponsivoNav />
@@ -71,17 +88,26 @@ function RegisterPage() {
                                 <div className="flex relative">
                                     <input
                                         type="text"
+                                        inputMode="numeric"
                                         {...register("cedula", {
                                             required: { value: true, message: "La cédula es obligatoria" },
                                             pattern: { value: /^[0-9]{10}$/, message: "La cédula debe tener 10 dígitos" }
                                         })}
                                         className="p-3 rounded block mb-2 text-black border border-black w-full"
                                         placeholder="1802154687"
+                                        onKeyPress={(event) => {
+                                            const charCode = event.which ? event.which : event.keyCode;
+                                            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }}
                                     />
                                     <BsCardHeading className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
                                 </div>
                                 {renderError(errors.cedula)}
                             </div>
+
+
 
                             {/* Campo para el nombre */}
                             <div>
@@ -122,19 +148,19 @@ function RegisterPage() {
                             {/* Campo para la fecha de nacimiento */}
                             <div>
                                 <label htmlFor="fechaNacimiento" className="text-slate-500 mb-2 block text-sm">Fecha de Nacimiento:</label>
-                                <div className="flex relative">
-                                    <input
-                                        type="text"
-                                        {...register("fechaNacimiento", {
-                                            required: { value: true, message: "La fecha de nacimiento es obligatoria" },
-                                            pattern: { value: /^\d{4}-\d{2}-\d{2}$/, message: "La fecha de nacimiento debe tener el formato YYYY-MM-DD" }
-                                        })}
-                                        className="p-3 rounded block mb-2 text-black border border-black w-full"
-                                        placeholder="1999-12-12"
-                                    />
-                                    <BsCalendar2Day className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
-                                </div>
+                                <input
+                                    type="date"
+                                    {...register("fechaNacimiento", {
+                                        required: "La fecha de nacimiento es obligatoria",
+                                        pattern: { value: /^\d{4}-\d{2}-\d{2}$/, message: "La fecha de nacimiento debe tener el formato YYYY-MM-DD" },
+                                        validate: validarFechaNacimiento // Usar la función de validación personalizada
+                                    })}
+                                    className="p-3 rounded block mb-2 text-black border border-black w-full"
+                                    placeholder="1999-12-12"
+                                />
                                 {renderError(errors.fechaNacimiento)}
+
+
                             </div>
 
                             {/* Campo para el correo */}
