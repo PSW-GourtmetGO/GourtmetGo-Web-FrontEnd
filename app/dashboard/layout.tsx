@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Logo from "../../public/imagenes/LogoSideBarSF.svg";
-import { IconType } from 'react-icons';
+import { IconType } from "react-icons";
 
 import {
   RiClipboardLine,
@@ -41,43 +41,47 @@ export default function DashboardLayout({
 
   const [enlaces, setEnlaces] = useState<Rutas[]>([]);
 
-useEffect(() => {
-    if (localStorage.getItem('rolID') === '1') {
-      setEnlaces([{
-        name: "dashboard",
-        link: "/dashboard",
-        icono: RiHome3Line,
-      },
-      {
-        name: "menu",
-        link: "/dashboard/menu",
-        icono: RiClipboardLine,
-      },
-      {
-        name: "pagos",
-        link: "/dashboard/pagos",
-        icono: RiShoppingCartLine,
-      },
-      {
-        name: "administrador",
-        link: "/dashboard/administrador",
-        icono: RiUserSettingsLine,
-      },
-      {
-        name: "perfil",
-        link: "/dashboard/perfil",
-        icono: RiUserLine,
-      },])
-    }else if (localStorage.getItem('rolID') === '2'){
-      setEnlaces([{
-        name: "dashboard",
-        link: "/dashboard",
-        icono: RiHome3Line,
-      }])
-    }else{
-        window.location.href = '/';
+  useEffect(() => {
+    if (localStorage.getItem("rolID") === "1") {
+      setEnlaces([
+        {
+          name: "dashboard",
+          link: "/dashboard",
+          icono: RiHome3Line,
+        },
+        {
+          name: "menu",
+          link: "/dashboard/menu",
+          icono: RiClipboardLine,
+        },
+        {
+          name: "pagos",
+          link: "/dashboard/pagos",
+          icono: RiShoppingCartLine,
+        },
+        {
+          name: "administrador",
+          link: "/dashboard/administrador",
+          icono: RiUserSettingsLine,
+        },
+        {
+          name: "perfil",
+          link: "/dashboard/perfil",
+          icono: RiUserLine,
+        },
+      ]);
+    } else if (localStorage.getItem("rolID") === "2") {
+      setEnlaces([
+        {
+          name: "dashboard",
+          link: "/dashboard",
+          icono: RiHome3Line,
+        },
+      ]);
+    } else {
+      window.location.href = "/";
     }
-}, []);
+  }, []);
 
   return (
     <>
@@ -135,6 +139,7 @@ useEffect(() => {
           </ul>
         </div>
       </div>
+
       <div className="pl-[10%] pt-[4%]">{children}</div>
     </>
   );
