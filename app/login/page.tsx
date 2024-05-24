@@ -34,7 +34,11 @@ function Login() {
         localStorage.setItem('restauranteID', userData.r_id);
         localStorage.setItem('restauranteNOMBRE', userData.r_nombre);
         localStorage.setItem('persona', userData.p_id);
-        localStorage.setItem('restauranteImagen', userData.r_imagen_base64);
+        if (userData.r_imagen_base64 === null) {
+          localStorage.setItem('restauranteImagen', 'https://firebasestorage.googleapis.com/v0/b/gourmetgo-firebase.appspot.com/o/Default%2FnoImagen.jpg?alt=media&token=3ee7f0de-f7f8-48b3-897f-cbb93a4b9872');
+        } else {
+          localStorage.setItem('restauranteImagen', userData.r_imagen_base64);
+        }
         if (userData.rol_id == 1){
             localStorage.setItem('plan', userData.plan);
         }
