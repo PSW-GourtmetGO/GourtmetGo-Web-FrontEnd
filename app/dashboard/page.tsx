@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import filtro from "../../public/imagenes/IconoFiltro.svg";
 import negocioSf from "../../public/imagenes/negocioSF.svg";
 import { useForm } from "react-hook-form";
 import { BiSearch } from "react-icons/bi";
 import empleado1 from "../../public/imagenes/mujer2.svg";
 import ModalPedidos from "./administrador/componentes/modalPedidos/page";
-import axios from 'axios';
+import axios from "axios";
 
 interface Pedido {
   pID: number;
@@ -18,11 +18,12 @@ interface Pedido {
 }
 
 function PedidosPage() {
-  const restaurante = localStorage.getItem('restauranteNOMBRE');
+  const restaurante = localStorage.getItem("restauranteNOMBRE");
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [pedido, setPedido] = useState<Pedido | null>(null);
-  const [filtroo, setFiltro] = useState<string>('Pendiente');
+  const [filtroo, setFiltro] = useState<string>("Pendiente");
   const [modalOpen, setModalOpen] = useState(false);
+  const [img,setImg] = useState("")
   const {
     register,
     handleSubmit,
@@ -32,13 +33,18 @@ function PedidosPage() {
   useEffect(() => {
     const obtenerPedidos = async () => {
       try {
-        const response = await axios.get(`http://localhost:4500/api/Web/pedidos/${localStorage.getItem('restauranteID')}`);
+        const response = await axios.get(
+          `http://localhost:4500/api/Web/pedidos/${localStorage.getItem(
+            "restauranteID"
+          )}`
+        );
         setPedidos(response.data);
       } catch (error) {
-        console.error('Error al obtener los pedidos:', error);
+        console.error("Error al obtener los pedidos:", error);
       }
     };
     obtenerPedidos();
+    setImg(localStorage.getItem('restauranteImagen') || "")
   }, [modalOpen]);
 
   const getColorByEstado = (estado: any) => {
@@ -54,51 +60,65 @@ function PedidosPage() {
     }
   };
 
-  
-
-  const openModal = (pedido:Pedido) => {
-    setPedido(pedido)
+  const openModal = (pedido: Pedido) => {
+    setPedido(pedido);
     setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const FilterChange = async(event:any) =>{
-    if (filtroo === 'Preparado'){
+  const FilterChange = async (event: any) => {
+    if (filtroo === "Preparado") {
       try {
-        const response = await axios.get(`http://localhost:4500/api/Web/pedidos/buscar/pedido?restaurante=${localStorage.getItem('restauranteID')}&filtro=${filtroo}`);
+        const response = await axios.get(
+          `http://localhost:4500/api/Web/pedidos/buscar/pedido?restaurante=${localStorage.getItem(
+            "restauranteID"
+          )}&filtro=${filtroo}`
+        );
         setPedidos(response.data);
-        setFiltro('');  
+        setFiltro("");
       } catch (error) {
-        console.error('Error al obtener los pedidos:', error);
-      }   
-    } else if (filtroo === 'Pendiente'){
-        try {
-          const response = await axios.get(`http://localhost:4500/api/Web/pedidos/buscar/pedido?restaurante=${localStorage.getItem('restauranteID')}&filtro=${filtroo}`);
-          setPedidos(response.data);
-          setFiltro('Preparado');  
-        } catch (error) {
-          console.error('Error al obtener los pedidos:', error);
-        }
-    }else if (filtroo === ''){   
-        try {
-          const response = await axios.get(`http://localhost:4500/api/Web/pedidos/${localStorage.getItem('restauranteID')}`);
-          setPedidos(response.data);
-          setFiltro('Pendiente')
-        } catch (error) {
-          console.error('Error al obtener los pedidos:', error);
-        }
+        console.error("Error al obtener los pedidos:", error);
+      }
+    } else if (filtroo === "Pendiente") {
+      try {
+        const response = await axios.get(
+          `http://localhost:4500/api/Web/pedidos/buscar/pedido?restaurante=${localStorage.getItem(
+            "restauranteID"
+          )}&filtro=${filtroo}`
+        );
+        setPedidos(response.data);
+        setFiltro("Preparado");
+      } catch (error) {
+        console.error("Error al obtener los pedidos:", error);
+      }
+    } else if (filtroo === "") {
+      try {
+        const response = await axios.get(
+          `http://localhost:4500/api/Web/pedidos/${localStorage.getItem(
+            "restauranteID"
+          )}`
+        );
+        setPedidos(response.data);
+        setFiltro("Pendiente");
+      } catch (error) {
+        console.error("Error al obtener los pedidos:", error);
+      }
     }
-  }
+  };
 
-  const InputChangeFind = async (event:any) => {
+  const InputChangeFind = async (event: any) => {
     const inputValue = event.target.value;
     try {
-      const response = await axios.get(`http://localhost:4500/api/Web/pedidos?restaurante=${localStorage.getItem('restauranteID')}&codigo=${inputValue}`);
+      const response = await axios.get(
+        `http://localhost:4500/api/Web/pedidos?restaurante=${localStorage.getItem(
+          "restauranteID"
+        )}&codigo=${inputValue}`
+      );
       setPedidos(response.data);
     } catch (error) {
-      console.error('Error al obtener las estadísticas:', error);
+      console.error("Error al obtener las estadísticas:", error);
     }
   };
 
@@ -118,21 +138,27 @@ function PedidosPage() {
           <h1>Pedidos</h1>
         </div>
         <div
-          className="col-start-4 col-span-2 text-[45px] flex items-center justify-end "
+          className="col-start-4 col-span-2 text-[30px] flex items-center justify-end "
           style={{ fontFamily: "David Libre" }}
         >
           <h1>{restaurante}</h1>
-          <Image src={negocioSf} alt=""></Image>
+          <div className="col-start-5 w-[25%]">
+            <Image src={img} alt="" width={20} height={20} className="w-[50%]" />
+          </div>
         </div>
         <div className="row-start-2 relative ">
           <input
             className="w-[320px] 2xl:w-[320px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg"
-            placeholder="Buscar código" onChange={InputChangeFind}
+            placeholder="Buscar código"
+            onChange={InputChangeFind}
           ></input>
           <BiSearch className="absolute left-3 top-4 text-white" />
         </div>
         <div className="row-start-2 col-start-5 relative ml-[20%]">
-          <button className="w-[150px] bg-[#393C49]  hover:bg-teal-700 text-white font-bold py-3  rounded-lg " onClick={FilterChange}>
+          <button
+            className="w-[150px] bg-[#393C49]  hover:bg-teal-700 text-white font-bold py-3  rounded-lg "
+            onClick={FilterChange}
+          >
             Filtrar Orden
           </button>
           <Image
@@ -148,7 +174,9 @@ function PedidosPage() {
                 <th className="py-2 px-4 bg-transparent text-gray-800">
                   Cliente
                 </th>
-                <th className="py-2 px-4 bg-transparent text-gray-800">Código</th>
+                <th className="py-2 px-4 bg-transparent text-gray-800">
+                  Código
+                </th>
                 <th className="py-2 px-4 bg-transparent text-gray-800">
                   Total a Pagar
                 </th>
@@ -168,8 +196,7 @@ function PedidosPage() {
                 >
                   <td className="py-2 px-4">
                     <div className="flex items-center justify-start ml-[23%] 2xl:ml-[29%]">
-                      <div className="mr-4">
-                      </div>
+                      <div className="mr-4"></div>
                       <span>{pedido.cCLIENTE}</span>
                     </div>
                   </td>
@@ -190,7 +217,12 @@ function PedidosPage() {
               ))}
             </tbody>
           </table>
-          <ModalPedidos isOpen={modalOpen} onClose={closeModal} pedidoDatos={pedido} setPedidoDatos={setPedido}></ModalPedidos>
+          <ModalPedidos
+            isOpen={modalOpen}
+            onClose={closeModal}
+            pedidoDatos={pedido}
+            setPedidoDatos={setPedido}
+          ></ModalPedidos>
         </div>
       </div>
     </div>
