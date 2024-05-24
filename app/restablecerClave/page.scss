@@ -55,3 +55,16 @@
         }
     }
 }
+
+@media screen and (max-width: 768px){
+    .contenedorPrincipal{
+        .contenedorRestablecer{
+            .portadasRestablecer{
+                display: none;
+            }
+            .formularioRestablecer{
+                width: 100%;
+            }
+        }
+    }
+}
