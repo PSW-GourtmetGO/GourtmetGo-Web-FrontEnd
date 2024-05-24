@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Logo from "../../public/imagenes/LogoSideBarSF.svg";
 import { IconType } from 'react-icons';
+import "./layout.scss"
 
 import {
   RiClipboardLine,
@@ -80,33 +81,22 @@ useEffect(() => {
 }, []);
 
   return (
-    <>
-      <div
-        className={`bg-[#274C5B] fixed lg:left-0 w-28 h-full flex flex-col justify-between py-6 rounded-tr-2xl z-50 transition-all `}
-      >
-        <div>
-          <ul className="pl-4">
-            {/* Logo */}
-            <li>
-              <div className="flex justify-center items-center p-4 mb-5">
-                <Image
-                  src={Logo}
-                  alt=""
-                  className="w-auto bg-[#5e7883] rounded-lg"
-                />
-              </div>
-            </li>
-            {/* Secciones */}
-            {enlaces.map((linkItem, index) => (
+    <div className="contenedorDashboard">
+      <div className="sidebar">
+          <div className="logoSidebar">
+            <img src="/imagenes/LodoSidebar.svg" alt="" />
+          </div>
+        <ul>
+          {enlaces.map((linkItem, index) => (
               <Link href={linkItem.link} key={index} passHref>
                 <li
-                  className={`p-4 rounded-tl-xl rounded-bl-xl hover:bg-[#F9F8F8] text-white group transition-colors ${
+                  className={`botonesSidebar hover:bg-[#F9F8F8] text-white group transition-colors ${
                     moduloSeleccionado === linkItem.link ? "bg-[#F9F8F8]" : ""
                   }`}
                   onClick={() => seleccionarModulo(linkItem.link)}
                 >
                   <div
-                    className={`p-4 flex justify-center rounded-xl group-hover:text-[#5cb793] transition-colors ${
+                    className={`iconosSidebar group-hover:text-[#5cb] transition-colors ${
                       moduloSeleccionado === linkItem.link
                         ? "text-[#5cb793]"
                         : ""
@@ -117,25 +107,18 @@ useEffect(() => {
                 </li>
               </Link>
             ))}
-          </ul>
-        </div>
-        {/* Cerrar Sesión */}
-        <div>
-          <ul className="pl-4">
-            <li className="p-4 rounded-tl-xl rounded-bl-xl  group transition-colors">
-              <a
-                className="group-hover:bg-white  p-4 flex justify-center rounded-xl text-white
-             group-hover:text-[#5cb793] transition-colors "
+        </ul>
+        <div className="salir">
+          <a className=" "
                 href="/"
-                onClick={cerrarSesion}
-              >
-                <RiLogoutBoxRLine className="text-xl "></RiLogoutBoxRLine>
-              </a>
-            </li>
-          </ul>
+                onClick={cerrarSesion}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h5.903q.214 0 .357.143t.143.357t-.143.357t-.357.143H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192h5.904q.214 0 .357.143t.143.357t-.143.357t-.357.143zm12.444-7.5H9.692q-.213 0-.356-.143T9.192 12t.143-.357t.357-.143h8.368l-1.971-1.971q-.141-.14-.15-.338q-.01-.199.15-.364q.159-.165.353-.168q.195-.003.36.162l2.614 2.613q.242.243.242.566t-.243.566l-2.613 2.613q-.146.146-.347.153t-.366-.159q-.16-.165-.157-.357t.162-.35z"/></svg>
+          </a>
         </div>
       </div>
-      <div className="pl-[10%] pt-[4%]">{children}</div>
-    </>
+      <div className="paginas">
+        {children}
+      </div>
+    </div>
   );
 }

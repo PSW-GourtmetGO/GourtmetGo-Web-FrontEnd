@@ -13,6 +13,7 @@ import {
 } from "react-icons/bs";
 import imagenClientes from "../../public/imagenes/imagenClientes.svg";
 import ResponsivoNav from "../componentes/navegacion/ResponsivoNav";
+import "./page.scss"
 
 function RegisterPage() {
     const {
@@ -55,37 +56,25 @@ function RegisterPage() {
 
 
     return (
-        <>
+        <div className="contenedorPrincipal">
             <ResponsivoNav />
-            <div
-                className="h-[calc(100vh-7rem)]"
-                style={{
-                    backgroundImage: 'url("/imagenes/fondo.svg")',
-                    minHeight: "calc(88vh)",
-                }}
-            >
-                <div className="w-full grid grid-cols-5">
-                    {/* Parte izquierda */}
-                    <div className="flex justify-center items-center col-span-3 row-start-1 mt-[5%] ">
-                        <div>
-                            <Image
-                                src={imagenClientes}
-                                alt="Descripción de la imagen"
-                                className="w-[80%]"
-                            />
-                        </div>
-                    </div>
-                    {/* Parte derecha */}
-                    <div className="col-start-4 col-span-2 mr-[10%] mt-[5%]">
-                        <form className="w-full grid grid-cols-2 gap-4" onSubmit={handleSubmit(onSubmit)}>
-                            <h1 className="text-black font-bold text-4xl mb-4 col-span-2 text-center">
-                                Registro de Clientes
-                            </h1>
+            <div className="contenedorRegistro">
+                <div className="portadasRegistro">
+                    <div className="porta">
 
-                            {/* Campo para la cédula */}
+                    </div>
+                </div>
+                <div className="formularioRegistro">
+                    <div className="encabezado">
+                        <h1>
+                            Registro de Clientes
+                        </h1>
+                    </div>
+                    <div className="formulario">
+                        <form className="" onSubmit={handleSubmit(onSubmit)}>
                             <div>
-                                <label htmlFor="cedula" className="text-slate-500 mb-2 block text-sm">Cédula:</label>
-                                <div className="flex relative">
+                                <label htmlFor="cedula">Cédula: </label>
+                                <div className="contenedorIngreso">
                                     <input
                                         type="text"
                                         inputMode="numeric"
@@ -93,7 +82,7 @@ function RegisterPage() {
                                             required: { value: true, message: "La cédula es obligatoria" },
                                             pattern: { value: /^[0-9]{10}$/, message: "La cédula debe tener 10 dígitos" }
                                         })}
-                                        className="p-3 rounded block mb-2 text-black border border-black w-full"
+                                        className="ingreso"
                                         placeholder="1802154687"
                                         onKeyPress={(event) => {
                                             const charCode = event.which ? event.which : event.keyCode;
@@ -102,130 +91,114 @@ function RegisterPage() {
                                             }
                                         }}
                                     />
-                                    <BsCardHeading className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
+                                    <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M17.73 12.462q.214 0 .358-.144t.143-.356t-.144-.357t-.356-.143h-3.077q-.213 0-.357.143q-.143.143-.143.357t.143.356t.357.144zm0-2.77q.214 0 .358-.143t.143-.357t-.144-.356t-.356-.144h-3.077q-.213 0-.357.143q-.143.144-.143.357t.143.357t.357.143zm-8.653 3.616q-.823 0-1.394.114q-.572.114-1.025.368q-.39.21-.589.459t-.198.532q0 .223.177.375t.444.152h5.17q.267 0 .444-.165t.177-.393q0-.252-.189-.489t-.598-.47q-.454-.255-1.025-.369t-1.394-.114m0-1.616q.633 0 1.066-.433q.434-.434.434-1.067t-.434-1.066t-1.066-.434t-1.066.434t-.434 1.066t.434 1.067t1.066.433M4.616 19q-.691 0-1.153-.462T3 17.384V6.616q0-.691.463-1.153T4.615 5h14.77q.69 0 1.152.463T21 6.616v10.769q0 .69-.463 1.153T19.385 19zm0-1h14.769q.23 0 .423-.192t.192-.424V6.616q0-.231-.192-.424T19.385 6H4.615q-.23 0-.423.192T4 6.616v10.769q0 .23.192.423t.423.192M4 18V6z" /></svg>
                                 </div>
                                 {renderError(errors.cedula)}
                             </div>
-
-
-
-                            {/* Campo para el nombre */}
                             <div>
-                                <label htmlFor="nombre" className="text-slate-500 mb-2 block text-sm">Nombre:</label>
-                                <div className="flex relative">
+                                <label htmlFor="fechaNacimiento">Fecha de nacimiento:</label>
+                                <div className="contenedorIngreso">
+                                    <input
+                                        type="date"
+                                        {...register("fechaNacimiento", {
+                                            required: "La fecha de nacimiento es obligatoria",
+                                            pattern: { value: /^\d{4}-\d{2}-\d{2}$/, message: "La fecha de nacimiento debe tener el formato YYYY-MM-DD" },
+                                            validate: validarFechaNacimiento // Usar la función de validación personalizada
+                                        })}
+                                        className="ingreso"
+                                        placeholder="1999-12-12"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label htmlFor="nombre">Nombre:</label>
+                                <div className="contenedorIngreso">
                                     <input
                                         type="text"
                                         {...register("nombre", {
                                             required: { value: true, message: "El nombre es obligatorio" },
                                             minLength: { value: 2, message: "El nombre debe tener al menos 2 caracteres" }
                                         })}
-                                        className="p-3 rounded block mb-2 text-black border border-black w-full"
+                                        className="ingreso"
                                         placeholder="Juan"
                                     />
-                                    <BsPerson className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
+                                    <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 11.385q-1.237 0-2.119-.882T9 8.385t.881-2.12T12 5.386t2.119.88t.881 2.12t-.881 2.118t-2.119.882m-7 7.23V16.97q0-.619.36-1.158q.361-.54.97-.838q1.416-.679 2.834-1.018q1.417-.34 2.836-.34t2.837.34t2.832 1.018q.61.298.97.838q.361.539.361 1.158v1.646zm1-1h12v-.646q0-.332-.215-.625q-.214-.292-.593-.494q-1.234-.598-2.546-.916T12 14.616t-2.646.318t-2.546.916q-.38.202-.593.494Q6 16.637 6 16.97zm6-7.23q.825 0 1.413-.588T14 8.384t-.587-1.412T12 6.384t-1.412.588T10 8.384t.588 1.413t1.412.587m0 7.232" /></svg>
                                 </div>
                                 {renderError(errors.nombre)}
                             </div>
-
-                            {/* Campo para el apellido */}
                             <div>
-                                <label htmlFor="apellido" className="text-slate-500 mb-2 block text-sm">Apellido:</label>
-                                <div className="flex relative">
+                                <label htmlFor="apellido">Apellido:</label>
+                                <div className="contenedorIngreso">
                                     <input
                                         type="text"
                                         {...register("apellido", {
                                             required: { value: true, message: "El apellido es obligatorio" },
                                             minLength: { value: 2, message: "El apellido debe tener al menos 2 caracteres" }
                                         })}
-                                        className="p-3 rounded block mb-2 text-black border border-black w-full"
+                                        className="ingreso"
                                         placeholder="Pérez"
                                     />
-                                    <BsPerson className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
+                                    <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 11.385q-1.237 0-2.119-.882T9 8.385t.881-2.12T12 5.386t2.119.88t.881 2.12t-.881 2.118t-2.119.882m-7 7.23V16.97q0-.619.36-1.158q.361-.54.97-.838q1.416-.679 2.834-1.018q1.417-.34 2.836-.34t2.837.34t2.832 1.018q.61.298.97.838q.361.539.361 1.158v1.646zm1-1h12v-.646q0-.332-.215-.625q-.214-.292-.593-.494q-1.234-.598-2.546-.916T12 14.616t-2.646.318t-2.546.916q-.38.202-.593.494Q6 16.637 6 16.97zm6-7.23q.825 0 1.413-.588T14 8.384t-.587-1.412T12 6.384t-1.412.588T10 8.384t.588 1.413t1.412.587m0 7.232" /></svg>
                                 </div>
                                 {renderError(errors.apellido)}
                             </div>
-
-                            {/* Campo para la fecha de nacimiento */}
                             <div>
-                                <label htmlFor="fechaNacimiento" className="text-slate-500 mb-2 block text-sm">Fecha de Nacimiento:</label>
+                                <label htmlFor="correo">Correo:</label>
+                                <div className="contenedorIngreso">
                                 <input
-                                    type="date"
-                                    {...register("fechaNacimiento", {
-                                        required: "La fecha de nacimiento es obligatoria",
-                                        pattern: { value: /^\d{4}-\d{2}-\d{2}$/, message: "La fecha de nacimiento debe tener el formato YYYY-MM-DD" },
-                                        validate: validarFechaNacimiento // Usar la función de validación personalizada
-                                    })}
-                                    className="p-3 rounded block mb-2 text-black border border-black w-full"
-                                    placeholder="1999-12-12"
-                                />
-                                {renderError(errors.fechaNacimiento)}
-
-
-                            </div>
-
-                            {/* Campo para el correo */}
-                            <div>
-                                <label htmlFor="correo" className="text-slate-500 mb-2 block text-sm">Correo:</label>
-                                <div className="flex relative">
-                                    <input
                                         type="email"
                                         {...register("correo", {
                                             required: { value: true, message: "El correo es obligatorio" },
                                             pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: "El correo debe ser una dirección válida" }
                                         })}
-                                        className="p-3 rounded block mb-2 text-black border border-black w-full"
+                                        className="ingreso"
                                         placeholder="Correo"
                                     />
-                                    <BsMailbox className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
+                                    <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M3.77 21q-.31 0-.54-.23T3 20.23v-6.46q0-.31.23-.54t.54-.23H7V8q0-2.083 1.458-3.542Q9.917 3 12 3h4q2.083 0 3.542 1.458Q21 5.917 21 8v12.5q0 .213-.144.356t-.357.144t-.356-.144T20 20.5V18h-5v2.23q0 .31-.23.54t-.54.23zM15 17h5V8q0-1.65-1.175-2.825T16 4h-4q-1.65 0-2.825 1.175T8 8v5h6.23q.31 0 .54.23t.23.54zm-6.308-.323q.154.096.308.096t.308-.096L14 14H4zM4 20h10v-4.98l-4.192 2.39q-.181.099-.382.158t-.422.059t-.425-.06q-.204-.058-.387-.157L4 15.02zm0-6v.38v-.016v.784v-.129V20v-4.98v.128v-.785v.015zm7-4.5q-.213 0-.356-.144t-.144-.357t.144-.356T11 8.5h6q.213 0 .356.144t.144.357t-.144.356T17 9.5z"/></svg>
                                 </div>
                                 {renderError(errors.correo)}
                             </div>
-
-                            {/* Campo para la contraseña */}
                             <div>
-                                <label htmlFor="contrasenia" className="text-slate-500 mb-2 block text-sm">Contraseña:</label>
-                                <div className="flex relative">
-                                    <input
+                                <label htmlFor="contrasenia">Contraseña:</label>
+                                <div className="contenedorIngreso">
+                                <input
                                         type="password"
                                         {...register("contrasenia", {
                                             required: { value: true, message: "La contraseña es obligatoria" },
                                             minLength: { value: 6, message: "La contraseña debe tener al menos 6 caracteres" }
                                         })}
-                                        className="p-3 rounded block mb-2 text-black border border-black w-full"
+                                        className="ingreso"
                                         placeholder="********"
                                     />
-                                    <BsEye className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
                                 </div>
                                 {renderError(errors.contrasenia)}
                             </div>
-
-                            {/* Campo para el nombre del restaurante */}
-                            <div className="col-span-2">
-                                <label htmlFor="nombreRestaurante" className="text-slate-500 mb-2 block text-sm">Nombre del Restaurante:</label>
-                                <div className="flex relative">
-                                    <input
+                            <div className='restaurante'>
+                                <label htmlFor="nombreRestaurante">Nombre del restaurante:</label>
+                                <div className="contenedorIngreso">
+                                <input
                                         type="text"
                                         {...register("nombreRestaurante", {
                                             required: { value: true, message: "El nombre del restaurante es obligatorio" },
                                             minLength: { value: 2, message: "El nombre del restaurante debe tener al menos 2 caracteres" }
                                         })}
-                                        className="p-3 rounded block mb-2 text-black border border-black w-full"
+                                        className="ingreso"
                                         placeholder="Pikos"
                                     />
-                                    <BsReverseLayoutTextWindowReverse className="w-6 h-6 absolute right-2 top-3 pointer-events-none" />
+                                    <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M8.75 18.692q.19 0 .316-.126q.126-.125.126-.316v-6.038q.708-.143 1.181-.655q.473-.513.473-1.257V6.692q0-.161-.111-.273q-.112-.111-.273-.111t-.273.111t-.112.273v3.193h-.942V6.692q0-.161-.112-.273t-.273-.111t-.273.111t-.111.273v3.193h-.943V6.692q0-.161-.111-.273t-.273-.111t-.273.111t-.112.273V10.3q0 .744.473 1.257t1.18.655v6.038q0 .19.127.316q.126.126.316.126m6 0q.19 0 .316-.126q.126-.125.126-.316v-5.792q.806-.304 1.278-1.121q.472-.818.472-1.954q0-1.33-.626-2.202q-.625-.873-1.566-.873t-1.566.873t-.626 2.202q0 1.136.472 1.954q.472.817 1.278 1.12v5.793q0 .19.126.316t.316.126M4.615 21q-.69 0-1.153-.462T3 19.385V4.615q0-.69.463-1.152T4.615 3h14.77q.69 0 1.152.463T21 4.616v14.769q0 .69-.463 1.153T19.385 21zm0-1h14.77q.23 0 .423-.192t.192-.424V4.616q0-.231-.192-.424T19.385 4H4.615q-.23 0-.423.192T4 4.615v14.77q0 .23.192.423t.423.192M4 20V4z"/></svg>
                                 </div>
                                 {renderError(errors.nombreRestaurante)}
                             </div>
-
-                            {/* Botón de submit */}
-                            <button type="submit" className="col-span-2 bg-[#01AE67] hover:bg-teal-700 text-white font-bold p-3 rounded-lg mt-2">
+                            <div className='boton'>
+                            <button type="submit" className="botonVerde">
                                 Guardar información
                             </button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 export default RegisterPage;
