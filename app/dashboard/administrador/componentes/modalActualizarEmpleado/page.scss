@@ -1,4 +1,4 @@
-.contenedorPrincipal{
+.contenedorModal{
     position: fixed;
     top: 0;
     left: 0;
@@ -7,7 +7,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #00000080;
+    backdrop-filter: blur(5px); 
     z-index: 50;
     .contenedorTarjeta{
         height: 90vh !important;
@@ -37,53 +38,13 @@
                 }
             }
     
-            .contenido{
-                display: flex;
-                column-gap: 20px;
-                //height:80%;
-                flex-direction: column;
-                box-sizing: border-box;
-                overflow-y: auto;
-                overflow-x: hidden; 
-                margin: 20px 0;
-    
+            .contenido{    
                 .formulario{
-                    .ingresos{
-                        display: flex;
-                        flex-direction: column;
-                        .contenedorIngreso{
-                            background-color: gray;
-                            border-radius: 10px;
-                            width: 100%;
-                            display: flex;
-                            flex-direction: row;
-                            align-items: center;
-                            padding: 5px 10px;
-                            
-
-                            input, input:hover, input:active, input:focus{
-                                background: transparent;
-                                width: 90%;
-                                outline: none;
-                                border-radius: 10px;
-                            }
-
-                        
-
-                            .iconoIngreso{
-                                width: 20px;
-                                height: 20px;
-                            }
-                        }
-                        .contenedorIngresoCalendario{
-                            width: 100% !important;
-                        }
+                    form{
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 20px;
                     }
-
-                }
-        
-                .portada{
-        
                 }
             }
     
