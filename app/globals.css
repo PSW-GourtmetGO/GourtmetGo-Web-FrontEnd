@@ -17,6 +17,7 @@
     overflow: hidden;
 }
 
+
 .botonVerde {
     background-color: rgb(22 163 74);
     font-family: "Raleway", sans-serif;
@@ -75,6 +76,61 @@
 }
 
 .contenedorIngreso .iconoIngreso {
+    height: 80%;
+    width: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+/*DASHBOARD*/
+.contenedorPaginasDashboard{
+    width: 100%;
+    height: 100%;
+    background-image: url("../public/imagenes/fondo.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 20px 50px;
+}
+
+.contenedorPaginasDashboard .encabezado{
+    font-family: "David Libre";
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.contenedorPaginasDashboard .encabezado .titulo hr{
+    width: 20vw;
+    height: 1px;
+    border: none;
+    background-color: gray;
+}
+
+.contenedorBuscador{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 40px;
+}
+
+.contenedorBuscador .inputBuscador{
+    width: 100%;
+    border: none;
+    border: 1px solid rgb(172, 172, 172);
+    background-color: transparent;
+    outline: none;
+    border-radius: 7px;
+    padding: 20px;
+}
+
+.contenedorBuscador .iconoBuscador{
     height: 80%;
     width: auto;
     position: absolute;
