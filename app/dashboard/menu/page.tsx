@@ -9,7 +9,6 @@ import axios from 'axios';
 import { PiAlignTop } from 'react-icons/pi';
 
 const MenuPage = () => {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState({
     platoID: 0,
@@ -45,7 +44,7 @@ const MenuPage = () => {
     };
     obtenerCategorias();
     handleObtenerPlatosTodos();
-  }, [isModalOpen,CategoriaAbierta]);
+  }, [isModalOpen, CategoriaAbierta]);
 
   const handleObtenerPlatosCategoria = async (categoriaId:number) => {
     try {
@@ -82,8 +81,8 @@ const MenuPage = () => {
     obtenerPlatos();
   }, []);
 
-  const handleModalOpen = (platoID:number,platoNombre:string,precio:number,visible:string,categoria:number,accion:string) => {
-    if (accion == "crear"){
+  const handleModalOpen = (platoID:number, platoNombre:string, precio:number, visible:string, categoria:number, accion:string) => {
+    if (accion == "crear") {
       setData({
         platoID: 0,
         platoNombre: '',
@@ -91,8 +90,8 @@ const MenuPage = () => {
         visible: "true",
         categoria: 1,
         accion: accion
-      });  
-    }else{
+      });
+    } else {
       setData({
         platoID: platoID,
         platoNombre: platoNombre,
@@ -119,8 +118,10 @@ const MenuPage = () => {
 
   const InputChangeFind = async (event:any) => {
     const inputValue = event.target.value;
+    const lettersOnly = inputValue.replace(/[^a-zA-Z\s]/g, '');
+    event.target.value = lettersOnly;
     try {
-      const response = await axios.get(`http://localhost:4500/api/Web/plato/duenio?restaurante=${localStorage.getItem('restauranteID')}&plato=${inputValue}`);
+      const response = await axios.get(`http://localhost:4500/api/Web/plato/duenio?restaurante=${localStorage.getItem('restauranteID')}&plato=${lettersOnly}`);
       setPlatos(response.data);
     } catch (error) {
       console.error('Error al obtener las estadísticas:', error);
@@ -134,7 +135,7 @@ const MenuPage = () => {
         minHeight: "calc(80vh)",
       }}>
 
-      <div className='max-h-[80vh] grid grid-cols-5 grid-rows-5 gap-y-12' >
+      <div className='max-h-[80vh] grid grid-cols-5 grid-rows-5 gap-y-12'>
 
         <div className='row-start-1 col-span-6 grid grid-cols-4 grid-rows-2 gap-y-24'>
 
@@ -143,18 +144,18 @@ const MenuPage = () => {
           </div>
 
           <div className='col-start-4 relative'>
-            <input className='pr-[100px] w-[320px] 2xl:w-[400px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg' placeholder='Buscar platos, bebidas, etc.' onChange={InputChangeFind}></input>
+            <input className='pr-[100px] w-[320px] 2xl:w-[400px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg' placeholder='Buscar platos, bebidas, etc.' maxLength={25} minLength={4} onChange={InputChangeFind}></input>
             <BiSearch className='absolute left-3 top-4 text-white' />
           </div>
 
           <div className='row-start-2 col-start-1 col-span-3'>
             <div style={{ fontFamily: "David Libre" }} className='flex justify-between'>
-              <div className='p-2 rounded-md' >
-              <Link href="/dashboard/menu">
-                <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosTodos()}>Todos</span>
-              </Link>
+              <div className='p-2 rounded-md'>
+                <Link href="/dashboard/menu">
+                  <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosTodos()}>Todos</span>
+                </Link>
               </div>
-              {categorias.map((categoria: { nombre: string,id:number }, index: number) => (
+              {categorias.map((categoria: { nombre: string, id:number }, index: number) => (
                 <div key={index} className='p-2 rounded-md'>
                   <Link href="/dashboard/menu">
                     <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosCategoria(categoria.id)}>{categoria.nombre}</span>
@@ -181,9 +182,9 @@ const MenuPage = () => {
         <div className='row-start-3 col-span-5 mt-5 '>
           <div className='grid grid-rows-3 gap-9'>
 
-            {platos.map((plato: { nombre: string,precio:any,categoria_nombre:string,categoria_id:number,ver:string,id:number }, index: number) => (
-            <div className='row-start-1 grid grid-cols-4 gap-3'>
-            <div className='col-start-1 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }} onClick={()=>handleModalOpen(plato.id,plato.nombre,plato.precio,plato.ver,plato.categoria_id,"actualizar")}>
+            {platos.map((plato: { nombre: string, precio:any, categoria_nombre:string, categoria_id:number, ver:string, id:number }, index: number) => (
+              <div className='row-start-1 grid grid-cols-4 gap-3' key={index}>
+                <div className='col-start-1 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }} onClick={()=>handleModalOpen(plato.id, plato.nombre, plato.precio, plato.ver, plato.categoria_id, "actualizar")}>
                   <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
                     <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
                   </div>
@@ -194,18 +195,17 @@ const MenuPage = () => {
                     <p className='text-gray-400 mt-2 mb-5'>{plato.categoria_nombre}</p>
                   </div>
                 </div>
-                </div>
-              ))};
+              </div>
+            ))}
           </div>
         </div>
         
-        <Modal isOpen={isModalOpen} onClose={handleModalClose} Datos ={data} setData={setData}/>
+        <Modal isOpen={isModalOpen} onClose={handleModalClose} Datos={data} setData={setData}/>
         <ModalC isOpen={CategoriaAbierta} onClose={handleCategoriaClose} />
 
       </div>
     </div>
-
-  )
+  );
 }
 
-export default MenuPage
+export default MenuPage;

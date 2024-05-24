@@ -24,38 +24,38 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
     useEffect(() => {
         const obtenerCategorias = async () => {
-          try {
-            const response = await axios.get(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`);
-            console.log(response.data)
-            setCategorias(response.data);
-          } catch (error) {
-            console.error('Error al obtener las caracteristicas:', error);
-          }
+            try {
+                const response = await axios.get(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`);
+                console.log(response.data)
+                setCategorias(response.data);
+            } catch (error) {
+                console.error('Error al obtener las caracteristicas:', error);
+            }
         };
         obtenerCategorias();
-      }, []);
+    }, []);
 
-      const handleSelectChange = async (event:any, categoriaId:any) => {
+    const handleSelectChange = async (event: any, categoriaId: any) => {
         const nuevaSeleccion = event.target.value;
-      
+
         try {
-          const response = await axios.put(`http://localhost:4500/api/Web/categoria/ver/${categoriaId}`, {
-            ver: nuevaSeleccion,
-          });
-          console.log(response.data);
-      
-          // Actualiza el estado de categorias con el nuevo valor de ver
-          setCategorias((prevCategorias) =>
-            prevCategorias.map((categoria) =>
-              categoria.id === categoriaId ? { ...categoria, ver: nuevaSeleccion } : categoria
-            )
-          );
+            const response = await axios.put(`http://localhost:4500/api/Web/categoria/ver/${categoriaId}`, {
+                ver: nuevaSeleccion,
+            });
+            console.log(response.data);
+
+            // Actualiza el estado de categorias con el nuevo valor de ver
+            setCategorias((prevCategorias) =>
+                prevCategorias.map((categoria) =>
+                    categoria.id === categoriaId ? { ...categoria, ver: nuevaSeleccion } : categoria
+                )
+            );
         } catch (error) {
-          console.error('Error al obtener las características:', error);
+            console.error('Error al obtener las características:', error);
         }
-      };
-      
-    const handleDeleteCategory = async (eliminarID:number) => {
+    };
+
+    const handleDeleteCategory = async (eliminarID: number) => {
         try {
             const response = await axios.delete(`http://localhost:4500/api/Web/categoria/${eliminarID}`, {});
 
@@ -71,8 +71,8 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         setShowAdd(true);
     };
 
-    const handleCloseAddCategory = async (ejecutar:number) => {
-        if (ejecutar === 0){
+    const handleCloseAddCategory = async (ejecutar: number) => {
+        if (ejecutar === 0) {
             setShowAdd(false);
             return;
         }
@@ -82,7 +82,7 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
         try {
             const response = await axios.post(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`, {
-              nombre: nombreCategoria,
+                nombre: nombreCategoria,
             });
             console.log(response.data);
 
@@ -96,14 +96,14 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         }
     };
 
-    const handleEditCategory = (nombre:string,categoriaID:number) => {
+    const handleEditCategory = (nombre: string, categoriaID: number) => {
         setCategoriaActualizar(nombre);
         setActualizarID(categoriaID);
         setShowEdit(true);
     };
 
-    const handleCloseEditCategory = async (ejecutar:number) => {
-        if (ejecutar === 0){
+    const handleCloseEditCategory = async (ejecutar: number) => {
+        if (ejecutar === 0) {
             setShowEdit(false);
             return;
         }
@@ -113,7 +113,7 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
         try {
             const response = await axios.put(`http://localhost:4500/api/Web/categoria/${actualizarID}`, {
-              nombre: categoriaActualizar,
+                nombre: categoriaActualizar,
             });
             console.log(response.data);
             const nuevaCategoria = response.data;
@@ -128,6 +128,18 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             console.error('Error al obtener las características:', error);
         }
         //setShowEdit(false);
+    };
+
+    const handleNombreCategoriaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const inputValue = event.target.value;
+        const lettersOnly = inputValue.replace(/[^a-zA-Z\s]/g, '');
+        setNombreCategoria(lettersOnly);
+    };
+
+    const handleUpdateNombreCategoriaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const inputValue = event.target.value;
+        const lettersOnly = inputValue.replace(/[^a-zA-Z\s]/g, '');
+        setCategoriaActualizar(lettersOnly);
     };
 
     return (
@@ -155,7 +167,7 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             {showAdd ? (
                                 <div className='row-start-2 items-center grid gris-rows-2'>
                                     <div className='row-start-1 flex items-center'>
-                                        <input type="text" placeholder="Nueva Categoría" className="rounded border w-full border-black mr-2 placeholder-black" value={nombreCategoria} onChange={(e) => setNombreCategoria(e.target.value)}/>
+                                        <input type="text" placeholder="Nueva Categoría" className="rounded border w-full border-black mr-2 placeholder-black" value={nombreCategoria} onChange={handleNombreCategoriaChange} maxLength={25} minLength={4} />
                                         <button className="bg-[#274C5B] text-white p-2 rounded-full  ml-5 mr-5" onClick={() => handleCloseAddCategory(1)}>Guardar</button>
                                         <button className="bg-[#B80808] text-white p-2 rounded-full ml-5" onClick={() => handleCloseAddCategory(0)}>Cerrar</button>
                                     </div>
@@ -163,12 +175,12 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             ) : showEdit ? (
                                 <div className='row-start-2 items-center grid gris-rows-2'>
                                     <div className='row-start-1 flex items-center'>
-                                    <input type="text" placeholder="Editar Categoría" className="rounded border w-full border-black mr-2 placeholder-black" value={categoriaActualizar} onChange={(e) => setCategoriaActualizar(e.target.value)}/>
-                                        <button className="bg-[#274C5B] text-white p-2 rounded-full  ml-5 mr-5" onClick={()=>handleCloseEditCategory(1)}>Guardar</button>
-                                        <button className="bg-[#B80808] text-white p-2 rounded-full ml-5" onClick={()=>handleCloseEditCategory(0)}>Cerrar</button>
+                                        <input type="text" placeholder="Editar Categoría" className="rounded border w-full border-black mr-2 placeholder-black" value={categoriaActualizar} onChange={handleUpdateNombreCategoriaChange} maxLength={25} minLength={4} />
+                                        <button className="bg-[#274C5B] text-white p-2 rounded-full  ml-5 mr-5" onClick={() => handleCloseEditCategory(1)}>Guardar</button>
+                                        <button className="bg-[#B80808] text-white p-2 rounded-full ml-5" onClick={() => handleCloseEditCategory(0)}>Cerrar</button>
                                     </div>
                                 </div>
-                        ) : (
+                            ) : (
                                 <div className='row-start-2'>
                                     <table className="w-full border-collapse">
                                         <thead className="border-b border-black">
@@ -184,30 +196,30 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
                                         <tbody className="text-center">
                                             {categorias.map((categoria: Categoria, index: number) => (
-                                            <tr className="bg-transparent text-gray-800">
-                                                <td className="py-2 px-4">
-                                                    <div className="flex items-center justify-center">
-                                                        <span>{categoria.nombre}</span>
-                                                    </div>
-                                                </td>
-                                                <td className="py-2 px-4">
-                                                    <button className="bg-[#274C5B] text-white p-2 rounded-full" onClick={()=>handleEditCategory(categoria.nombre,categoria.id)}>
-                                                        <BiPencil className="left-3 top-4 text-white text-xl 2xl:text-2xl " />
-                                                    </button>
-                                                    <button className="bg-[#B80808] text-white p-2 ml-5 rounded-full" onClick={()=>handleDeleteCategory(categoria.id)}>
-                                                        <FaRegTrashAlt className="left-3 top-4 text-white text-xl 2xl:text-2xl" />
-                                                    </button>
-                                                    <select
-                                                        className="border border-black p-2 ml-5 rounded-full"
-                                                        onChange={(event) => handleSelectChange(event, categoria.id)}
-                                                         value={categoria.ver}
-                                                    >
-                                                        <option value="true" selected={categoria.ver === "true"}>Visible</option>
-                                                        <option value="false" selected={categoria.ver === "false"}>No Visible</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            ))};
+                                                <tr className="bg-transparent text-gray-800" key={index}>
+                                                    <td className="py-2 px-4">
+                                                        <div className="flex items-center justify-center">
+                                                            <span>{categoria.nombre}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-2 px-4">
+                                                        <button className="bg-[#274C5B] text-white p-2 rounded-full" onClick={() => handleEditCategory(categoria.nombre, categoria.id)}>
+                                                            <BiPencil className="left-3 top-4 text-white text-xl 2xl:text-2xl " />
+                                                        </button>
+                                                        <button className="bg-[#B80808] text-white p-2 ml-5 rounded-full" onClick={() => handleDeleteCategory(categoria.id)}>
+                                                            <FaRegTrashAlt className="left-3 top-4 text-white text-xl 2xl:text-2xl" />
+                                                        </button>
+                                                        <select
+                                                            className="border border-black p-2 ml-5 rounded-full"
+                                                            onChange={(event) => handleSelectChange(event, categoria.id)}
+                                                            value={categoria.ver}
+                                                        >
+                                                            <option value="true" selected={categoria.ver === "true"}>Visible</option>
+                                                            <option value="false" selected={categoria.ver === "false"}>No Visible</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
@@ -221,4 +233,3 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 };
 
 export default ModalC;
-
