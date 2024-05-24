@@ -23,6 +23,7 @@ function PedidosPage() {
   const [pedido, setPedido] = useState<Pedido | null>(null);
   const [filtroo, setFiltro] = useState<string>("Pendiente");
   const [modalOpen, setModalOpen] = useState(false);
+  const [img,setImg] = useState("")
   const {
     register,
     handleSubmit,
@@ -43,6 +44,7 @@ function PedidosPage() {
       }
     };
     obtenerPedidos();
+    setImg(localStorage.getItem('restauranteImagen') || "")
   }, [modalOpen]);
 
   const getColorByEstado = (estado: any) => {
@@ -141,7 +143,7 @@ function PedidosPage() {
         >
           <h1>{restaurante}</h1>
           <div className="col-start-5 w-[25%]">
-            <Image src={negocioSf} alt=""></Image>
+            <Image src={img} alt="" width={20} height={20} className="w-[50%]" />
           </div>
         </div>
         <div className="row-start-2 relative ">

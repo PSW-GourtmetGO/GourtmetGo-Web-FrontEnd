@@ -23,6 +23,8 @@ const PerfilPage = () => {
   const [total_platos, setTotalPlatos] = useState(null);
   const [restaurante, setRestaurante] = useState("");
   const [imagenRestaurante, setImagenRestaurante] = useState<File | null>(null);
+  const [img,setImg] = useState("")
+
   useEffect(() => {
     const obtenerEstadisticasRestaurantes = async () => {
       try {
@@ -66,17 +68,21 @@ const PerfilPage = () => {
     };
 
     setRestaurante(localStorage.getItem("restauranteNOMBRE") || "");
-
+    setImg(localStorage.getItem('restauranteImagen') || "")
     obtenerDatosRestaurante();
     obtenerEstadisticasRestaurantes();
   }, [setValue, restaurante]);
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    const base64Image = await convertImageToBase64(data.imagen[0]);
-    console.log(base64Image);
+
+    const envioImagen = await uploadFile(
+      imagenRestaurante,"logos",
+      data.NombreRestaurante
+    );
+
     const datosEnviar = {
       ...data,
-      imagen: base64Image,
+      imagen: envioImagen,
     };
 
     axios
@@ -89,11 +95,8 @@ const PerfilPage = () => {
       .then(async (response) => {
         localStorage.setItem("restauranteNOMBRE", data.NombreRestaurante);
         setRestaurante(localStorage.getItem("restauranteNOMBRE") || "");
-        const envioImagen = await uploadFile(
-          imagenRestaurante,"logos",
-          data.NombreRestaurante
-        );
-        console.log(envioImagen);
+        localStorage.setItem('restauranteImagen', envioImagen);
+        setImg(envioImagen)
         toast.success("Información actualizada correctamente", {
           position: "top-right",
           autoClose: 3000,
@@ -125,20 +128,6 @@ const PerfilPage = () => {
       });
   };
 
-  const convertImageToBase64 = (file: File) => {
-    return new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          resolve(reader.result);
-        } else {
-          reject(new Error("Failed to read the file as base64."));
-        }
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  };
   const renderError = (error: any) => {
     if (error && typeof error.message === "string") {
       return <p className="text-red-500 text-lg">{error.message}</p>;
@@ -176,7 +165,7 @@ const PerfilPage = () => {
         </div>
 
         <div className="row-start-2 col-start-1 col-span-2 mt-5 ">
-          <Image src={negocioSf} alt="" className="w-[50%]"></Image>
+        <Image src={img} alt="" width={20} height={20} className="w-[50%]" />
           <div
             className=" text-[30px] ml-5  "
             style={{ fontFamily: "David Libre" }}
