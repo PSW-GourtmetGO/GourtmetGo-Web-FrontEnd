@@ -1,59 +1,59 @@
 "use client";
-import axios from 'axios';
-import React from 'react';
+import axios from "axios";
+import React from "react";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
-    BsCalendar2Day,
-    BsCardHeading,
-    BsEye,
-    BsMailbox,
-    BsPerson,
-    BsReverseLayoutTextWindowReverse,
+  BsCalendar2Day,
+  BsCardHeading,
+  BsEye,
+  BsMailbox,
+  BsPerson,
+  BsReverseLayoutTextWindowReverse,
 } from "react-icons/bs";
 import imagenClientes from "../../public/imagenes/imagenClientes.svg";
 import ResponsivoNav from "../componentes/navegacion/ResponsivoNav";
 import "./page.scss"
 
 function RegisterPage() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
-    const onSubmit: SubmitHandler<any> = (data) => {
-        axios.post('http://localhost:4500/api/Web/clientes/register', data)
-            .then(response => {
-                alert("Usuario creado");
-                window.location.href = "/login"
-            })
-            .catch(error => {
-                alert("Hubo un problema al procesar la información. Intente más tarde");
-                console.error('Error submitting data:', error);
-            });
-    };
-    const renderError = (error: any) => {
-        if (error && typeof error.message === 'string') {
-            return <p className="text-red-500 text-lg">{error.message}</p>;
-        }
-        return null;
-    };
-    const validarFechaNacimiento = (value: any) => {
-        // Convertir la fecha de nacimiento a un objeto Date
-        const fechaNacimiento = new Date(value);
-        // Calcular la fecha actual
-        const fechaActual = new Date();
-        // Calcular la edad restando los años de la fecha de nacimiento de la fecha actual
-        const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit: SubmitHandler<any> = (data) => {
+    axios
+      .post("http://localhost:4500/api/Web/clientes/register", data)
+      .then((response) => {
+        alert("Usuario creado");
+        window.location.href = "/login";
+      })
+      .catch((error) => {
+        alert("Hubo un problema al procesar la información. Intente más tarde");
+        console.error("Error submitting data:", error);
+      });
+  };
+  const renderError = (error: any) => {
+    if (error && typeof error.message === "string") {
+      return <p className="text-red-500 text-lg">{error.message}</p>;
+    }
+    return null;
+  };
+  const validarFechaNacimiento = (value: any) => {
+    // Convertir la fecha de nacimiento a un objeto Date
+    const fechaNacimiento = new Date(value);
+    // Calcular la fecha actual
+    const fechaActual = new Date();
+    // Calcular la edad restando los años de la fecha de nacimiento de la fecha actual
+    const edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
 
-        // Verificar si la edad es menor de 18 años
-        if (edad < 18) {
-            return "Debes ser mayor de 18 años";
-        }
+    // Verificar si la edad es menor de 18 años
+    if (edad < 18) {
+      return "Debes ser mayor de 18 años";
+    }
 
-        return undefined; // Devuelve undefined si el usuario es mayor de 18 años
-    };
-
+    return undefined; // Devuelve undefined si el usuario es mayor de 18 años
+  };
 
     return (
         <div className="contenedorPrincipal">
