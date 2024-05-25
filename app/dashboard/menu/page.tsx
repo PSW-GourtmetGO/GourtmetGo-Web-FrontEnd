@@ -7,8 +7,13 @@ import ModalC from './componentes/modalcategoria/page';
 import Link from 'next/link';
 import axios from 'axios';
 import { PiAlignTop } from 'react-icons/pi';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import "./page.scss";
+
 
 const MenuPage = () => {
+  const [currentDate, setCurrentDate] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState({
     platoID: 0,
@@ -24,6 +29,9 @@ const MenuPage = () => {
   const [platos, setPlatos] = useState([]);
 
   useEffect(() => {
+    const date = new Date();
+    const formattedDate = format(date, 'EEEE, d MMM yyyy', { locale: es });
+    setCurrentDate(formattedDate);
     const obtenerCategorias = async () => {
       try {
         const response = await axios.get(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`);
@@ -46,7 +54,7 @@ const MenuPage = () => {
     handleObtenerPlatosTodos();
   }, [isModalOpen, CategoriaAbierta]);
 
-  const handleObtenerPlatosCategoria = async (categoriaId:number) => {
+  const handleObtenerPlatosCategoria = async (categoriaId: number) => {
     try {
       const response = await axios.get(`http://localhost:4500/api/Web/plato/duenio/categoria/${categoriaId}`);
       console.log(categoriaId);
@@ -81,7 +89,7 @@ const MenuPage = () => {
     obtenerPlatos();
   }, []);
 
-  const handleModalOpen = (platoID:number, platoNombre:string, precio:number, visible:string, categoria:number, accion:string) => {
+  const handleModalOpen = (platoID: number, platoNombre: string, precio: number, visible: string, categoria: number, accion: string) => {
     if (accion == "crear") {
       setData({
         platoID: 0,
@@ -116,7 +124,7 @@ const MenuPage = () => {
     setCategoriaAbierta(false);
   };
 
-  const InputChangeFind = async (event:any) => {
+  const InputChangeFind = async (event: any) => {
     const inputValue = event.target.value;
     const lettersOnly = inputValue.replace(/[^a-zA-Z\s]/g, '');
     event.target.value = lettersOnly;
@@ -129,81 +137,67 @@ const MenuPage = () => {
   };
 
   return (
-    <div className="bg-cover bg-no-repeat bg-center"
-      style={{
-        backgroundImage: 'url("/imagenes/fondo.svg")',
-        minHeight: "calc(80vh)",
-      }}>
-
-      <div className='max-h-[80vh] grid grid-cols-5 grid-rows-5 gap-y-12'>
-
-        <div className='row-start-1 col-span-6 grid grid-cols-4 grid-rows-2 gap-y-24'>
-
-          <div className='col-start-1' style={{ fontFamily: "David Libre" }}>
-            <h1 className='text-[45px]'>{restaurante} </h1>
-          </div>
-
-          <div className='col-start-4 relative'>
-            <input className='pr-[100px] w-[320px] 2xl:w-[400px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg' placeholder='Buscar platos, bebidas, etc.' maxLength={25} minLength={4} onChange={InputChangeFind}></input>
-            <BiSearch className='absolute left-3 top-4 text-white' />
-          </div>
-
-          <div className='row-start-2 col-start-1 col-span-3'>
-            <div style={{ fontFamily: "David Libre" }} className='flex justify-between'>
-              <div className='p-2 rounded-md'>
+    <div className="contenedorPaginasDashboard">
+      <div className="encabezado">
+        <div className="titulo">
+          <h1>Platos</h1>
+          <hr />
+        </div>
+        <div className="inforestaurante">
+          <h1>{restaurante}</h1>
+        </div>
+      </div>
+      <div className="informacionPlatos">
+        <div className="usuario">
+          <h2>Anthony Solis</h2>
+          <p>{currentDate}</p>
+        </div>
+        <div className="contenedorBuscador">
+        <input className='inputBuscador' placeholder='Buscar platos, bebidas, etc.' maxLength={25} minLength={4} onChange={InputChangeFind}></input>
+        <svg className='iconoBuscador' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9.539 15.23q-2.398 0-4.065-1.666Q3.808 11.899 3.808 9.5t1.666-4.065T9.539 3.77t4.064 1.666T15.269 9.5q0 1.042-.369 2.017t-.97 1.668l5.909 5.907q.14.14.15.345q.009.203-.15.363q-.16.16-.354.16t-.354-.16l-5.908-5.908q-.75.639-1.725.989t-1.96.35m0-1q1.99 0 3.361-1.37q1.37-1.37 1.37-3.361T12.9 6.14T9.54 4.77q-1.991 0-3.361 1.37T4.808 9.5t1.37 3.36t3.36 1.37" /></svg>
+        </div>
+      </div>
+      <div className="contenidoMenu">
+        <div className="botonesPlatos">
+          <div className="contenedorEtiquetas">
+            <div className='etiqueta'>
+              <Link href="/dashboard/menu">
+                <span className='textoEtiqueta' onClick={() => handleObtenerPlatosTodos()}>Todos</span>
+              </Link>
+            </div>
+            {categorias.map((categoria: { nombre: string, id: number }, index: number) => (
+              <div key={index} className='etiqueta'>
                 <Link href="/dashboard/menu">
-                  <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosTodos()}>Todos</span>
+                  <span className='textoEtiqueta' onClick={() => handleObtenerPlatosCategoria(categoria.id)}>{categoria.nombre}</span>
                 </Link>
               </div>
-              {categorias.map((categoria: { nombre: string, id:number }, index: number) => (
-                <div key={index} className='p-2 rounded-md'>
-                  <Link href="/dashboard/menu">
-                    <span className='text-sm text-[#ea7c69] border-b-2 border-[#ea7c69]' onClick={() => handleObtenerPlatosCategoria(categoria.id)}>{categoria.nombre}</span>
-                  </Link>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
-
-          <div className='row-start-2 col-start-4 flex items-center justify-end mr-3'>
-            <button className='bg-[#01AE67] hover:bg-teal-700 text-white font-bold py-3 px-2 rounded-lg' onClick={handleCategoriaOpen}>Editar Categorias</button>
+          <div className="btnPlato">
+            <button className='botonVerde' onClick={handleCategoriaOpen}>Editar Categorias</button>
+            <button className='botonVerde' onClick={()=>handleModalOpen(0,"",0,"",0,"crear")}>Agregar Plato</button>
           </div>
-
         </div>
-
-        <div className='row-start-2 col-start-1 col-span-6 flex items-start justify-start mr-[5%] border-black border-t-2'>
-          <h1 style={{ fontFamily: "David Libre" }} className='font-bold text-xl mt-5'>Mis Platos</h1>
-        </div>
-
-        <div className='row-start-2 col-start-5 flex items-center justify-end mr-3'>
-          <button className='bg-[#01AE67] hover:bg-teal-700 text-white font-bold py-3 px-2 rounded-lg' onClick={()=>handleModalOpen(0,"",0,"",0,"crear")}>Añadir Plato</button>
-        </div>
-
-        <div className='row-start-3 col-span-5 mt-5 '>
-          <div className='grid grid-rows-3 gap-9'>
-
-            {platos.map((plato: { nombre: string, precio:any, categoria_nombre:string, categoria_id:number, ver:string, id:number }, index: number) => (
-              <div className='row-start-1 grid grid-cols-4 gap-3' key={index}>
-                <div className='col-start-1 max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden justify-center text-center' style={{ width: '250px' }} onClick={()=>handleModalOpen(plato.id, plato.nombre, plato.precio, plato.ver, plato.categoria_id, "actualizar")}>
-                  <div className='flex justify-center items-center overflow-hidden' style={{ backgroundImage: 'linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%)' }}>
-                    <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='rounded-full w-56 h-auto' />
+        <div className="listaPlatos">
+        {platos.map((plato: { nombre: string, precio:any, categoria_nombre:string, categoria_id:number, ver:string, id:number }, index: number) => (
+              <div className='contenedorPlato' key={index}>
+                <div className='tarjetaPlato' style={{ width: '250px' }} onClick={()=>handleModalOpen(plato.id, plato.nombre, plato.precio, plato.ver, plato.categoria_id, "actualizar")}>
+                  <div className='imagenPlato'>
+                    <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='fotoPlato' />
                   </div>
-                  <div className='max-w-md mx-auto bg-[#274c5b] shadow-lg rounded-b-xl overflow-hidden text-white'>
-                    <h2 className='text-xl font-bold mt-5'>{plato.nombre}</h2>
-                    <h3 className='text-sm'>{plato.precio}</h3>
-                    <h3 className='text-sm'>{plato.ver}</h3>
-                    <p className='text-gray-400 mt-2 mb-5'>{plato.categoria_nombre}</p>
+                  <div className='detallePlato'>
+                    <h2 className='nombrePlato'>{plato.nombre}</h2>
+                    <h3 className='precioPlato'>$ {plato.precio}</h3>
+                    <h3 className='verPlato'>{plato.ver}</h3>
+                    <p className='categoriaPlato'>{plato.categoria_nombre}</p>
                   </div>
                 </div>
               </div>
             ))}
-          </div>
         </div>
-        
-        <Modal isOpen={isModalOpen} onClose={handleModalClose} Datos={data} setData={setData}/>
-        <ModalC isOpen={CategoriaAbierta} onClose={handleCategoriaClose} />
-
       </div>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} Datos={data} setData={setData}/>
+      <ModalC isOpen={CategoriaAbierta} onClose={handleCategoriaClose} />
     </div>
   );
 }

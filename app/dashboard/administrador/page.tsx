@@ -6,7 +6,9 @@ import { FaRegTrashAlt } from 'react-icons/fa'
 import Modal from './componentes/modalempleado/page';
 import ModalUpdate from './componentes/modalActualizarEmpleado/page';
 import axios from 'axios';
+import { Tooltip } from '@nextui-org/tooltip';
 import "./page.scss";
+import { DiVim } from 'react-icons/di';
 
 const AdministradorPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -155,12 +157,24 @@ const AdministradorPage = () => {
                 <td className="py-2 px-4">{empleado.correo}</td>
                 <td className="py-2 px-4">
                   <div className="contenedorBotonesAccion">
-                    <button className="btnAccion btnEditar" onClick={() => handleModalUpdateOpen(empleado)}>
-                      <svg className='iconoAccion' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M5 19h1.098L16.796 8.302l-1.098-1.098L5 17.902zm-.192 1q-.343 0-.576-.232T4 19.192v-1.04q0-.332.13-.632t.349-.518L17.18 4.287q.153-.137.339-.212T17.907 4t.39.064t.35.228l1.067 1.074q.165.159.226.35q.06.19.06.38q0 .204-.068.39q-.069.185-.218.339L6.998 19.521q-.217.218-.518.348T5.848 20zM19.019 6.092l-1.111-1.111zm-2.781 1.67l-.54-.558l1.098 1.098z"/></svg>
-                    </button>
-                    <button className="btnAccion btnEliminar" onClick={() => eliminarEmpleado(empleado)}>
-                      <svg className='iconoAccion' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M7 21q-.825 0-1.412-.587T5 19V6q-.425 0-.712-.288T4 5t.288-.712T5 4h4q0-.425.288-.712T10 3h4q.425 0 .713.288T15 4h4q.425 0 .713.288T20 5t-.288.713T19 6v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zm-7 11q.425 0 .713-.288T11 16V9q0-.425-.288-.712T10 8t-.712.288T9 9v7q0 .425.288.713T10 17m4 0q.425 0 .713-.288T15 16V9q0-.425-.288-.712T14 8t-.712.288T13 9v7q0 .425.288.713T14 17M7 6v13z"/></svg>
-                    </button>
+                    <Tooltip content={
+                      <div className='tooltip tooltipEditar'>
+                        Editar
+                      </div>
+                    }>
+                      <button className="btnAccion btnEditar" onClick={() => handleModalUpdateOpen(empleado)}>
+                        <svg className='iconoAccion' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h6.525q.5 0 .75.313t.25.687t-.262.688T11.5 5H5v14h14v-6.525q0-.5.313-.75t.687-.25t.688.25t.312.75V19q0 .825-.587 1.413T19 21zm4-7v-2.425q0-.4.15-.763t.425-.637l8.6-8.6q.3-.3.675-.45t.75-.15q.4 0 .763.15t.662.45L22.425 3q.275.3.425.663T23 4.4t-.137.738t-.438.662l-8.6 8.6q-.275.275-.637.438t-.763.162H10q-.425 0-.712-.288T9 14m12.025-9.6l-1.4-1.4zM11 13h1.4l5.8-5.8l-.7-.7l-.725-.7L11 11.575zm6.5-6.5l-.725-.7zl.7.7z"/></svg>
+                      </button>
+                    </Tooltip>
+                    <Tooltip content={
+                      <div className='tooltip tooltipEliminar'>
+                        Eliminar
+                      </div>
+                    }>
+                      <button className="btnAccion btnEliminar" onClick={() => eliminarEmpleado(empleado)}>
+                        <svg className='iconoAccion' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="white" d="M7 21q-.825 0-1.412-.587T5 19V6q-.425 0-.712-.288T4 5t.288-.712T5 4h4q0-.425.288-.712T10 3h4q.425 0 .713.288T15 4h4q.425 0 .713.288T20 5t-.288.713T19 6v13q0 .825-.587 1.413T17 21zM17 6H7v13h10zm-7 11q.425 0 .713-.288T11 16V9q0-.425-.288-.712T10 8t-.712.288T9 9v7q0 .425.288.713T10 17m4 0q.425 0 .713-.288T15 16V9q0-.425-.288-.712T14 8t-.712.288T13 9v7q0 .425.288.713T14 17M7 6v13z" /></svg>
+                      </button>
+                    </Tooltip>
                   </div>
                 </td>
               </tr>
@@ -169,7 +183,7 @@ const AdministradorPage = () => {
         </table>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleModalClose} />
-      <ModalUpdate isOpen={isModalUpdateOpen} onClose={handleModalUpdateClose} Datos ={data} setDatos={setData}/>
+      <ModalUpdate isOpen={isModalUpdateOpen} onClose={handleModalUpdateClose} Datos={data} setDatos={setData} />
     </div>
   );
 };
