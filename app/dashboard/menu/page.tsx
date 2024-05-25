@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { BiSearch } from 'react-icons/bi';
@@ -6,11 +6,11 @@ import Modal from './componentes/modalmenu/page';
 import ModalC from './componentes/modalcategoria/page';
 import Link from 'next/link';
 import axios from 'axios';
-import { PiAlignTop } from 'react-icons/pi';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import "./page.scss";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MenuPage = () => {
   const [currentDate, setCurrentDate] = useState<string>('');
@@ -23,7 +23,7 @@ const MenuPage = () => {
     categoria: 0,
     accion: ''
   });
-  const [CategoriaAbierta, setCategoriaAbierta] = useState(false)
+  const [CategoriaAbierta, setCategoriaAbierta] = useState(false);
   const restaurante = localStorage.getItem('restauranteNOMBRE');
   const [categorias, setCategorias] = useState([]);
   const [platos, setPlatos] = useState([]);
@@ -35,7 +35,7 @@ const MenuPage = () => {
     const obtenerCategorias = async () => {
       try {
         const response = await axios.get(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`);
-        console.log(response.data)
+        console.log(response.data);
         setCategorias(response.data);
       } catch (error) {
         console.error('Error al obtener las estadísticas:', error);
@@ -79,7 +79,7 @@ const MenuPage = () => {
     const obtenerPlatos = async () => {
       try {
         const response = await axios.get(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`);
-        console.log(response.data)
+        console.log(response.data);
         setCategorias(response.data);
       } catch (error) {
         console.error('Error al obtener las estadísticas:', error);
@@ -90,12 +90,12 @@ const MenuPage = () => {
   }, []);
 
   const handleModalOpen = (platoID: number, platoNombre: string, precio: number, visible: string, categoria: number, accion: string) => {
-    if (accion == "crear") {
+    if (accion === 'crear') {
       setData({
         platoID: 0,
         platoNombre: '',
         precio: 0,
-        visible: "true",
+        visible: 'true',
         categoria: 1,
         accion: accion
       });
@@ -153,8 +153,10 @@ const MenuPage = () => {
           <p>{currentDate}</p>
         </div>
         <div className="contenedorBuscador">
-        <input className='inputBuscador' placeholder='Buscar platos, bebidas, etc.' maxLength={25} minLength={4} onChange={InputChangeFind}></input>
-        <svg className='iconoBuscador' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9.539 15.23q-2.398 0-4.065-1.666Q3.808 11.899 3.808 9.5t1.666-4.065T9.539 3.77t4.064 1.666T15.269 9.5q0 1.042-.369 2.017t-.97 1.668l5.909 5.907q.14.14.15.345q.009.203-.15.363q-.16.16-.354.16t-.354-.16l-5.908-5.908q-.75.639-1.725.989t-1.96.35m0-1q1.99 0 3.361-1.37q1.37-1.37 1.37-3.361T12.9 6.14T9.54 4.77q-1.991 0-3.361 1.37T4.808 9.5t1.37 3.36t3.36 1.37" /></svg>
+          <input className='inputBuscador' placeholder='Buscar platos, bebidas, etc.' maxLength={25} minLength={4} onChange={InputChangeFind}></input>
+          <svg className='iconoBuscador' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M9.539 15.23q-2.398 0-4.065-1.666Q3.808 11.899 3.808 9.5t1.666-4.065T9.539 3.77t4.064 1.666T15.269 9.5q0 1.042-.369 2.017t-.97 1.668l5.909 5.907q.14.14.15.345q.009.203-.15.363q-.16.16-.354.16t-.354-.16l-5.908-5.908q-.75.639-1.725.989t-1.96.35m0-1q1.99 0 3.361-1.37q1.37-1.37 1.37-3.361T12.9 6.14T9.54 4.77q-1.991 0-3.361 1.37T4.808 9.5t1.37 3.36t3.36 1.37" />
+          </svg>
         </div>
       </div>
       <div className="contenidoMenu">
@@ -175,28 +177,29 @@ const MenuPage = () => {
           </div>
           <div className="btnPlato">
             <button className='botonVerde' onClick={handleCategoriaOpen}>Editar Categorias</button>
-            <button className='botonVerde' onClick={()=>handleModalOpen(0,"",0,"",0,"crear")}>Agregar Plato</button>
+            <button className='botonVerde' onClick={() => handleModalOpen(0, "", 0, "", 0, "crear")} disabled={categorias.length === 0}>Agregar Plato</button>
           </div>
         </div>
         <div className="listaPlatos">
-        {platos.map((plato: { nombre: string, precio:any, categoria_nombre:string, categoria_id:number, ver:string, id:number }, index: number) => (
-              <div className='contenedorPlato' key={index}>
-                <div className='tarjetaPlato' style={{ width: '250px' }} onClick={()=>handleModalOpen(plato.id, plato.nombre, plato.precio, plato.ver, plato.categoria_id, "actualizar")}>
-                  <div className='imagenPlato'>
-                    <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='fotoPlato' />
-                  </div>
-                  <div className='detallePlato'>
-                    <h2 className='nombrePlato'>{plato.nombre}</h2>
-                    <h3 className='precioPlato'>$ {plato.precio}</h3>
-                    <h3 className='verPlato'>{plato.ver}</h3>
-                    <p className='categoriaPlato'>{plato.categoria_nombre}</p>
-                  </div>
+          {platos.map((plato: { nombre: string, precio: any, categoria_nombre: string, categoria_id: number, ver: string, id: number }, index: number) => (
+            <div className='contenedorPlato' key={index}>
+              <div className='tarjetaPlato' style={{ width: '250px' }} onClick={() => handleModalOpen(plato.id, plato.nombre, plato.precio, plato.ver, plato.categoria_id, "actualizar")}>
+                <div className='imagenPlato'>
+                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='fotoPlato' />
+                </div>
+                <div className='detallePlato'>
+                  <h2 className='nombrePlato'>{plato.nombre}</h2>
+                  <h3 className='precioPlato'>$ {plato.precio}</h3>
+                  <h3 className='verPlato'>{plato.ver}</h3>
+                  <p className='categoriaPlato'>{plato.categoria_nombre}</p>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
+        <ToastContainer />
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} Datos={data} setData={setData}/>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} Datos={data} setData={setData} />
       <ModalC isOpen={CategoriaAbierta} onClose={handleCategoriaClose} />
     </div>
   );

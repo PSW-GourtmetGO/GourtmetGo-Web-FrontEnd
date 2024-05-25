@@ -5,6 +5,7 @@ import { BiPencil, BiPlus } from 'react-icons/bi';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import "./page.scss";
 import { Tooltip } from '@nextui-org/tooltip';
+import { Bounce, toast } from 'react-toastify';
 
 interface ModalProps {
     isOpen: boolean;
@@ -52,22 +53,80 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     categoria.id === categoriaId ? { ...categoria, ver: nuevaSeleccion } : categoria
                 )
             );
+            toast.success("Información actualizada correctamente", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+              });
         } catch (error) {
+            toast.error(
+                "Hubo un problema al procesar la información. Intentalo mas tarde.",
+                {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                  transition: Bounce,
+                }
+              );
             console.error('Error al obtener las características:', error);
         }
     };
 
     const handleDeleteCategory = async (eliminarID: number) => {
+        const confirmacion = window.confirm("¿Estás seguro de que quieres eliminar esta categoría?");
+    
+        if (!confirmacion) {
+            return; // Si el usuario cancela, no se ejecuta la eliminación
+        }
+    
         try {
             const response = await axios.delete(`http://localhost:4500/api/Web/categoria/${eliminarID}`, {});
-
+    
+            toast.success("Categoria eliminada correctamente", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+    
             setCategorias((prevCategorias) =>
                 prevCategorias.filter((categoria) => categoria.id !== eliminarID)
             );
         } catch (error) {
+            toast.error(
+                "Hubo un problema al procesar la información. Inténtalo más tarde.",
+                {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                }
+            );
             console.error('Error al obtener las características:', error);
         }
     };
+    
 
     const handleAddCategory = () => {
         setShowAdd(true);
@@ -86,6 +145,19 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             const response = await axios.post(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`, {
                 nombre: nombreCategoria,
             });
+
+            toast.success("Categoria creada correctamente", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+              });
+
             console.log(response.data);
 
             const nuevaCategoria = response.data;
@@ -94,6 +166,20 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             setNombreCategoria("");
             setShowAdd(false);
         } catch (error) {
+            toast.error(
+                "Hubo un problema al procesar la información. Inténtalo más tarde.",
+                {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                }
+            );
             console.error('Error al obtener las características:', error);
         }
     };
@@ -117,6 +203,17 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             const response = await axios.put(`http://localhost:4500/api/Web/categoria/${actualizarID}`, {
                 nombre: categoriaActualizar,
             });
+            toast.success("Categoria editada correctamente", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+              });
             console.log(response.data);
             const nuevaCategoria = response.data;
 
@@ -127,6 +224,20 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             );
             setShowEdit(false);
         } catch (error) {
+            toast.error(
+                "Hubo un problema al procesar la información. Inténtalo más tarde.",
+                {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                }
+            );
             console.error('Error al obtener las características:', error);
         }
         //setShowEdit(false);
