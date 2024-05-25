@@ -27,7 +27,7 @@ function RegisterPage() {
       .then((response) => {
         toast.success("Usuario creado", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -44,7 +44,7 @@ function RegisterPage() {
           "Hubo un problema al procesar la información. Intentalo mas tarde.",
           {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,

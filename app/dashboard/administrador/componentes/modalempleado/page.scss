@@ -18,7 +18,10 @@
                 flex-direction: row;
                 width: 100%;
             }
-    }
+        }
+        .red-text {
+            color: red;
+        }
 }
 
 @media only screen and (max-width: 800px) {

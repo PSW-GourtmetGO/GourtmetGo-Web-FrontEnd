@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState, useEffect } from 'react'
 import { BiPencil, BiSearch } from 'react-icons/bi'
@@ -8,7 +7,9 @@ import ModalUpdate from './componentes/modalActualizarEmpleado/page';
 import axios from 'axios';
 import { Tooltip } from '@nextui-org/tooltip';
 import "./page.scss";
-import { DiVim } from 'react-icons/di';
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const AdministradorPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,13 +83,27 @@ const AdministradorPage = () => {
 
   const eliminarEmpleado = async (empleado: Empleado) => {
     try {
-      const response = await axios.delete(`http://localhost:4500/api/Web/empleado?empleado_id=${empleado.id}`);
-      setEmpleados(prevEmpleados => prevEmpleados.filter(e => e.id !== empleado.id));
-      alert("Empleado eliminado de manera exitosa")
+        // Preguntar al usuario si realmente desea eliminar al empleado
+        const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar este empleado?");
+        
+        if (confirmacion) {
+            const response = await axios.delete(`http://localhost:4500/api/Web/empleado?empleado_id=${empleado.id}`);
+            setEmpleados(prevEmpleados => prevEmpleados.filter(e => e.id !== empleado.id));
+            toast.success("Empleado eliminado de manera exitosa",{
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     } catch (error) {
-      console.error('Error al obtener las estadísticas:', error);
+        console.error('Error al obtener las estadísticas:', error);
     }
-  }
+}
+
 
   const restaurante = localStorage.getItem('restauranteNOMBRE');
 
@@ -181,10 +196,12 @@ const AdministradorPage = () => {
             ))}
           </tbody>
         </table>
+            <ToastContainer />
       </div>
       <Modal isOpen={isModalOpen} onClose={handleModalClose} />
       <ModalUpdate isOpen={isModalUpdateOpen} onClose={handleModalUpdateClose} Datos={data} setDatos={setData} />
     </div>
+
   );
 };
 
