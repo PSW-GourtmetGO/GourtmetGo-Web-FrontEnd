@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BiPencil, BiPlus } from 'react-icons/bi';
-import { FaRegTrashAlt } from 'react-icons/fa';
 import "./page.scss";
 import { Tooltip } from '@nextui-org/tooltip';
 import { Bounce, toast } from 'react-toastify';
@@ -24,6 +22,7 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const [nombreCategoria, setNombreCategoria] = useState("");
     const [categoriaActualizar, setCategoriaActualizar] = useState("");
     const [actualizarID, setActualizarID] = useState(Number);
+    const [nombreValido, setNombreValido] = useState(false);
 
     useEffect(() => {
         const obtenerCategorias = async () => {
@@ -246,12 +245,14 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const handleNombreCategoriaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
         const lettersOnly = inputValue.replace(/[^a-zA-Z\s]/g, '');
+        setNombreValido(lettersOnly.trim().length >= 4);
         setNombreCategoria(lettersOnly);
     };
 
     const handleUpdateNombreCategoriaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
         const lettersOnly = inputValue.replace(/[^a-zA-Z\s]/g, '');
+        setNombreValido(lettersOnly.trim().length >= 4);
         setCategoriaActualizar(lettersOnly);
     };
 
@@ -279,8 +280,9 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             {showAdd ? (
                                 <div>
                                     <div className="contenedorIngreso">
-                                        <input type="text" placeholder="Nueva Categoría" className="ingreso" value={nombreCategoria} onChange={handleNombreCategoriaChange} maxLength={25} minLength={4} />
+                                        <input type="text" placeholder="Nueva Categoría" className="ingreso" value={nombreCategoria} onChange={handleNombreCategoriaChange} required={nombreValido} max={15} maxLength={15} />
                                     </div>
+                                    {!nombreValido && <p className="mensajeError text-red-500">Nombre tiene que tener más de 4 caracteres.</p>}
                                     <div className="botonesAgregar">
                                         <button className="botonVerde" onClick={() => handleCloseAddCategory(1)}>Guardar</button>
                                         <button className="botonVerdeOscuro" onClick={() => handleCloseAddCategory(0)}>Cerrar</button>
@@ -292,7 +294,7 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                         <input type="text" placeholder="Editar Categoría" className="ingreso" value={categoriaActualizar} onChange={handleUpdateNombreCategoriaChange} maxLength={25} minLength={4} />
                                     </div>
                                     <div className="botonesAgregar">
-                                        <button className="botonVerde" onClick={() => handleCloseEditCategory(1)}>Guardar</button>
+                                        <button className="botonVerde" onClick={() => handleCloseEditCategory(1)} disabled={!nombreValido}>Guardar</button>
                                         <button className="botonVerdeOscuro" onClick={() => handleCloseEditCategory(0)}>Cerrar</button>
                                     </div>
                                 </div>
