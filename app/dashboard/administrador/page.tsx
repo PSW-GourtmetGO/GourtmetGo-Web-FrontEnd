@@ -113,7 +113,7 @@ const AdministradorPage = () => {
           <h1>{restaurante}</h1>
         </div>
       </div>
-      <div className="botonesAccion">
+      <div className="botonesAccionEmpleados">
         <div className="contenedorBuscador">
           <input
             className="inputBuscador"

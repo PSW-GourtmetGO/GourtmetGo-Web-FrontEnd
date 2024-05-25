@@ -65,11 +65,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         <div>
             {isOpen && (
                 <div className="contenedorModal">
-                    <div className="contenedorTarjeta">
-                        <div className="tarjeta">
-                            <div className="encabezado">
-                                <h1>Registro Empleados</h1>
-                            </div>
+                    <div className="tarjetaModal">
+                        <div className="encabezadoModal">
+                            <h1>Regsitro empleados</h1>
+                            <button type="button" onClick={() => {
+                                onClose();
+                            }} className="btnAtras">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z" /></svg>
+                            </button>
+                        </div>
                             <div className="contenido">
                                 <div className='formulario'>
                                     <form onSubmit={handleSubmit}>
@@ -90,6 +94,18 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                             </div>
                                         </div>
 
+                                        <div className="ingresos">
+                                            <label htmlFor="fecha_Nacimiento" className="label">Fecha de Nacimiento:</label>
+                                            <div className="contenedorIngreso contenedorIngresoCalendario">
+                                                <input
+                                                    type="date"
+                                                    id="fecha_Nacimiento"
+                                                    name="fecha_Nacimiento"
+                                                    value={formData.fecha_Nacimiento}
+                                                    onChange={handleInputChange}
+                                                    className="ingreso" required />
+                                            </div>
+                                        </div>
                                         <div className="ingresos">
                                             <label htmlFor="nombre" className="label">Nombre:</label>
                                             <div className="contenedorIngreso">
@@ -117,18 +133,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                                     onChange={handleInputChange}
                                                     className="ingreso" required />
                                                 <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21" /></svg>
-                                            </div>
-                                        </div>
-                                        <div className="ingresos">
-                                            <label htmlFor="fecha_Nacimiento" className="label">Fecha de Nacimiento:</label>
-                                            <div className="contenedorIngreso contenedorIngresoCalendario">
-                                                <input
-                                                    type="date"
-                                                    id="fecha_Nacimiento"
-                                                    name="fecha_Nacimiento"
-                                                    value={formData.fecha_Nacimiento}
-                                                    onChange={handleInputChange}
-                                                    className="ingreso" required />
                                             </div>
                                         </div>
                                         <div className="ingresos">
@@ -186,12 +190,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             </div>
                             <div className="botones">
-                                <button type="submit" onClick={guardarEmpleado} className="boton boton1">Guardar</button>
-                                <button type="button" onClick={onClose} className="boton boton2">Cancelar</button>
+                                <button type="submit" onClick={guardarEmpleado} className="botonVerde">Guardar</button>
                             </div>
 
-
-                        </div>
                     </div>
                 </div>
             )}
