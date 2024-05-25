@@ -8,6 +8,7 @@ import { BiSearch } from "react-icons/bi";
 import empleado1 from "../../public/imagenes/mujer2.svg";
 import ModalPedidos from "./administrador/componentes/modalPedidos/page";
 import axios from "axios";
+import "./page.scss"
 
 interface Pedido {
   pID: number;
@@ -23,7 +24,7 @@ function PedidosPage() {
   const [pedido, setPedido] = useState<Pedido | null>(null);
   const [filtroo, setFiltro] = useState<string>("Pendiente");
   const [modalOpen, setModalOpen] = useState(false);
-  const [img,setImg] = useState("")
+  const [img, setImg] = useState("")
   const {
     register,
     handleSubmit,
@@ -123,108 +124,90 @@ function PedidosPage() {
   };
 
   return (
-    <div
-      className="bg-cover bg-no-repeat bg-center"
-      style={{
-        backgroundImage: 'url("/imagenes/fondo.svg")',
-        minHeight: "calc(80vh)",
-      }}
-    >
-      <div className="w-full grid grid-cols-5 grid-rows-auto">
-        <div
-          className="col-start-1 col-span-1 text-[45px] border-b border-black"
-          style={{ fontFamily: "David Libre", height: "70px" }}
-        >
+    <div className="contenedorPaginasDashboard">
+      <div className="encabezado">
+        <div className="titulo">
           <h1>Pedidos</h1>
+          <hr />
         </div>
-        <div
-          className="col-start-4 col-span-2 text-[30px] flex items-center justify-end "
-          style={{ fontFamily: "David Libre" }}
-        >
+        <div className="inforestaurante">
           <h1>{restaurante}</h1>
-          <div className="col-start-5 w-[25%]">
-            <Image src={img} alt="" width={20} height={20} className="w-[50%]" />
+          <div className="logoRestaurante">
+            <img src={img} alt="" />
           </div>
         </div>
-        <div className="row-start-2 relative ">
-          <input
-            className="w-[320px] 2xl:w-[320px] text-white font-bold bg-[#274C5B] py-3 pl-12 rounded-lg"
-            placeholder="Buscar código"
-            onChange={InputChangeFind}
-          ></input>
-          <BiSearch className="absolute left-3 top-4 text-white" />
+      </div>
+      <div className="contenidoPedidos">
+        <div className="botonesAccionPedidos">
+          <div className="contenedorBuscador">
+            <input
+              className="inputBuscador"
+              placeholder="Buscar código"
+              onChange={InputChangeFind}
+            ></input>
+            <svg className='iconoBuscador' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M9.539 15.23q-2.398 0-4.065-1.666Q3.808 11.899 3.808 9.5t1.666-4.065T9.539 3.77t4.064 1.666T15.269 9.5q0 1.042-.369 2.017t-.97 1.668l5.909 5.907q.14.14.15.345q.009.203-.15.363q-.16.16-.354.16t-.354-.16l-5.908-5.908q-.75.639-1.725.989t-1.96.35m0-1q1.99 0 3.361-1.37q1.37-1.37 1.37-3.361T12.9 6.14T9.54 4.77q-1.991 0-3.361 1.37T4.808 9.5t1.37 3.36t3.36 1.37" /></svg>
+          </div>
+          <div className="botonFiltrar">
+            <button
+              className="botonVerdeOscuro"
+              onClick={FilterChange}
+            >
+              Filtrar Orden
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 21 21"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M6.5 4a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1m12 2h-11m-2 0h-3m4 8a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1m12 2h-11m-2 0h-3m12-7a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1m-1 2h-11m16 0h-3" /></svg>
+            </button>
+          </div>
         </div>
-        <div className="row-start-2 col-start-5 relative ml-[20%]">
-          <button
-            className="w-[150px] bg-[#393C49]  hover:bg-teal-700 text-white font-bold py-3  rounded-lg "
-            onClick={FilterChange}
-          >
-            Filtrar Orden
-          </button>
-          <Image
-            src={filtro}
-            alt=""
-            className="absolute left-3 top-4 text-white"
-          />
-        </div>
-        <div className="row-start-3 col-span-5 mt-10 mr-[5%]">
-          <table className="w-full rounded-xl bg-[#FFFFFF] shadow-2xl">
-            <thead className="border-b border-black">
+        <div className="tabla">
+          <table>
+            <thead>
               <tr>
-                <th className="py-2 px-4 bg-transparent text-gray-800">
+                <th>
                   Cliente
                 </th>
-                <th className="py-2 px-4 bg-transparent text-gray-800">
+                <th>
                   Código
                 </th>
-                <th className="py-2 px-4 bg-transparent text-gray-800">
-                  Total a Pagar
+                <th>
+                  Total a pagar
                 </th>
-                <th className="py-2 px-4 bg-transparent text-gray-800">
+                <th>
                   Estado
                 </th>
               </tr>
             </thead>
-
-            <tbody className="text-center">
-              {/* Aquí generamos las filas con un ciclo */}
+            <tbody>
               {pedidos.map((pedido, index) => (
                 <tr
                   key={pedido.pID}
                   onClick={() => openModal(pedido)}
-                  className="bg-transparent text-gray-800 hover:bg-slate-400 cursor-pointer"
+                  className=""
                 >
-                  <td className="py-2 px-4">
-                    <div className="flex items-center justify-start ml-[23%] 2xl:ml-[29%]">
-                      <div className="mr-4"></div>
-                      <span>{pedido.cCLIENTE}</span>
-                    </div>
+                  <td>
+                    <span>{pedido.cCLIENTE}</span>
                   </td>
-
-                  <td className="py-2 px-4">{pedido.pCODIGO}</td>
-                  <td className="py-2 px-4">{pedido.pTOTAL}</td>
-                  <td className="py-2 px-4">
-                    <div
-                      className="p-1 text-white rounded-xl"
-                      style={{
-                        backgroundColor: getColorByEstado(pedido.pESTADO),
-                      }}
-                    >
-                      {pedido.pESTADO}
-                    </div>
+                  <td>
+                    <span>{pedido.pCODIGO}</span>
+                  </td>
+                  <td>
+                    <span>{pedido.pTOTAL}</span>
+                  </td>
+                  <td>
+                    <span className="estadoPedido" style={{
+                      backgroundColor: getColorByEstado(pedido.pESTADO),
+                    }}>{pedido.pESTADO}</span>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <ModalPedidos
-            isOpen={modalOpen}
-            onClose={closeModal}
-            pedidoDatos={pedido}
-            setPedidoDatos={setPedido}
-          ></ModalPedidos>
         </div>
       </div>
+      <ModalPedidos
+        isOpen={modalOpen}
+        onClose={closeModal}
+        pedidoDatos={pedido}
+        setPedidoDatos={setPedido}
+      ></ModalPedidos>
     </div>
   );
 }

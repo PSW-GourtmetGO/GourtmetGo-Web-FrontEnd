@@ -133,6 +133,18 @@
     margin-bottom: 20px;
 }
 
+.contenedorPaginasDashboard .encabezado .inforestaurante{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.contenedorPaginasDashboard .encabezado .inforestaurante .logoRestaurante img{
+    height: 5vw;
+    width: auto;
+}
+
 .contenedorPaginasDashboard .encabezado .titulo hr{
     width: 20vw;
     height: 1px;
