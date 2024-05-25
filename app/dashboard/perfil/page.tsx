@@ -10,6 +10,8 @@ import negocioSf from "../../../public/imagenes/negocioSF.svg";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { uploadFile } from "../../firebase/config";
+import "./page.scss";
+
 const PerfilPage = () => {
   const {
     register,
@@ -23,7 +25,7 @@ const PerfilPage = () => {
   const [total_platos, setTotalPlatos] = useState(null);
   const [restaurante, setRestaurante] = useState("");
   const [imagenRestaurante, setImagenRestaurante] = useState<File | null>(null);
-  const [img,setImg] = useState("")
+  const [img, setImg] = useState("")
 
   useEffect(() => {
     const obtenerEstadisticasRestaurantes = async () => {
@@ -76,7 +78,7 @@ const PerfilPage = () => {
   const onSubmit: SubmitHandler<any> = async (data) => {
 
     const envioImagen = await uploadFile(
-      imagenRestaurante,"logos",
+      imagenRestaurante, "logos",
       data.NombreRestaurante
     );
 
@@ -150,71 +152,59 @@ const PerfilPage = () => {
     return undefined; // Devuelve undefined si el usuario es mayor de 18 años
   };
   return (
-    <div
-      className="bg-cover bg-no-repeat bg-center"
-      style={{
-        backgroundImage: 'url("/imagenes/fondo.svg")',
-      }}
-    >
-      <div className="w-full grid grid-cols-5 row-auto h-full">
-        <div
-          className="col-start-1 col-span-1 text-[45px] border-b border-black"
-          style={{ fontFamily: "David Libre", height: "70px" }}
-        >
+    <div className="contenedorPaginasDashboard">
+      <div className="encabezado">
+        <div className="titulo">
           <h1>Perfil</h1>
+          <hr />
         </div>
-
-        <div className="row-start-2 col-start-1 col-span-2 mt-5 ">
-        <Image src={img} alt="" width={20} height={20} className="w-[50%]" />
-          <div
-            className=" text-[30px] ml-5  "
-            style={{ fontFamily: "David Libre" }}
-          >
-            <h1>{restaurante}</h1>
+        <div className="inforestaurante">
+          <h1></h1>
+        </div>
+      </div>
+      <div className="contenedorPerfil">
+        <div className="informacionPerfil">
+          <div className="imagenPerfil">
+            <img src={img} alt="" />
           </div>
-          <div className="ml-5 flex mt-5">
-            <Image src={ventas} alt="" className="w-[10%]"></Image>
-            <div className="ml-3">
+          <div className="nombrePerfil">
+            <h2>{restaurante}</h2>
+          </div>
+          <div className="estadisticas">
+            <div className="ventasRealizadas">
               {total_pedidos && (
-                <h1 className="text-xl font-bold">{total_pedidos}</h1>
+                <p className="">{total_pedidos}</p>
               )}
-              <h1 className="text-[20px] ">Ventas realizadas</h1>
+              <p className="">Ventas realizadas</p>
             </div>
-          </div>
-          <div className="ml-5 flex mt-5">
-            <Image src={platos} alt="" className="w-[10%]"></Image>
-            <div className="ml-3">
+            <div className="platosRegistrados">
               {total_platos && (
-                <h1 className="text-xl font-bold">{total_platos}</h1>
+                <p className="">{total_platos}</p>
               )}
-              <h1 className="text-[20px] ">Platos registrados</h1>
+              <p className="">Platos registrados</p>
             </div>
-          </div>
-          <div className="ml-5 flex mt-5">
-            <Image src={empleados} alt="" className="w-[10%]"></Image>
-            <div className="ml-3">
+            <div className="empleadosRegistrados">
               {total_empleados && (
-                <h1 className="text-xl font-bold">{total_empleados}</h1>
+                <h1 className="">{total_empleados}</h1>
               )}
-              <h1 className="text-[20px] ">Empleados registrados</h1>
+              <h1 className="">Empleados registrados</h1>
             </div>
           </div>
         </div>
-
-        <div className="col-start-3 col-span-5 row-start-2 row-span-2 mr-[10%] flex items-center ">
+        <div className="formularioPerfil">
           <form
-            className=" w-full  grid grid-cols-2 gap-4"
+            className=""
             onSubmit={handleSubmit(onSubmit)}
           >
             {/* Campo para el cedula */}
             <div>
               <label
                 htmlFor="cedula"
-                className="text-slate-500 mb-2 block text-sm"
+                className=""
               >
                 Cedula:
               </label>
-              <div className="flex relative">
+              <div className="contenedorIngreso">
                 <input
                   type="text"
                   inputMode="numeric"
@@ -228,7 +218,7 @@ const PerfilPage = () => {
                       message: "La cédula debe tener 10 dígitos",
                     },
                   })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  className="ingreso"
                   placeholder="0502634967"
                   onKeyPress={(event) => {
                     const charCode = event.which ? event.which : event.keyCode;
@@ -237,6 +227,7 @@ const PerfilPage = () => {
                     }
                   }}
                 />
+                                  <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M17.73 12.462q.214 0 .358-.144t.143-.356t-.144-.357t-.356-.143h-3.077q-.213 0-.357.143q-.143.143-.143.357t.143.356t.357.144zm0-2.77q.214 0 .358-.143t.143-.357t-.144-.356t-.356-.144h-3.077q-.213 0-.357.143q-.143.144-.143.357t.143.357t.357.143zm-8.653 3.616q-.823 0-1.394.114q-.572.114-1.025.368q-.39.21-.589.459t-.198.532q0 .223.177.375t.444.152h5.17q.267 0 .444-.165t.177-.393q0-.252-.189-.489t-.598-.47q-.454-.255-1.025-.369t-1.394-.114m0-1.616q.633 0 1.066-.433q.434-.434.434-1.067t-.434-1.066t-1.066-.434t-1.066.434t-.434 1.066t.434 1.067t1.066.433M4.616 19q-.691 0-1.153-.462T3 17.384V6.616q0-.691.463-1.153T4.615 5h14.77q.69 0 1.152.463T21 6.616v10.769q0 .69-.463 1.153T19.385 19zm0-1h14.769q.23 0 .423-.192t.192-.424V6.616q0-.231-.192-.424T19.385 6H4.615q-.23 0-.423.192T4 6.616v10.769q0 .23.192.423t.423.192M4 18V6z" /></svg>
               </div>
               {renderError(errors.cedula)}
             </div>
@@ -245,11 +236,11 @@ const PerfilPage = () => {
             <div>
               <label
                 htmlFor="nombre"
-                className="text-slate-500 mb-2 block text-sm"
+                className=""
               >
                 Nombre:
               </label>
-              <div className="flex relative">
+              <div className="contenedorIngreso">
                 <input
                   type="text"
                   {...register("nombre", {
@@ -266,9 +257,10 @@ const PerfilPage = () => {
                       message: "Solo se permiten letras ",
                     },
                   })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  className="ingreso"
                   placeholder="Alex"
                 />
+                                  <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 11.385q-1.237 0-2.119-.882T9 8.385t.881-2.12T12 5.386t2.119.88t.881 2.12t-.881 2.118t-2.119.882m-7 7.23V16.97q0-.619.36-1.158q.361-.54.97-.838q1.416-.679 2.834-1.018q1.417-.34 2.836-.34t2.837.34t2.832 1.018q.61.298.97.838q.361.539.361 1.158v1.646zm1-1h12v-.646q0-.332-.215-.625q-.214-.292-.593-.494q-1.234-.598-2.546-.916T12 14.616t-2.646.318t-2.546.916q-.38.202-.593.494Q6 16.637 6 16.97zm6-7.23q.825 0 1.413-.588T14 8.384t-.587-1.412T12 6.384t-1.412.588T10 8.384t.588 1.413t1.412.587m0 7.232" /></svg>
               </div>
               {renderError(errors.nombre)}
             </div>
@@ -277,11 +269,11 @@ const PerfilPage = () => {
             <div>
               <label
                 htmlFor="apellido"
-                className="text-slate-500 mb-2 block text-sm"
+                className=""
               >
                 Apellido:
               </label>
-              <div className="flex relative">
+              <div className="contenedorIngreso">
                 <input
                   type="text"
                   {...register("apellido", {
@@ -298,23 +290,24 @@ const PerfilPage = () => {
                       message: "Solo se permiten letras y espacios",
                     },
                   })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  className="ingreso"
                   placeholder="Jimenez"
                 />
+                                  <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 11.385q-1.237 0-2.119-.882T9 8.385t.881-2.12T12 5.386t2.119.88t.881 2.12t-.881 2.118t-2.119.882m-7 7.23V16.97q0-.619.36-1.158q.361-.54.97-.838q1.416-.679 2.834-1.018q1.417-.34 2.836-.34t2.837.34t2.832 1.018q.61.298.97.838q.361.539.361 1.158v1.646zm1-1h12v-.646q0-.332-.215-.625q-.214-.292-.593-.494q-1.234-.598-2.546-.916T12 14.616t-2.646.318t-2.546.916q-.38.202-.593.494Q6 16.637 6 16.97zm6-7.23q.825 0 1.413-.588T14 8.384t-.587-1.412T12 6.384t-1.412.588T10 8.384t.588 1.413t1.412.587m0 7.232" /></svg>
               </div>
               {renderError(errors.apellido)}
             </div>
 
             {/* Campo para la fecha de nacimiento */}
             <div>
-              <label
+            <label
                 htmlFor="fechaNacimiento"
-                className="text-slate-500 mb-2 block text-sm"
+                className=""
               >
                 Fecha de Nacimiento:
               </label>
-              <div className="flex relative">
-                <input
+              <div className="contenedorIngreso">
+              <input
                   type="date"
                   {...register("fechaNacimiento", {
                     required: {
@@ -328,7 +321,7 @@ const PerfilPage = () => {
                     },
                     validate: validarFechaNacimiento,
                   })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  className="ingreso"
                   placeholder="1999-12-12"
                 />
               </div>
@@ -337,14 +330,14 @@ const PerfilPage = () => {
 
             {/* Campo para el correo */}
             <div>
-              <label
+            <label
                 htmlFor="correo"
-                className="text-slate-500 mb-2 block text-sm"
+                className=""
               >
                 Correo:
               </label>
-              <div className="flex relative">
-                <input
+              <div className="contenedorIngreso">
+              <input
                   type="email"
                   {...register("correo", {
                     required: {
@@ -356,23 +349,24 @@ const PerfilPage = () => {
                       message: "El correo debe ser una dirección válida",
                     },
                   })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  className="ingreso"
                   placeholder="alexJime@gmail.com"
                 />
+                                  <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M3.77 21q-.31 0-.54-.23T3 20.23v-6.46q0-.31.23-.54t.54-.23H7V8q0-2.083 1.458-3.542Q9.917 3 12 3h4q2.083 0 3.542 1.458Q21 5.917 21 8v12.5q0 .213-.144.356t-.357.144t-.356-.144T20 20.5V18h-5v2.23q0 .31-.23.54t-.54.23zM15 17h5V8q0-1.65-1.175-2.825T16 4h-4q-1.65 0-2.825 1.175T8 8v5h6.23q.31 0 .54.23t.23.54zm-6.308-.323q.154.096.308.096t.308-.096L14 14H4zM4 20h10v-4.98l-4.192 2.39q-.181.099-.382.158t-.422.059t-.425-.06q-.204-.058-.387-.157L4 15.02zm0-6v.38v-.016v.784v-.129V20v-4.98v.128v-.785v.015zm7-4.5q-.213 0-.356-.144t-.144-.357t.144-.356T11 8.5h6q.213 0 .356.144t.144.357t-.144.356T17 9.5z" /></svg>
               </div>
               {renderError(errors.correo)}
             </div>
 
             {/* Campo para la direccion */}
             <div>
-              <label
+            <label
                 htmlFor="direccion"
-                className="text-slate-500 mb-2 block text-sm"
+                className=""
               >
                 Dirección:
               </label>
-              <div className="flex relative">
-                <input
+              <div className="contenedorIngreso">
+              <input
                   type="text"
                   {...register("direccion", {
                     required: {
@@ -388,23 +382,24 @@ const PerfilPage = () => {
                       message: "Solo se permiten letras y espacios",
                     },
                   })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  className="ingreso"
                   placeholder="Ambato"
                 />
+                                  <svg className="iconoIngreso" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256"><path fill="currentColor" d="M248 210h-18V94h2a6 6 0 0 0 0-12h-50V46h2a6 6 0 0 0 0-12H40a6 6 0 0 0 0 12h2v164H24a6 6 0 0 0 0 12h224a6 6 0 0 0 0-12M218 94v116h-36V94ZM54 46h116v164h-28v-50a6 6 0 0 0-6-6H88a6 6 0 0 0-6 6v50H54Zm76 164H94v-44h36ZM74 80a6 6 0 0 1 6-6h16a6 6 0 0 1 0 12H80a6 6 0 0 1-6-6m48 0a6 6 0 0 1 6-6h16a6 6 0 0 1 0 12h-16a6 6 0 0 1-6-6m-42 46a6 6 0 0 1 0-12h16a6 6 0 0 1 0 12Zm42-6a6 6 0 0 1 6-6h16a6 6 0 0 1 0 12h-16a6 6 0 0 1-6-6"/></svg>
               </div>
               {renderError(errors.direccion)}
             </div>
 
             {/* Campo para el nombre restaurante */}
             <div>
-              <label
+            <label
                 htmlFor="NombreRestaurante"
-                className="text-slate-500 mb-2 block text-sm "
+                className=""
               >
                 Nombre del Restaurante:
               </label>
-              <div className="flex relative">
-                <input
+              <div className="contenedorIngreso">
+              <input
                   type="text"
                   {...register("NombreRestaurante", {
                     required: {
@@ -417,23 +412,24 @@ const PerfilPage = () => {
                         "El nombre del restaurante debe tener al menos 2 caracteres",
                     },
                   })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  className="ingreso"
                   placeholder="Pikos"
                 />
+                                  <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M8.75 18.692q.19 0 .316-.126q.126-.125.126-.316v-6.038q.708-.143 1.181-.655q.473-.513.473-1.257V6.692q0-.161-.111-.273q-.112-.111-.273-.111t-.273.111t-.112.273v3.193h-.942V6.692q0-.161-.112-.273t-.273-.111t-.273.111t-.111.273v3.193h-.943V6.692q0-.161-.111-.273t-.273-.111t-.273.111t-.112.273V10.3q0 .744.473 1.257t1.18.655v6.038q0 .19.127.316q.126.126.316.126m6 0q.19 0 .316-.126q.126-.125.126-.316v-5.792q.806-.304 1.278-1.121q.472-.818.472-1.954q0-1.33-.626-2.202q-.625-.873-1.566-.873t-1.566.873t-.626 2.202q0 1.136.472 1.954q.472.817 1.278 1.12v5.793q0 .19.126.316t.316.126M4.615 21q-.69 0-1.153-.462T3 19.385V4.615q0-.69.463-1.152T4.615 3h14.77q.69 0 1.152.463T21 4.616v14.769q0 .69-.463 1.153T19.385 21zm0-1h14.77q.23 0 .423-.192t.192-.424V4.616q0-.231-.192-.424T19.385 4H4.615q-.23 0-.423.192T4 4.615v14.77q0 .23.192.423t.423.192M4 20V4z" /></svg>
               </div>
               {renderError(errors.NombreRestaurante)}
             </div>
 
             {/* Campo para cargar la imagen del negocio */}
             <div>
-              <label
+            <label
                 htmlFor="imagen"
-                className="text-slate-500 mb-2 block text-sm"
+                className=""
               >
                 Imagen del Negocio:
               </label>
-              <div className="flex relative">
-                <input
+              <div className="contenedorIngreso">
+              <input
                   type="file"
                   {...register("imagen", {
                     required: {
@@ -441,7 +437,7 @@ const PerfilPage = () => {
                       message: "Imagen is required",
                     },
                   })}
-                  className="p-3 rounded block mb-2 text-black border border-black w-full"
+                  className="ingresoImagen"
                   placeholder="Imagen"
                   onChange={(e) => {
                     if (e.target.files && e.target.files[0]) {
@@ -449,13 +445,16 @@ const PerfilPage = () => {
                     }
                   }}
                 />
+                <svg className='iconoIngreso' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h12.769q.69 0 1.153.463T20 5.616v12.769q0 .69-.462 1.153T18.384 20zm0-1h12.769q.23 0 .423-.192t.192-.424V5.616q0-.231-.192-.424T18.384 5H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192M7.5 16.5h9.154l-2.827-3.77l-2.615 3.308l-1.75-2.115zM5 19V5zm3.5-9.5q.414 0 .707-.293T9.5 8.5t-.293-.707T8.5 7.5t-.707.293T7.5 8.5t.293.707t.707.293"/></svg>
               </div>
             </div>
 
             {/* Botón de submit */}
-            <button className="col-span-2 bg-[#01AE67] hover:bg-teal-700 text-white font-bold p-3 rounded-lg mt-2">
+            <div>
+            <button className="botonVerde">
               Guardar información
             </button>
+            </div>
             <ToastContainer />
           </form>
         </div>

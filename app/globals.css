@@ -84,10 +84,15 @@
 
 }
 
-.contenedorIngreso .select{
+.contenedorIngreso .select,
+.contenedorIngreso .ingresoImagen{
     width: 100%;
     border: 1px solid rgb(172, 172, 172);
     border-radius: 7px;
+}
+
+.contenedorIngreso .ingresoImagen{
+    padding: 5px 10px;
 }
 
 .contenedorIngreso .ingreso:hover,
