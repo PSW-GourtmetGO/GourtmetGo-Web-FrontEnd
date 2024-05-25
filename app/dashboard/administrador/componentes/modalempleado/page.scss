@@ -1,15 +1,4 @@
 .contenedorModal{
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #00000080;
-    backdrop-filter: blur(5px); 
-    z-index: 50;
     .contenedorTarjeta{
         height: 90vh !important;
         width: 80vh !important;
