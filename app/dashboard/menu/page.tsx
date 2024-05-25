@@ -27,6 +27,7 @@ const MenuPage = () => {
   const restaurante = localStorage.getItem('restauranteNOMBRE');
   const [categorias, setCategorias] = useState([]);
   const [platos, setPlatos] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const date = new Date();
@@ -130,11 +131,17 @@ const MenuPage = () => {
     event.target.value = lettersOnly;
     try {
       const response = await axios.get(`http://localhost:4500/api/Web/plato/duenio?restaurante=${localStorage.getItem('restauranteID')}&plato=${lettersOnly}`);
-      setPlatos(response.data);
+      console.log(response.data)
+      setSearchResults(response.data); 
     } catch (error) {
       console.error('Error al obtener las estadísticas:', error);
     }
   };
+
+  useEffect(() => {
+    // Actualiza la lista de platos solo si hay resultados de búsqueda
+    setPlatos(searchResults.length > 0 ? searchResults : []);
+  }, [searchResults]);
 
   return (
     <div className="contenedorPaginasDashboard">
