@@ -249,6 +249,10 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         setNombreCategoria(lettersOnly);
     };
 
+    useEffect(() => {
+        setNombreValido(categoriaActualizar.trim().length >= 4);
+      }, [categoriaActualizar]);
+
     const handleUpdateNombreCategoriaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
         const lettersOnly = inputValue.replace(/[^a-zA-Z\s]/g, '');
@@ -282,19 +286,20 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                     <div className="contenedorIngreso">
                                         <input type="text" placeholder="Nueva Categoría" className="ingreso" value={nombreCategoria} onChange={handleNombreCategoriaChange} required={nombreValido} max={15} maxLength={15} />
                                     </div>
-                                    {!nombreValido && <p className="mensajeError text-red-500">Nombre tiene que tener más de 4 caracteres.</p>}
+                                    {!nombreValido && <p className="mensajeError text-red-500">Nombre tiene que tener más de 3 caracteres.</p>}
                                     <div className="botonesAgregar">
-                                        <button className="botonVerde" onClick={() => handleCloseAddCategory(1)}>Guardar</button>
+                                        <button className="botonVerde" onClick={() => handleCloseAddCategory(1)} disabled={!nombreValido}>Guardar</button>
                                         <button className="botonVerdeOscuro" onClick={() => handleCloseAddCategory(0)}>Cerrar</button>
                                     </div>
                                 </div>
                             ) : showEdit ? (
                                 <div>
                                     <div className="contenedorIngreso">
-                                        <input type="text" placeholder="Editar Categoría" className="ingreso" value={categoriaActualizar} onChange={handleUpdateNombreCategoriaChange} maxLength={25} minLength={4} />
+                                        <input type="text" placeholder="Editar Categoría" className="ingreso" value={categoriaActualizar} onChange={handleUpdateNombreCategoriaChange} required={nombreValido} maxLength={25} minLength={4} />
                                     </div>
+                                    {!nombreValido && <p className="mensajeError text-red-500">Nombre tiene que tener más de 3 caracteres.</p>}
                                     <div className="botonesAgregar">
-                                        <button className="botonVerde" onClick={() => handleCloseEditCategory(1)} disabled={!nombreValido}>Guardar</button>
+                                        <button className="botonVerde" onClick={() => handleCloseEditCategory(1)} disabled={!nombreValido}>Actualizar</button>
                                         <button className="botonVerdeOscuro" onClick={() => handleCloseEditCategory(0)}>Cerrar</button>
                                     </div>
                                 </div>

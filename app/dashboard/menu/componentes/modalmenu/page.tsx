@@ -50,7 +50,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
   const [formData, setFormData] = useState({
     id: 0,
     nombre: "",
-    precio: 0,
+    precio: 0.5,
     visible: "true",
     categoria: 1,
   });
@@ -65,7 +65,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
     setFormData({
       id: 0,
       nombre: "",
-      precio: 0,
+      precio: 0.5,
       visible: "true",
       categoria: 1,
     });
@@ -75,19 +75,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
   useEffect(() => {
     const obtenerCategorias = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:4500/api/Web/categoria/${localStorage.getItem(
-            "restauranteID"
-          )}`
-        );
+        const response = await axios.get(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`);
         console.log(response.data);
         setCategorias(response.data);
       } catch (error) {
-        console.error("Error al obtener las características:", error);
+        console.error('Error al obtener las estadísticas:', error);
       }
     };
     obtenerCategorias();
-  }, []);
+  });
 
   const guardarPlato = async () => {
     try {
@@ -131,7 +127,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
       setFormData({
         id: 0,
         nombre: "",
-        precio: 0,
+        precio: 0.5,
         visible: "true",
         categoria: 1,
       });
@@ -195,6 +191,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
         theme: "dark",
         transition: Bounce,
       });
+
+      onClose();
     } catch (error) {
       toast.error(
         "Hubo un problema al procesar la información. Inténtalo más tarde.",
@@ -240,6 +238,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
           transition: Bounce,
         });
       }
+
+      onClose();
     } catch (error) {
       toast.error(
         "Hubo un problema al procesar la información. Inténtalo más tarde.",
@@ -290,6 +290,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    setNombreEditado(Datos.platoNombre);
+    setNombreValido(Datos.platoNombre.trim().length >= 4);
+  }, [Datos.platoNombre]);
 
   const handleNombreChangeEdit = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -373,7 +378,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
                   setFormData({
                     id: 0,
                     nombre: "",
-                    precio: 0,
+                    precio: 0.5,
                     visible: "true",
                     categoria: 1,
                   });
@@ -555,16 +560,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
               <button
                 type="button"
                 onClick={() => {
-                  setFormData({
-                    id: Datos.platoID,
-                    nombre: Datos.platoNombre,
-                    precio: Datos.precio,
-                    visible: Datos.visible,
-                    categoria: Datos.categoria,
-                  });
-                  setNombreValido(false);
-                  onClose();
-                }}
+                    setFormData({
+                      id: 0,
+                      nombre: "",
+                      precio: 0.5,
+                      visible: "true",
+                      categoria: 1,
+                    });
+                    setNombreValido(false);
+                    onClose();
+                  }}
                 className="btnAtras"
               >
                 <svg
@@ -725,6 +730,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
                 type="submit"
                 onClick={actualizarPlato}
                 className="botonVerde"
+                disabled={!nombreValido}
               >
                 Actualizar
               </button>

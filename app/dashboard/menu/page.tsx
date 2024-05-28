@@ -33,6 +33,7 @@ const MenuPage = () => {
     const date = new Date();
     const formattedDate = format(date, 'EEEE, d MMM yyyy', { locale: es });
     setCurrentDate(formattedDate);
+
     const obtenerCategorias = async () => {
       try {
         const response = await axios.get(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`);
@@ -132,7 +133,7 @@ const MenuPage = () => {
     try {
       const response = await axios.get(`http://localhost:4500/api/Web/plato/duenio?restaurante=${localStorage.getItem('restauranteID')}&plato=${lettersOnly}`);
       console.log(response.data)
-      setSearchResults(response.data); 
+      setSearchResults(response.data);
     } catch (error) {
       console.error('Error al obtener las estadísticas:', error);
     }
