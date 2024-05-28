@@ -291,6 +291,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
     });
   };
 
+  useEffect(() => {
+    setNombreEditado(Datos.platoNombre);
+    setNombreValido(Datos.platoNombre.trim().length >= 4);
+  }, [Datos.platoNombre]);
+
   const handleNombreChangeEdit = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const lettersOnly = value.replace(/[^a-zA-Z\s]/g, "");

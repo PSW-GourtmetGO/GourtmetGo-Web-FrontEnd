@@ -249,6 +249,10 @@ const ModalC: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         setNombreCategoria(lettersOnly);
     };
 
+    useEffect(() => {
+        setNombreValido(categoriaActualizar.trim().length >= 4);
+      }, [categoriaActualizar]);
+
     const handleUpdateNombreCategoriaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
         const lettersOnly = inputValue.replace(/[^a-zA-Z\s]/g, '');
