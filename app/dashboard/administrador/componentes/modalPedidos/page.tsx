@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./page.scss";
 
 interface Pedido {
   pID: number;
@@ -22,7 +23,7 @@ interface detallePedido {
   pdCANTIDAD: number;
   pdPRECIO: number;
 }
-const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose,pedidoDatos,setPedidoDatos }) => {
+const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose, pedidoDatos, setPedidoDatos }) => {
   const [detallePedidos, setDetallePedidos] = useState<detallePedido[]>([]);
   useEffect(() => {
     const obtenerDetallePedidos = async () => {
@@ -52,11 +53,11 @@ const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose,pedidoDatos,setPed
   };
 
   const actualizarEstado = async () => {
-    if (pedidoDatos){
+    if (pedidoDatos) {
       let newEstado = pedidoDatos.pESTADO;
-      if (newEstado === 'Pendiente'){
+      if (newEstado === 'Pendiente') {
         newEstado = 'Preparado'
-      }else{
+      } else {
         newEstado = 'Completo'
       }
       try {
@@ -72,84 +73,84 @@ const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose,pedidoDatos,setPed
   return (
     <>
       {isOpen && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-          <div className="bg-white w-[45%] h-auto 2xl:w-[45%] 2xl:h-auto rounded-lg p-10">
-            <div className="grid grid-cols-4 w-full gap-x-6">
-              <div className="col-start-1 col-span-4">
-                <h2 className="text-2xl font-bold mb-4">
-                  Información del Pedido
-                </h2>
-              </div>
-              <div className="col-start-1">
-                <span className="font-bold">Cliente</span>
-                <p>{pedidoDatos?.cCLIENTE}</p>
-                <span className="font-bold">Estado</span>
-                <div
-                      className="p-1 text-white rounded-xl"
-                      style={{
-                        backgroundColor: getColorByEstado(pedidoDatos?.pESTADO),
-                      }}
-                    >
-                      {pedidoDatos?.pESTADO}
-                    </div>
-                <span className="font-bold">Codigo de validación</span>
-                <p>{pedidoDatos?.pCODIGO}</p>
-              </div>
-              <div className="col-start-2 col-span-4">
-                <span className="font-bold">Detalle del Pedido</span>
-                <div
-                  className="grid grid-cols-2 w-full"
-                  style={{ overflowY: "auto" }}
+        <div className="contenedorModal">
+          <div className="tarjetaModal">
+            <div className="encabezadoModal">
+              <h1>Información del Pedido</h1>
+              <button
+                type="button"
+                onClick={onClose}
+                className="btnAtras"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 24 24"
                 >
-                  {/* Establece el scroll vertical */}
-                  <div className="col-span-2" style={{ maxHeight: "200px" }}>
-                    {/* Establece la altura máxima del contenedor */}
-                    <table className=" w-full text-center">
-                      <thead className="bg-gray-200 sticky top-0 z-10">
-                        <tr>
-                          <th className="p-2">Artículo</th>
-                          <th className="p-2">Cantidad</th>
-                          <th className="p-2">Pvp</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {detallePedidos.map((detalle, index) => (
-                          <tr key={index}>
-                            <td className="p-2">{detalle.pltNOMBRE}</td>
-                            <td className="p-2">{detalle.pdCANTIDAD}</td>
-                            <td className="p-2">{detalle.pdPRECIO}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                      <tfoot className="bg-gray-200 sticky bottom-0 z-10">
-                        <tr>
-                          <td className="p-2"></td>
-                          <td className="p-2 font-bold">Total:</td>
-                          <td className="p-2 font-bold ">
-                            {  detallePedidos.reduce(
-                              (acc, curr) => acc + curr.pdPRECIO,0
-                            )}
-                          </td>
-                        </tr>
-                      </tfoot>
-                    </table>
+                  <path
+                    fill="currentColor"
+                    d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="cuerpoModalPedidos">
+              <div className="informacionPedido">
+                <div className="lineaInformacion">
+                  <p>Cliente:</p>
+                  <p>{pedidoDatos?.cCLIENTE}</p>
+                </div>
+                <div className="lineaInformacion">
+                  <p>Estado:
+                  </p>
+                  <div
+                    className="estadoPedido"
+                    style={{
+                      backgroundColor: getColorByEstado(pedidoDatos?.pESTADO),
+                    }}
+                  >
+                    {pedidoDatos?.pESTADO}
                   </div>
                 </div>
+                <div className="lineaInformacion">
+                  <p>Código de validación:</p>
+                  <p>{pedidoDatos?.pCODIGO}</p>
+                </div>
               </div>
-
-              <div className="col-span-4 text-right mt-[25px]">
-                <button
+              <div className="tabla">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                      <th>Precio</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {detallePedidos.map((detalle, index) => (
+                      <tr key={index}>
+                        <td>{detalle.pltNOMBRE}</td>
+                        <td>{detalle.pdCANTIDAD}</td>
+                        <td>{detalle.pdPRECIO}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td></td>
+                      <td>Total:</td>
+                      <td>{detallePedidos.reduce((acc, curr) => acc + curr.pdPRECIO, 0)}</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div className="botonesPedido">
+              <button
                   type="submit"
-                  className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md" onClick={actualizarEstado}
+                  className="botonVerde" onClick={actualizarEstado}
                 >
                   Cambiar Siguiente Estado
-                </button>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-md ml-2"
-                >
-                  Cancelar
                 </button>
               </div>
             </div>

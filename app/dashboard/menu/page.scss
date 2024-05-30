@@ -36,13 +36,10 @@
                     border-radius: 10px;
                     display: flex;
                     align-items: center;
+                    text-transform: capitalize;
                 }
 
                 .etiqueta:hover {
-                    background-color: #00AF66;
-                }
-
-                .etiqueta.selected {
                     background-color: #00AF66;
                 }
             }
@@ -62,6 +59,7 @@
                 display: flex;
                 justify-content: center;
                 .tarjetaPlato{
+                    text-transform: capitalize;
                     margin-top: 50px;
                     .imagenPlato{
                         /*background: linear-gradient(to bottom, white 25%, #274c5b 25%, #274c5b 100%);*/
@@ -73,12 +71,17 @@
                         height: 100px;
                         border-top-left-radius: 10px;
                         border-top-right-radius: 10px;
-                        .fotoPlato{
+                        .contenedorFotoPlato{
                             top: -1;                            
                             position: absolute;
-                            border-radius: 50%;
                             transition: ease-in-out 0.7s;
                             -webkit-transition: ease-in-out 0.7s ;
+                            object-fit: cover;
+                            .fotoPlato{
+                                height: 200px;
+                                width: 200px;
+                                border-radius: 50%;
+                            }
                         }
                         .iconoSubirPlato{
                             width: 100px;
@@ -86,6 +89,11 @@
                             transition: ease-in-out 0.7s;
                             -webkit-transition: ease-in-out 0.7s ;
                             opacity: 0;
+                            background-color: #00af66;
+                            border-radius: 50%;
+                            color: #fff;
+                            height: 100px;
+                            width: 100px;
                         }
                     }
                     .imagenPlato:hover{
@@ -97,10 +105,8 @@
                             height: 200px;
                             width: 200px;
                             padding: 50px;
-                            border-radius: 50%;
                             cursor: pointer;
                             z-index: 50;
-                            background-color: #00AF66;
                         }
                     }
                     .detallePlato{
