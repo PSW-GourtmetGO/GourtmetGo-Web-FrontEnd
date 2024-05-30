@@ -46,7 +46,7 @@ function PedidosPage() {
     };
     obtenerPedidos();
     setImg(localStorage.getItem('restauranteImagen') || "")
-  }, [modalOpen]);
+  }, [modalOpen,pedidos]);
 
   const getColorByEstado = (estado: any) => {
     switch (estado) {
