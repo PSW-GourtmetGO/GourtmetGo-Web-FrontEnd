@@ -1,5 +1,6 @@
 .contenedorPaginasDashboard {
     .informacionPlatos {
+        text-transform: capitalize;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -76,7 +77,7 @@
                             position: absolute;
                             transition: ease-in-out 0.7s;
                             -webkit-transition: ease-in-out 0.7s ;
-                            object-fit: cover;
+                            object-fit: contain;
                             .fotoPlato{
                                 height: 200px;
                                 width: 200px;
