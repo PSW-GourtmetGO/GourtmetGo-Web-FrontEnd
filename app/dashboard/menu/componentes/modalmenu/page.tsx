@@ -24,6 +24,7 @@ interface ModalProps {
     visible: string;
     categoria: number;
     accion: string;
+    imagen:string;
   };
   setData: React.Dispatch<
     React.SetStateAction<{
@@ -33,6 +34,7 @@ interface ModalProps {
       visible: string;
       categoria: number;
       accion: string;
+      imagen:string;
     }>
   >;
 }
@@ -55,10 +57,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
     categoria: 1,
   });
   const [nombreEditado, setNombreEditado] = useState("");
+  const [imagenAnterior, setImagenAnterior] = useState("");
   const [nombreValido, setNombreValido] = useState(false);
 
   useEffect(() => {
     setNombreEditado(Datos.platoNombre);
+    setImagenAnterior(Datos.imagen)
   }, [Datos.platoNombre]);
 
   const handleModalClose = () => {
@@ -97,19 +101,24 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
         console.error("Categoría no encontrada");
         return;
       }
-      const imagenPlatoUpload = await uploadPlate(
-        imagenPlato,
-        `platos/${categoria.nombre}`,
-        localStorage.getItem("restauranteNOMBRE")
-      );
-      console.log("Este es el plato subido", imagenPlatoUpload);
+
+      let nuevaImagen = null
+      if (!imagenPlato == null){
+        nuevaImagen = await uploadPlate(
+          imagenPlato,
+          `platos/${categoria.nombre}`,
+          localStorage.getItem("restauranteNOMBRE")
+        );
+      } 
+
+      console.log("Este es el plato subido", nuevaImagen);
       const response = await axios.post(
         `http://localhost:4500/api/Web/plato/${formData.categoria}`,
         {
           nombre: formData.nombre,
           precio: formData.precio,
           ver: formData.visible,
-          imagen: null,
+          imagen: nuevaImagen,
         }
       );
       toast.success("Plato creado correctamente", {
@@ -164,19 +173,27 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
         console.error("Categoría no encontrada al actualizar");
         return;
       }
-      const imagenPlatoUpdate = await uploadPlate(
-        imagenPlato,
-        `platos/${categoriaSeleccionada.nombre}`,
-        localStorage.getItem("restauranteNOMBRE")
-      );
-      console.log("Este es el plato subido", imagenPlatoUpdate);
+
+      let nuevaImagen = ''
+
+      if (imagenPlato == null){
+        nuevaImagen = imagenAnterior
+      }else{
+        nuevaImagen = await uploadPlate(
+          imagenPlato,
+          `platos/${categoriaSeleccionada.nombre}`,
+          localStorage.getItem("restauranteNOMBRE")
+        );
+      }
+
+      console.log("Este es el plato subido", nuevaImagen);
       const response = await axios.put(
         `http://localhost:4500/api/Web/plato/${Datos.platoID}`,
         {
           nombre: Datos.platoNombre,
           precio: Datos.precio,
           ver: Datos.visible,
-          imagen: null,
+          imagen: nuevaImagen,
           categoria: Datos.categoria,
         }
       );
