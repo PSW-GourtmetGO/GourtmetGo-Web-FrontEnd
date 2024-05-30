@@ -28,6 +28,7 @@ const MenuPage = () => {
   const [categorias, setCategorias] = useState([]);
   const [platos, setPlatos] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const persona = localStorage.getItem('persona')
 
   useEffect(() => {
     const date = new Date();
@@ -157,7 +158,7 @@ const MenuPage = () => {
       </div>
       <div className="informacionPlatos">
         <div className="usuario">
-          <h2>Anthony Solis</h2>
+          <h2>{persona}</h2>
           <p>{currentDate}</p>
         </div>
         <div className="contenedorBuscador">
@@ -189,11 +190,11 @@ const MenuPage = () => {
           </div>
         </div>
         <div className="listaPlatos">
-          {platos.map((plato: { nombre: string, precio: any, categoria_nombre: string, categoria_id: number, ver: string, id: number }, index: number) => (
+          {platos.map((plato: { nombre: string, precio: any, categoria_nombre: string, categoria_id: number, ver: string, id: number,imagen:string }, index: number) => (
             <div className='contenedorPlato' key={index}>
               <div className='tarjetaPlato' style={{ width: '250px' }} onClick={() => handleModalOpen(plato.id, plato.nombre, plato.precio, plato.ver, plato.categoria_id, "actualizar")}>
                 <div className='imagenPlato'>
-                  <Image width={200} height={200} src="/imagenes/platillos.svg" alt="" className='fotoPlato' />
+                  <Image width={200} height={200} src={plato.imagen ? plato.imagen : "https://firebasestorage.googleapis.com/v0/b/gourmetgo-firebase.appspot.com/o/Default%2FnoImagen.jpg?alt=media&token=3ee7f0de-f7f8-48b3-897f-cbb93a4b9872"} alt="" className='fotoPlato' />
                 </div>
                 <div className='detallePlato'>
                   <h2 className='nombrePlato'>{plato.nombre}</h2>

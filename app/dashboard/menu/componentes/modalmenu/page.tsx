@@ -109,7 +109,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
           nombre: formData.nombre,
           precio: formData.precio,
           ver: formData.visible,
-          imagen: null,
+          imagen: imagenPlatoUpload,
         }
       );
       toast.success("Plato creado correctamente", {
