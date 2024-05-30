@@ -144,9 +144,9 @@ const ModalUpdate: React.FC<ModalUpdate> = ({ isOpen, onClose, Datos, setDatos }
                             </button>
                         </div>
                         <div className="contenido">
-                            <div className='formulario'>
+                            <div className='formularioModalEditarEmpleado'>
                                 <form onSubmit={handleSubmit}>
-                                    {['cedula', 'nombre', 'apellido', 'fecha_Nacimiento', 'direccion', 'telefono', 'correo'].map((field, index) => (
+                                    {['cedula', 'fecha_Nacimiento', 'nombre', 'apellido', 'direccion', 'telefono', 'correo'].map((field, index) => (
                                         <div className="ingresos" key={index}>
                                             <label htmlFor={field} className="label">{field.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase())}:</label>
                                             <div className="contenedorIngreso">
