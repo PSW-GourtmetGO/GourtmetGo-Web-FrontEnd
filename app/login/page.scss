@@ -19,7 +19,7 @@
             }
         }
 
-        .formularioLoguin{
+        .contenedorFormularioLoguin{
             width: 50%;
             font-family: "Raleway", sans-serif;
             display: flex;
@@ -39,7 +39,7 @@
                 }
             }
 
-            .formulario{
+            .formularioLoguin{
                 margin: 10px 0;
                 form{
                     div{
@@ -82,7 +82,7 @@
             .portadasLoguin{
                 display: none;
             }
-            .formularioLoguin{
+            .contenedorFormularioLoguin{
                 width: 100%;
             }
         }

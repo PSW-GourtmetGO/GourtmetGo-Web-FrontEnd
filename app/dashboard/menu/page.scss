@@ -77,6 +77,30 @@
                             top: -1;                            
                             position: absolute;
                             border-radius: 50%;
+                            transition: ease-in-out 0.7s;
+                            -webkit-transition: ease-in-out 0.7s ;
+                        }
+                        .iconoSubirPlato{
+                            width: 100px;
+                            height: auto;
+                            transition: ease-in-out 0.7s;
+                            -webkit-transition: ease-in-out 0.7s ;
+                            opacity: 0;
+                        }
+                    }
+                    .imagenPlato:hover{
+                        .fotoPlato{
+                            scale: 1.1;
+                        }
+                        .iconoSubirPlato{
+                            opacity: 1;
+                            height: 200px;
+                            width: 200px;
+                            padding: 50px;
+                            border-radius: 50%;
+                            cursor: pointer;
+                            z-index: 50;
+                            background-color: #00AF66;
                         }
                     }
                     .detallePlato{

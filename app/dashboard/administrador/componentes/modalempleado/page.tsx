@@ -156,7 +156,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             </button>
                         </div>
                         <div className="contenido">
-                            <div className='formulario'>
+                            <div className='formularioModalEmpleados'>
                                 <form onSubmit={handleSubmit}>
                                     {['cedula', 'nombre', 'apellido', 'fecha_Nacimiento', 'direccion', 'telefono', 'correo', 'contrasenia'].map((field, index) => (
                                         <div className="ingresos" key={index}>
