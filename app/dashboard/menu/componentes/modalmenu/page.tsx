@@ -742,7 +742,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
                 </div>
               </div>
             </div>
-            <div className="botones">
+            <div className="botonesEditarPlato">
               <button
                 type="submit"
                 onClick={actualizarPlato}
@@ -754,7 +754,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
               <button
                 type="button"
                 onClick={eliminarPlato}
-                className="botonRojo"
+                className="botonVerdeOscuro"
               >
                 Eliminar
               </button>

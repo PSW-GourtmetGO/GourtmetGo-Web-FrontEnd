@@ -306,6 +306,8 @@
     border-radius: 5px;
     padding: 2px 7px;
     box-shadow: -1px -1px 5px grey;
+    font-family: "Raleway", sans-serif;
+    text-transform: capitalize;
 }
 
 .tooltipEditar{

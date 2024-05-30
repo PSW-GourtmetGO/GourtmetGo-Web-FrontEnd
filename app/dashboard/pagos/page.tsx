@@ -55,7 +55,7 @@ const PagosPage = () => {
         <div className="infoPagos">
           <p className="parrafo1">Todas tus transacciones se realizan a través de paypal</p>
           <p className="parrafo2">Ingresa la información de PayPal</p>
-          <div className="formulario">
+          <div className="formularioPagos">
             <form className="" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label

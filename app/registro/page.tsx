@@ -88,13 +88,13 @@ function RegisterPage() {
 
           </div>
         </div>
-        <div className="formularioRegistro">
+        <div className="contenedorFormularioRegistro">
           <div className="encabezado">
             <h1>
               Registro de Clientes
             </h1>
           </div>
-          <div className="formulario">
+          <div className="formularioRegistro">
             <form className="" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label htmlFor="cedula">Cédula: </label>

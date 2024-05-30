@@ -1,5 +1,6 @@
 .contenedorPrincipal{
     .contenedorRegistro{
+        font-family: "Raleway", sans-serif;
         height: 100%;
         padding: 70px 70px 0 70px;
         display: flex;
@@ -19,7 +20,7 @@
                 margin: 20px;
             }
         }
-        .formularioRegistro{
+        .contenedorFormularioRegistro{
             width: 50%;
             height: auto;
             .encabezado{
@@ -28,7 +29,7 @@
                 font-weight: bold;
                 margin-bottom: 20px;
             }
-            .formulario{
+            .formularioRegistro{
                 form{
                     display: grid;
                     grid-template-columns: repeat(2, 1fr);
@@ -49,7 +50,7 @@
             .portadasRegistro{
                 display: none;
             }
-            .formularioRegistro{
+            .contenedorFormularioRegistro{
                 width: 100%;
             }
         }
