@@ -180,7 +180,7 @@ function PedidosPage() {
                 <tr
                   key={pedido.pID}
                   onClick={() => openModal(pedido)}
-                  className=""
+                  className="filaTablaPedidos"
                 >
                   <td>
                     <span>{pedido.cCLIENTE}</span>
