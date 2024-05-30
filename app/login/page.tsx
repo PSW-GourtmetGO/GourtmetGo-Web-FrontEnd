@@ -61,14 +61,14 @@ function Login() {
           <div className="porta">
           </div>
         </div>
-        <div className="formularioLoguin">
+        <div className="contenedorFormularioLoguin">
           <div className="encabezadoLoguin">
             <img src="/imagenes/logoBlanco.svg" alt="" />
               <h1 className="">
                 Bienvenido a GourmetGo
               </h1>
           </div>
-          <div className="formulario">
+          <div className="formularioLoguin">
             <form className="" onSubmit={handleSubmit}>
               <div className="contenedorIngreso">
                 <input

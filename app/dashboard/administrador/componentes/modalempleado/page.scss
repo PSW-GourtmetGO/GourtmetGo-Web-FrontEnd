@@ -2,7 +2,7 @@
     .tarjetaModal{
 
             .contenido{    
-                .formulario{
+                .formularioModalEmpleados{
                     form{
                         display: grid;
                         grid-template-columns: repeat(2, 1fr);
@@ -13,7 +13,6 @@
     
             .botones{
                 margin: 20px 0;
-                //height: 10%;
                 display: flex;
                 flex-direction: row;
                 width: 100%;
@@ -31,7 +30,7 @@
                 .contenido{
                     display: flex;
                     flex-direction: column;
-                    .formulario{
+                    .formularioModalEmpleados{
                         .ingresos{
                             .contenedorIngreso{
                                 input{
