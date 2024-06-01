@@ -80,7 +80,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
     const obtenerCategorias = async () => {
       try {
         const response = await axios.get(`http://localhost:4500/api/Web/categoria/${localStorage.getItem('restauranteID')}`);
-        console.log(response.data);
         setCategorias(response.data);
       } catch (error) {
         console.error('Error al obtener las estadísticas:', error);
@@ -102,14 +101,20 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
         return;
       }
 
+      console.log(imagenPlato)
+
       let nuevaImagen = null
-      if (!imagenPlato == null){
+      if (imagenPlato != null){
         nuevaImagen = await uploadPlate(
           imagenPlato,
           `platos/${categoria.nombre}`,
           localStorage.getItem("restauranteNOMBRE")
         );
+        console.log(nuevaImagen)
+        console.log("arriba")
       } 
+
+      console.log(nuevaImagen)
 
       console.log("Este es el plato subido", nuevaImagen);
       const response = await axios.post(
@@ -336,7 +341,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(formData);
     onClose();
   };
 
@@ -742,7 +746,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
                 </div>
               </div>
             </div>
-            <div className="botonesEditarPlato">
+            <div className="botones">
               <button
                 type="submit"
                 onClick={actualizarPlato}
@@ -754,7 +758,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
               <button
                 type="button"
                 onClick={eliminarPlato}
-                className="botonVerdeOscuro"
+                className="botonRojo"
               >
                 Eliminar
               </button>
