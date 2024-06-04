@@ -246,6 +246,7 @@ function RegisterPage() {
                 <button type="submit" className="botonVerde">
                   Guardar información
                 </button>
+                
                 <ToastContainer />
               </div>
             </form>
