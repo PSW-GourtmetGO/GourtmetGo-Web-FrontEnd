@@ -233,14 +233,31 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
     }
   };
 
-  const eliminarPlato = async () => {
-    const confirmacion = window.confirm(
-      "¿Estás seguro de que quieres eliminar este plato?"
-    );
+  const [isDeleting, setIsDeleting] = useState(false);
 
-    if (!confirmacion) {
-      return;
-    }
+  const handleEliminarClick = () => {
+    toast.dark(
+      <div>
+        <p className="mb-5">¿Estás seguro de que quieres eliminar este plato?</p>
+        <button className="border mr-2 p-2 rounded-md bg-[#a31616]" onClick={eliminarPlato}>Sí</button>
+        <button className="border ml-2 p-2 rounded-md bg-[#16a34a]" onClick={() => toast.dismiss()}>No</button>
+      </div>,
+      {
+        position: "top-right",
+        autoClose: false,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      }
+    );
+  };
+
+  const eliminarPlato = async () => {
+    setIsDeleting(true);
 
     try {
       const response = await axios.delete(
@@ -757,7 +774,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, Datos, setData }) => {
               </button>
               <button
                 type="button"
-                onClick={eliminarPlato}
+                onClick={handleEliminarClick}
                 className="botonRojo"
               >
                 Eliminar

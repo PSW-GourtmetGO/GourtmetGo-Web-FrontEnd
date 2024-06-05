@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import pagosImagen from "../../../public/imagenes/PagosImagen.svg";
 import paypal from "../../../public/imagenes/paypal.svg";
 import "./page.scss";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 const PagosPage = () => {
   const {
@@ -17,10 +18,33 @@ const PagosPage = () => {
   const onSubmit: SubmitHandler<any> = (data) => {
     axios.put(`http://localhost:4500/api/Web/propietario/paypal/${localStorage.getItem('restauranteID')}`, data)
       .then(response => {
-        alert("información almacenada");
+        toast.success("Información almacenada", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
       })
       .catch(error => {
-        alert("Hubo un problema al procesar la información. Intente más tarde");
+        toast.error(
+          "Hubo un problema al procesar la información. Intente más tarde",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+          }
+        );
       });
   };
 
@@ -109,6 +133,7 @@ const PagosPage = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

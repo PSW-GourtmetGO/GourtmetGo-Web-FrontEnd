@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./page.scss";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 interface Pedido {
   pID: number;
@@ -64,8 +65,20 @@ const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose, pedidoDatos, setP
         const response = await axios.put(`http://localhost:4500/api/Web/pedidos?id=${pedidoDatos.pID}&estado=${newEstado}`);
         setPedidoDatos((prevState: Pedido | null) => ({ ...prevState!, pESTADO: newEstado }));
       } catch (error) {
+        toast.error(
+          "Hubo un problema al procesar la información. Inténtalo más tarde.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+          });
         console.error('Error al obtener los pedidos:', error);
-        alert("Hubo un problema al conectarse al servidor")
       }
     }
   };
@@ -155,6 +168,7 @@ const ModalPedidos: React.FC<ModalProps> = ({ isOpen, onClose, pedidoDatos, setP
               </div>
             </div>
           </div>
+          <ToastContainer />
         </div>
       )}
     </>
