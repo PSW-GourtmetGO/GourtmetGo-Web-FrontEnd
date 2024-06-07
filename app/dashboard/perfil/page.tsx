@@ -1,12 +1,7 @@
 "use client";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ventas from "../../../public/imagenes/VentasRealizadas.svg";
-import platos from "../../../public/imagenes/PlatosRegistrados.svg";
-import empleados from "../../../public/imagenes/EmpleadosRegistrados.svg";
 import { useForm, SubmitHandler } from "react-hook-form";
-import negocioSf from "../../../public/imagenes/negocioSF.svg";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { uploadFile } from "../../firebase/config";
