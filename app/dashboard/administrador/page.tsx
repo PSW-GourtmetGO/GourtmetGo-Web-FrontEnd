@@ -92,15 +92,17 @@ const AdministradorPage = () => {
 
       // Mostrar confirmación utilizando un toast personalizado
       const confirmToast = (
-        <div className="grid gap-4 justify-items-end">
-          <div className="grid grid-cols-2">
-            <div className="col-span-2">
-              <p className="mb-6">¿Estás seguro de que deseas eliminar este empleado?</p>
-            </div>
-            <button className="bg-[#00AF66] hover:bg-[#00af66d0] text-white font-bold py-2 px-4 rounded" onClick={(e) => confirmarEliminacion(e, empleado)}>Confirmar</button>
-            <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={cancelarEliminacion}>Cancelar</button>
+        <div className="grid justify-items-end">
+        <div className="grid grid-cols-2 gap-2">
+          <div className="col-span-2">
+            <p className="mb-6">¿Estás seguro de que deseas eliminar este empleado?</p>
           </div>
+          <button className="bg-[#00AF66] hover:bg-[#00af66d0] text-white font-bold py-2 px-4 rounded mr-2" onClick={(e) => confirmarEliminacion(e, empleado)}>Confirmar</button>
+          <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2" onClick={cancelarEliminacion}>Cancelar</button>
         </div>
+      </div>
+      
+
       );
 
       toast.warn(confirmToast, {
