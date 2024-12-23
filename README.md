@@ -55,6 +55,8 @@ En este repositorio de tiene la interfaz del usuario dueño de restaurante.
 [@Eduardo Pila](https://github.com/Eduardlink)
 - Estilización
 
+[@Sebastián Ilbay](https://github.com/ATLASSdeveloper)
+- Integración Front-Back
 
 ## Autores
 
@@ -62,3 +64,4 @@ En este repositorio de tiene la interfaz del usuario dueño de restaurante.
 - [@Erik Granda](https://github.com/ErikGranda3756)
 - [@Anthony Solis](https://github.com/Anthony6887)
 - [@Eduardo Pila](https://github.com/Eduardlink)
+- [@Sebastián Ilbay](https://github.com/ATLASSdeveloper)
